@@ -71,7 +71,7 @@ export async function resolveTopic(cache, input, now) {
     else {
         throw new Error("Give --title with --from, or --qid.");
     }
-    const entity = await lookupEntity(cache, qid, input.projects, now);
+    const entity = await lookupEntity(cache, qid, now);
     const projects = input.projects ?? [...entity.sitelinks.keys()].sort();
     const editions = [];
     for (const project of projects) {

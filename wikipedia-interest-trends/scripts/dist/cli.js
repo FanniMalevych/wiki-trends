@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { ANALYZE_HELP, analyzeCommand } from "./commands/analyze.js";
 import { CACHE_HELP, cacheCommand } from "./commands/cache.js";
 import { FETCH_HELP, fetchCommand } from "./commands/fetch.js";
 import { RESOLVE_HELP, resolveCommand } from "./commands/resolve.js";
@@ -11,8 +12,11 @@ const COMMANDS = {
         run: resolveCommand,
     },
     fetch: { summary: "Download pageviews for a topic or articles (cached locally)", help: FETCH_HELP, run: fetchCommand },
-    analyze: { summary: "Normalize, deseasonalize and fit a trend with a confidence score" },
-    compare: { summary: "Compare trends for one topic across language editions" },
+    analyze: {
+        summary: "Trend and confidence per edition for a topic, ranked across editions",
+        help: ANALYZE_HELP,
+        run: analyzeCommand,
+    },
     chart: { summary: "Render a chart (SVG/PNG) from analyzed series" },
     report: { summary: "Build a one-page shareable report (HTML/PDF)" },
     cache: { summary: "Inspect or clear the local cache", help: CACHE_HELP, run: cacheCommand },

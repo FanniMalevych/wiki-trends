@@ -4,6 +4,7 @@ import { success, type Envelope } from "../output.js";
 import { resolveTopic } from "../resolve.js";
 import { httpStats } from "../wiki/http.js";
 import { normalizeProject } from "../wiki/pageviews.js";
+import { parseLangs } from "./selection.js";
 
 export const RESOLVE_HELP = `Usage: cli.js resolve (--title <title> --from <p> | --qid <Q>) [--lang <codes>]
 
@@ -20,14 +21,6 @@ Options:
 Editions without an article are listed with status "missing". Their
 "candidates" are unverified search results; never use them without checking.
 `;
-
-/** Parses "--lang pl,cs --lang uk" into ["pl.wikipedia", "cs.wikipedia", "uk.wikipedia"]. */
-export function parseLangs(values: string[] | undefined): string[] | null {
-  if (!values || values.length === 0) return null;
-  const codes = values.flatMap((v) => v.split(",")).map((c) => c.trim()).filter(Boolean);
-  if (codes.includes("all")) return null;
-  return [...new Set(codes.map(normalizeProject))];
-}
 
 export async function resolveCommand(argv: string[], now = Date.now()): Promise<Envelope> {
   const { values } = parseArgs({

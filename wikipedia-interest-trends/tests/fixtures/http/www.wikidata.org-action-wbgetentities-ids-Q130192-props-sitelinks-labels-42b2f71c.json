@@ -1,0 +1,217 @@
+{
+ "url": "https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&ids=Q130192&props=sitelinks%7Clabels",
+ "status": 200,
+ "body": {
+  "entities": {
+   "Q130192": {
+    "type": "item",
+    "id": "Q130192",
+    "labels": {
+     "zh-hans": {
+      "language": "zh-hans",
+      "value": "以英语为第二语言或外语"
+     },
+     "zh-hant": {
+      "language": "zh-hant",
+      "value": "以英語為第二語言或外語"
+     },
+     "zh-hk": {
+      "language": "zh-hk",
+      "value": "以英語為第二語言或外語"
+     },
+     "zh-cn": {
+      "language": "zh-cn",
+      "value": "以英语为第二语言或外语"
+     },
+     "zh-sg": {
+      "language": "zh-sg",
+      "value": "以英语为第二语言或外语"
+     },
+     "zh-tw": {
+      "language": "zh-tw",
+      "value": "以英語為第二語言或外語"
+     },
+     "de": {
+      "language": "de",
+      "value": "Englisch als Zweitsprache"
+     },
+     "ja": {
+      "language": "ja",
+      "value": "第二言語または外国語としての英語"
+     },
+     "rn": {
+      "language": "rn",
+      "value": "Icongereza ka rurimi rwa kabiri"
+     },
+     "en": {
+      "language": "en",
+      "value": "English as a second or foreign language"
+     },
+     "tr": {
+      "language": "tr",
+      "value": "yabancı dil olarak İngilizce"
+     },
+     "ar": {
+      "language": "ar",
+      "value": "الإنجليزية لغة ثانية"
+     },
+     "ru": {
+      "language": "ru",
+      "value": "английский язык как иностранный"
+     },
+     "zh": {
+      "language": "zh",
+      "value": "以英語為第二語言或外語"
+     },
+     "es": {
+      "language": "es",
+      "value": "inglés como segunda lengua"
+     },
+     "eo": {
+      "language": "eo",
+      "value": "angla lingvo kiel fremda lingvo"
+     },
+     "ta": {
+      "language": "ta",
+      "value": "இரண்டாம் மொழியாக ஆங்கிலம்"
+     },
+     "fr": {
+      "language": "fr",
+      "value": "anglais langue seconde"
+     },
+     "pl": {
+      "language": "pl",
+      "value": "angielski jako drugi lub obcy język"
+     },
+     "ca": {
+      "language": "ca",
+      "value": "anglès com a segona llengua"
+     },
+     "sv": {
+      "language": "sv",
+      "value": "engelska som andraspråk"
+     },
+     "ko": {
+      "language": "ko",
+      "value": "제2언어로서의 영어"
+     },
+     "ms": {
+      "language": "ms",
+      "value": "Bahasa Inggeris sebagai bahasa kedua atau bahasa asing"
+     },
+     "fa": {
+      "language": "fa",
+      "value": "انگلیسی به عنوان زبان دوم یا خارجی"
+     },
+     "vi": {
+      "language": "vi",
+      "value": "tiếng Anh như ngôn ngữ thứ hai hoặc ngoại ngữ"
+     },
+     "fi": {
+      "language": "fi",
+      "value": "Englannin kielen opetus vieraana kielenä"
+     },
+     "id": {
+      "language": "id",
+      "value": "English as a second language"
+     },
+     "en-us": {
+      "language": "en-us",
+      "value": "English as a second or foreign language"
+     },
+     "sl": {
+      "language": "sl",
+      "value": "angleščina kot drugi ali tuji jezik"
+     },
+     "az": {
+      "language": "az",
+      "value": "İngilis dili ikinci və ya xarici dil kimi"
+     }
+    },
+    "sitelinks": {
+     "arwiki": {
+      "site": "arwiki",
+      "title": "الإنجليزية لغة ثانية",
+      "badges": []
+     },
+     "azwiki": {
+      "site": "azwiki",
+      "title": "İngilis dili ikinci və ya xarici dil kimi",
+      "badges": []
+     },
+     "dewiki": {
+      "site": "dewiki",
+      "title": "Englisch als Zweitsprache",
+      "badges": []
+     },
+     "enwiki": {
+      "site": "enwiki",
+      "title": "English as a second or foreign language",
+      "badges": []
+     },
+     "enwikiversity": {
+      "site": "enwikiversity",
+      "title": "TESOL",
+      "badges": []
+     },
+     "eswiki": {
+      "site": "eswiki",
+      "title": "Inglés como segunda lengua",
+      "badges": []
+     },
+     "fawiki": {
+      "site": "fawiki",
+      "title": "انگلیسی به عنوان زبان دوم یا خارجی",
+      "badges": []
+     },
+     "fiwiki": {
+      "site": "fiwiki",
+      "title": "Englannin kielen opetus vieraana kielenä",
+      "badges": []
+     },
+     "idwiki": {
+      "site": "idwiki",
+      "title": "Bahasa Inggris sebagai bahasa kedua",
+      "badges": []
+     },
+     "kowiki": {
+      "site": "kowiki",
+      "title": "제2언어 또는 외국어로서의 영어",
+      "badges": []
+     },
+     "rnwiki": {
+      "site": "rnwiki",
+      "title": "Icongereza ka rurimi rwa kabiri",
+      "badges": []
+     },
+     "simplewiki": {
+      "site": "simplewiki",
+      "title": "English as a second language",
+      "badges": []
+     },
+     "tawiki": {
+      "site": "tawiki",
+      "title": "இரண்டாம் மொழியாக ஆங்கிலம்",
+      "badges": []
+     },
+     "trwiki": {
+      "site": "trwiki",
+      "title": "Yabancı dil olarak İngilizce eğitimi",
+      "badges": []
+     },
+     "zhwiki": {
+      "site": "zhwiki",
+      "title": "以英語為第二語言或外語",
+      "badges": []
+     },
+     "zhwikiversity": {
+      "site": "zhwikiversity",
+      "title": "TESOL",
+      "badges": []
+     }
+    }
+   }
+  },
+  "success": 1
+ }
+}

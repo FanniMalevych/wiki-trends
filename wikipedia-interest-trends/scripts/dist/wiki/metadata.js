@@ -6,7 +6,6 @@ const MAX_RANKED_REDIRECTS = 100;
 const TITLES_PER_QUERY = 50; // MediaWiki limit for anonymous clients
 // Wikidata site IDs whose language code does not map mechanically to a subdomain.
 const SITE_TO_PROJECT = { be_x_oldwiki: "be-tarask.wikipedia" };
-const PROJECT_TO_SITE = Object.fromEntries(Object.entries(SITE_TO_PROJECT).map(([s, p]) => [p, s]));
 // "<code>wiki" site IDs that are not language editions of Wikipedia.
 const NON_WIKIPEDIA_SITES = new Set([
     "abstractwiki", "commonswiki", "specieswiki", "metawiki", "wikidatawiki", "mediawikiwiki", "sourceswiki",
@@ -21,15 +20,6 @@ export function siteToProject(site) {
         return undefined;
     const match = /^([a-z0-9_]+)wiki$/.exec(site);
     return match ? `${match[1].replaceAll("_", "-")}.wikipedia` : undefined;
-}
-/** "pl.wikipedia" -> "plwiki". */
-export function projectToSite(project) {
-    if (PROJECT_TO_SITE[project])
-        return PROJECT_TO_SITE[project];
-    const match = /^([a-z0-9-]+)\.wikipedia$/.exec(project);
-    if (!match)
-        throw new Error(`Only Wikipedia editions can be matched across languages (got "${project}").`);
-    return `${match[1].replaceAll("-", "_")}wiki`;
 }
 export function languageOf(project) {
     return project.split(".")[0];
@@ -151,16 +141,13 @@ export async function searchTitles(cache, project, query, now, limit = 3) {
         .slice(0, limit)
         .map((s) => normalizeTitle(s.title));
 }
-/** Looks up a Wikidata item's labels and Wikipedia articles, optionally only for the given projects. */
-export async function lookupEntity(cache, qid, projects, now) {
-    const languages = new Set(["en", ...(projects ?? []).map(languageOf)]);
-    const url = apiUrl(WIKIDATA_API, {
-        action: "wbgetentities",
-        ids: qid,
-        props: "sitelinks|labels",
-        languages: [...languages].join("|"),
-        ...(projects ? { sitefilter: projects.map(projectToSite).join("|") } : {}),
-    });
+/**
+ * Looks up a Wikidata item's labels and Wikipedia articles in every language.
+ * Fetching all of them (rather than filtering by the requested editions) means
+ * a follow-up question about other languages is answered from the cache.
+ */
+export async function lookupEntity(cache, qid, now) {
+    const url = apiUrl(WIKIDATA_API, { action: "wbgetentities", ids: qid, props: "sitelinks|labels" });
     const body = await cachedQuery(cache, url, now);
     const entity = Object.values(body.entities ?? {})[0];
     if (!entity || entity.missing !== undefined)

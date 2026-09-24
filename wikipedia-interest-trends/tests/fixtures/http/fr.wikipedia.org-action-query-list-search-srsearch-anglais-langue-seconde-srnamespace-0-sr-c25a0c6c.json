@@ -1,0 +1,65 @@
+{
+ "url": "https://fr.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&list=search&srsearch=anglais+langue+seconde&srnamespace=0&srlimit=10&srprop=&srinfo=suggestion",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "continue": {
+   "sroffset": 10,
+   "continue": "-||"
+  },
+  "query": {
+   "search": [
+    {
+     "ns": 0,
+     "title": "Langue seconde",
+     "pageid": 2728982
+    },
+    {
+     "ns": 0,
+     "title": "Anglais",
+     "pageid": 5539
+    },
+    {
+     "ns": 0,
+     "title": "Langues en Inde",
+     "pageid": 4007277
+    },
+    {
+     "ns": 0,
+     "title": "Langues les plus parlées",
+     "pageid": 6462206
+    },
+    {
+     "ns": 0,
+     "title": "Vieil anglais",
+     "pageid": 114481
+    },
+    {
+     "ns": 0,
+     "title": "Langues germaniques",
+     "pageid": 57289
+    },
+    {
+     "ns": 0,
+     "title": "Influence du français sur l'anglais",
+     "pageid": 5463060
+    },
+    {
+     "ns": 0,
+     "title": "Langues en République dominicaine",
+     "pageid": 9402157
+    },
+    {
+     "ns": 0,
+     "title": "Atlas des langues en danger dans le monde",
+     "pageid": 2751355
+    },
+    {
+     "ns": 0,
+     "title": "Yiddish",
+     "pageid": 3619793
+    }
+   ]
+  }
+ }
+}

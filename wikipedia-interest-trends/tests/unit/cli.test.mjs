@@ -9,7 +9,7 @@ const run = (...args) => spawnSync(process.execPath, [cli, ...args], { encoding:
 test("--help lists every command and exits 0", () => {
   const r = run("--help");
   assert.equal(r.status, 0);
-  for (const cmd of ["resolve", "fetch", "analyze", "compare", "chart", "report", "cache"]) {
+  for (const cmd of ["resolve", "fetch", "analyze", "chart", "report", "cache"]) {
     assert.match(r.stdout, new RegExp(`^  ${cmd}\\b`, "m"));
   }
 });
@@ -25,7 +25,7 @@ test("unknown command returns a JSON error envelope", () => {
 });
 
 test("known but unimplemented command returns a JSON error envelope", () => {
-  const r = run("analyze");
+  const r = run("chart");
   assert.equal(r.status, 2);
   assert.equal(JSON.parse(r.stdout).ok, false);
 });

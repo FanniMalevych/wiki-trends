@@ -1,0 +1,488 @@
+{
+ "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/aggregate/fr.wikipedia/all-access/user/monthly/20210901/20260831",
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2021090100",
+    "views": 650414307
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2021100100",
+    "views": 689027089
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2021110100",
+    "views": 702311291
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2021120100",
+    "views": 684879294
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022010100",
+    "views": 767734414
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022020100",
+    "views": 656865057
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022030100",
+    "views": 694803560
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022040100",
+    "views": 638252914
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022050100",
+    "views": 651035673
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022060100",
+    "views": 587818653
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022070100",
+    "views": 644006079
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022080100",
+    "views": 758853681
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022090100",
+    "views": 813486664
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022100100",
+    "views": 880169731
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022110100",
+    "views": 933590890
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2022120100",
+    "views": 888562797
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023010100",
+    "views": 908043258
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023020100",
+    "views": 687563756
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023030100",
+    "views": 758361308
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023040100",
+    "views": 701030060
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023050100",
+    "views": 758225210
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023060100",
+    "views": 644762552
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023070100",
+    "views": 669225723
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023080100",
+    "views": 738345725
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023090100",
+    "views": 734060043
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023100100",
+    "views": 728744052
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023110100",
+    "views": 697125990
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023120100",
+    "views": 697825397
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024010100",
+    "views": 806236114
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024020100",
+    "views": 690177488
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024030100",
+    "views": 736343740
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024040100",
+    "views": 657332715
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024050100",
+    "views": 677865443
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024060100",
+    "views": 619293302
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024070100",
+    "views": 651161710
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024080100",
+    "views": 714449671
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024090100",
+    "views": 664831166
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024100100",
+    "views": 698519787
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024110100",
+    "views": 720742284
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024120100",
+    "views": 718193052
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025010100",
+    "views": 781284656
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025020100",
+    "views": 655483102
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025030100",
+    "views": 670462585
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025040100",
+    "views": 609113616
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025050100",
+    "views": 642833130
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025060100",
+    "views": 581878594
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025070100",
+    "views": 608565514
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025080100",
+    "views": 624518060
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025090100",
+    "views": 588427050
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025100100",
+    "views": 606032337
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025110100",
+    "views": 633930200
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2025120100",
+    "views": 606121479
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026010100",
+    "views": 655022393
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026020100",
+    "views": 579846778
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026030100",
+    "views": 598873759
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026040100",
+    "views": 553793201
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026050100",
+    "views": 605859627
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026060100",
+    "views": 558565835
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026070100",
+    "views": 585807001
+   },
+   {
+    "project": "fr.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2026080100",
+    "views": 559376792
+   }
+  ]
+ }
+}

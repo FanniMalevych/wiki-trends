@@ -1,0 +1,12 @@
+{
+  "description": "Dated events that change how Wikipedia pageviews are measured. The analysis matches detected level changes against these (±1 month) and adds `note` as a caveat when a window extends past one; `detail` is background for people.",
+  "events": [
+    {
+      "period": "2025-05",
+      "scope": "all",
+      "label": "Wikimedia bot-detection update",
+      "note": "raw counts are not comparable across it; shares of edition views are affected much less.",
+      "detail": "Wikimedia reclassified traffic after improving bot detection in May 2025 and reported about 8% fewer human pageviews in Mar–Aug 2025 than a year earlier."
+    }
+  ]
+}

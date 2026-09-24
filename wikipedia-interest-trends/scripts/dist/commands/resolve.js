@@ -4,6 +4,7 @@ import { success } from "../output.js";
 import { resolveTopic } from "../resolve.js";
 import { httpStats } from "../wiki/http.js";
 import { normalizeProject } from "../wiki/pageviews.js";
+import { parseLangs } from "./selection.js";
 export const RESOLVE_HELP = `Usage: cli.js resolve (--title <title> --from <p> | --qid <Q>) [--lang <codes>]
 
 Finds the article about one topic in each Wikipedia language edition, via Wikidata.
@@ -19,15 +20,6 @@ Options:
 Editions without an article are listed with status "missing". Their
 "candidates" are unverified search results; never use them without checking.
 `;
-/** Parses "--lang pl,cs --lang uk" into ["pl.wikipedia", "cs.wikipedia", "uk.wikipedia"]. */
-export function parseLangs(values) {
-    if (!values || values.length === 0)
-        return null;
-    const codes = values.flatMap((v) => v.split(",")).map((c) => c.trim()).filter(Boolean);
-    if (codes.includes("all"))
-        return null;
-    return [...new Set(codes.map(normalizeProject))];
-}
 export async function resolveCommand(argv, now = Date.now()) {
     const { values } = parseArgs({
         args: argv,

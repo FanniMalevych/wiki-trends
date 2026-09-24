@@ -4,13 +4,12 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Cache } from "../../scripts/dist/cache/db.js";
-import { parseLangs } from "../../scripts/dist/commands/resolve.js";
+import { parseLangs } from "../../scripts/dist/commands/selection.js";
 import { normalizeQid, resolveTopic } from "../../scripts/dist/resolve.js";
 import {
   LOOKUP_TTL_MS,
   looksRelated,
   lookupPage,
-  projectToSite,
   rankRedirects,
   siteToProject,
 } from "../../scripts/dist/wiki/metadata.js";
@@ -22,13 +21,6 @@ test("siteToProject maps Wikidata site IDs to Wikipedia editions", () => {
   for (const other of ["plwikiquote", "commonswiki", "wikidatawiki", "abstractwiki", "specieswiki"]) {
     assert.equal(siteToProject(other), undefined, other);
   }
-});
-
-test("projectToSite is the inverse for Wikipedia editions", () => {
-  for (const p of ["pl.wikipedia", "zh-min-nan.wikipedia", "be-tarask.wikipedia"]) {
-    assert.equal(siteToProject(projectToSite(p)), p);
-  }
-  assert.throws(() => projectToSite("de.wikiversity"), /Only Wikipedia editions/);
 });
 
 test("normalizeQid and parseLangs", () => {
@@ -141,10 +133,13 @@ test("rankRedirects batches 50 titles per request", async () => {
 test("resolveTopic maps a title to each edition and explains gaps", async () => {
   fakeApi((u) => {
     if (u.host === "www.wikidata.org") {
-      assert.equal(u.searchParams.get("sitefilter"), "plwiki|cswiki");
       return {
         entities: {
-          Q1: { id: "Q1", labels: { en: { value: "topic" }, pl: { value: "temat" } }, sitelinks: { cswiki: { title: "Téma x" } } },
+          Q1: {
+            id: "Q1",
+            labels: { en: { value: "topic" }, pl: { value: "temat" } },
+            sitelinks: { cswiki: { title: "Téma x" }, dewiki: { title: "Thema" } },
+          },
         },
       };
     }
@@ -158,6 +153,7 @@ test("resolveTopic maps a title to each edition and explains gaps", async () => 
   assert.deepEqual(topic.editions[1], { project: "cs.wikipedia", status: "found", title: "Téma_x" });
   assert.equal(topic.editions[0].status, "missing");
   assert.deepEqual(topic.editions[0].candidates, ["Temat"]);
+  assert.equal(topic.editions.length, 2); // only the requested editions, although de exists
 });
 
 test("resolveTopic rejects a title without a Wikidata item", async () => {

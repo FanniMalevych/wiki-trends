@@ -1,5 +1,5 @@
 {
- "url": "https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&ids=Q333&props=sitelinks%7Clabels&languages=en",
+ "url": "https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&ids=Q333&props=sitelinks%7Clabels",
  "status": 200,
  "body": {
   "entities": {
@@ -10,6 +10,1142 @@
      "en": {
       "language": "en",
       "value": "astronomy"
+     },
+     "it": {
+      "language": "it",
+      "value": "astronomia"
+     },
+     "pl": {
+      "language": "pl",
+      "value": "astronomia"
+     },
+     "nb": {
+      "language": "nb",
+      "value": "astronomi"
+     },
+     "fr": {
+      "language": "fr",
+      "value": "astronomie"
+     },
+     "be-tarask": {
+      "language": "be-tarask",
+      "value": "астраномія"
+     },
+     "map-bms": {
+      "language": "map-bms",
+      "value": "astronomi"
+     },
+     "yue": {
+      "language": "yue",
+      "value": "天文學"
+     },
+     "sgs": {
+      "language": "sgs",
+      "value": "astruonuomėjė"
+     },
+     "nan": {
+      "language": "nan",
+      "value": "thian-bûn-ha̍k"
+     },
+     "nds-nl": {
+      "language": "nds-nl",
+      "value": "steernskunde"
+     },
+     "vro": {
+      "language": "vro",
+      "value": "tähetiidüs"
+     },
+     "es": {
+      "language": "es",
+      "value": "astronomía"
+     },
+     "de": {
+      "language": "de",
+      "value": "Astronomie"
+     },
+     "ilo": {
+      "language": "ilo",
+      "value": "astronomia"
+     },
+     "en-ca": {
+      "language": "en-ca",
+      "value": "astronomy"
+     },
+     "en-gb": {
+      "language": "en-gb",
+      "value": "astronomy"
+     },
+     "mk": {
+      "language": "mk",
+      "value": "астрономија"
+     },
+     "nn": {
+      "language": "nn",
+      "value": "astronomi"
+     },
+     "sv": {
+      "language": "sv",
+      "value": "astronomi"
+     },
+     "da": {
+      "language": "da",
+      "value": "astronomi"
+     },
+     "af": {
+      "language": "af",
+      "value": "sterrekunde"
+     },
+     "am": {
+      "language": "am",
+      "value": "ሥነ ፈለክ"
+     },
+     "an": {
+      "language": "an",
+      "value": "astronomía"
+     },
+     "ang": {
+      "language": "ang",
+      "value": "tungolcræft"
+     },
+     "ar": {
+      "language": "ar",
+      "value": "علم الفلك"
+     },
+     "arc": {
+      "language": "arc",
+      "value": "ܡܡܠܠܘܬ ܟܘܟܒܐ"
+     },
+     "arz": {
+      "language": "arz",
+      "value": "فلك"
+     },
+     "ast": {
+      "language": "ast",
+      "value": "astronomía"
+     },
+     "av": {
+      "language": "av",
+      "value": "астрономия"
+     },
+     "ay": {
+      "language": "ay",
+      "value": "alaxpacha yänakata"
+     },
+     "az": {
+      "language": "az",
+      "value": "astronomiya"
+     },
+     "ba": {
+      "language": "ba",
+      "value": "астрономия"
+     },
+     "bar": {
+      "language": "bar",
+      "value": "Astronomie"
+     },
+     "be": {
+      "language": "be",
+      "value": "астраномія"
+     },
+     "bg": {
+      "language": "bg",
+      "value": "астрономия"
+     },
+     "bm": {
+      "language": "bm",
+      "value": "dolokalan"
+     },
+     "bn": {
+      "language": "bn",
+      "value": "জ্যোতির্বিজ্ঞান"
+     },
+     "br": {
+      "language": "br",
+      "value": "steredoniezh"
+     },
+     "bs": {
+      "language": "bs",
+      "value": "astronomija"
+     },
+     "ca": {
+      "language": "ca",
+      "value": "astronomia"
+     },
+     "ceb": {
+      "language": "ceb",
+      "value": "astronomiya"
+     },
+     "ckb": {
+      "language": "ckb",
+      "value": "ئەستێرەناسی"
+     },
+     "co": {
+      "language": "co",
+      "value": "astronomia"
+     },
+     "cs": {
+      "language": "cs",
+      "value": "astronomie"
+     },
+     "csb": {
+      "language": "csb",
+      "value": "astronomiô"
+     },
+     "cv": {
+      "language": "cv",
+      "value": "астрономи"
+     },
+     "cy": {
+      "language": "cy",
+      "value": "seryddiaeth"
+     },
+     "diq": {
+      "language": "diq",
+      "value": "asmênşınasiye"
+     },
+     "dsb": {
+      "language": "dsb",
+      "value": "astronomija"
+     },
+     "dv": {
+      "language": "dv",
+      "value": "ފަލަކީ އިލްމު"
+     },
+     "el": {
+      "language": "el",
+      "value": "αστρονομία"
+     },
+     "eml": {
+      "language": "eml",
+      "value": "astronomî"
+     },
+     "eo": {
+      "language": "eo",
+      "value": "astronomio"
+     },
+     "et": {
+      "language": "et",
+      "value": "astronoomia"
+     },
+     "eu": {
+      "language": "eu",
+      "value": "astronomia"
+     },
+     "ext": {
+      "language": "ext",
+      "value": "astronomia"
+     },
+     "fa": {
+      "language": "fa",
+      "value": "اخترشناسی"
+     },
+     "fi": {
+      "language": "fi",
+      "value": "tähtitiede"
+     },
+     "fo": {
+      "language": "fo",
+      "value": "stjørnufrøði"
+     },
+     "frp": {
+      "language": "frp",
+      "value": "astronomia"
+     },
+     "frr": {
+      "language": "frr",
+      "value": "Stäärkunde"
+     },
+     "fur": {
+      "language": "fur",
+      "value": "astronomie"
+     },
+     "fy": {
+      "language": "fy",
+      "value": "stjerrekunde"
+     },
+     "ga": {
+      "language": "ga",
+      "value": "réalteolaíocht"
+     },
+     "gan": {
+      "language": "gan",
+      "value": "天文學"
+     },
+     "gd": {
+      "language": "gd",
+      "value": "reul-eòlas"
+     },
+     "gl": {
+      "language": "gl",
+      "value": "astronomía"
+     },
+     "gn": {
+      "language": "gn",
+      "value": "mbyjakuaa"
+     },
+     "gu": {
+      "language": "gu",
+      "value": "ખગોળશાસ્ત્ર"
+     },
+     "gv": {
+      "language": "gv",
+      "value": "rollageydys"
+     },
+     "hak": {
+      "language": "hak",
+      "value": "thiên-vùn-ho̍k"
+     },
+     "haw": {
+      "language": "haw",
+      "value": "kilo hōkū"
+     },
+     "he": {
+      "language": "he",
+      "value": "אסטרונומיה"
+     },
+     "hi": {
+      "language": "hi",
+      "value": "खगोल शास्त्र"
+     },
+     "hif": {
+      "language": "hif",
+      "value": "taara vigyan"
+     },
+     "hr": {
+      "language": "hr",
+      "value": "astronomija"
+     },
+     "ht": {
+      "language": "ht",
+      "value": "astwonomi"
+     },
+     "hu": {
+      "language": "hu",
+      "value": "csillagászat"
+     },
+     "hy": {
+      "language": "hy",
+      "value": "աստղագիտություն"
+     },
+     "ia": {
+      "language": "ia",
+      "value": "astronomia"
+     },
+     "id": {
+      "language": "id",
+      "value": "astronomi"
+     },
+     "ie": {
+      "language": "ie",
+      "value": "astronomie"
+     },
+     "io": {
+      "language": "io",
+      "value": "astronomio"
+     },
+     "is": {
+      "language": "is",
+      "value": "stjörnufræði"
+     },
+     "iu": {
+      "language": "iu",
+      "value": "ᓯᓚᓯᐅᕐᓂᖅ"
+     },
+     "ja": {
+      "language": "ja",
+      "value": "天文学"
+     },
+     "jbo": {
+      "language": "jbo",
+      "value": "kesyske"
+     },
+     "jv": {
+      "language": "jv",
+      "value": "astronomi"
+     },
+     "ka": {
+      "language": "ka",
+      "value": "ასტრონომია"
+     },
+     "kk": {
+      "language": "kk",
+      "value": "астрономия"
+     },
+     "kl": {
+      "language": "kl",
+      "value": "ulloriarsiorneq"
+     },
+     "kn": {
+      "language": "kn",
+      "value": "ಖಗೋಳಶಾಸ್ತ್ರ"
+     },
+     "ko": {
+      "language": "ko",
+      "value": "천문학"
+     },
+     "krc": {
+      "language": "krc",
+      "value": "астрономия"
+     },
+     "ku": {
+      "language": "ku",
+      "value": "stêrnasî"
+     },
+     "kw": {
+      "language": "kw",
+      "value": "astronymyl"
+     },
+     "ky": {
+      "language": "ky",
+      "value": "астрономия"
+     },
+     "la": {
+      "language": "la",
+      "value": "astronomia"
+     },
+     "lad": {
+      "language": "lad",
+      "value": "astronomiya"
+     },
+     "lb": {
+      "language": "lb",
+      "value": "Astronomie"
+     },
+     "lbe": {
+      "language": "lbe",
+      "value": "цIурттал элму"
+     },
+     "lez": {
+      "language": "lez",
+      "value": "астрономия"
+     },
+     "li": {
+      "language": "li",
+      "value": "starekunde"
+     },
+     "lmo": {
+      "language": "lmo",
+      "value": "astronomia"
+     },
+     "ln": {
+      "language": "ln",
+      "value": "mambí ma nzɔ́tɔ"
+     },
+     "lo": {
+      "language": "lo",
+      "value": "ດາຣາສາດ"
+     },
+     "lt": {
+      "language": "lt",
+      "value": "astronomija"
+     },
+     "lv": {
+      "language": "lv",
+      "value": "astronomija"
+     },
+     "mg": {
+      "language": "mg",
+      "value": "hainkintana"
+     },
+     "ml": {
+      "language": "ml",
+      "value": "ജ്യോതിഃശാസ്ത്രം"
+     },
+     "mn": {
+      "language": "mn",
+      "value": "одон орон"
+     },
+     "mr": {
+      "language": "mr",
+      "value": "खगोलशास्त्र"
+     },
+     "ms": {
+      "language": "ms",
+      "value": "astronomi"
+     },
+     "mt": {
+      "language": "mt",
+      "value": "astronomija"
+     },
+     "mwl": {
+      "language": "mwl",
+      "value": "astronomie"
+     },
+     "my": {
+      "language": "my",
+      "value": "နက္ခတ္တဗေဒ"
+     },
+     "nah": {
+      "language": "nah",
+      "value": "ilhuicamatiliztli"
+     },
+     "nap": {
+      "language": "nap",
+      "value": "astronumia"
+     },
+     "nds": {
+      "language": "nds",
+      "value": "Astronomie"
+     },
+     "ne": {
+      "language": "ne",
+      "value": "खगोल विज्ञान"
+     },
+     "new": {
+      "language": "new",
+      "value": "खगोलशास्त्र"
+     },
+     "nl": {
+      "language": "nl",
+      "value": "astronomie"
+     },
+     "nov": {
+      "language": "nov",
+      "value": "astronomia"
+     },
+     "nrm": {
+      "language": "nrm",
+      "value": "astrononmie"
+     },
+     "nso": {
+      "language": "nso",
+      "value": "thutanaledi"
+     },
+     "oc": {
+      "language": "oc",
+      "value": "astronomia"
+     },
+     "pa": {
+      "language": "pa",
+      "value": "ਤਾਰਾ ਵਿਗਿਆਨ"
+     },
+     "pam": {
+      "language": "pam",
+      "value": "astronomiya"
+     },
+     "pcd": {
+      "language": "pcd",
+      "value": "astrononmie"
+     },
+     "pnb": {
+      "language": "pnb",
+      "value": "فلکیات"
+     },
+     "ps": {
+      "language": "ps",
+      "value": "ستورپوهنه"
+     },
+     "pt": {
+      "language": "pt",
+      "value": "astronomia"
+     },
+     "pt-br": {
+      "language": "pt-br",
+      "value": "astronomia"
+     },
+     "qu": {
+      "language": "qu",
+      "value": "quyllur yachay"
+     },
+     "rm": {
+      "language": "rm",
+      "value": "astronomia"
+     },
+     "rmy": {
+      "language": "rmy",
+      "value": "chexanipen"
+     },
+     "ro": {
+      "language": "ro",
+      "value": "astronomie"
+     },
+     "ru": {
+      "language": "ru",
+      "value": "астрономия"
+     },
+     "rue": {
+      "language": "rue",
+      "value": "астрономія"
+     },
+     "sa": {
+      "language": "sa",
+      "value": "ज्योतिश्शास्त्रम्"
+     },
+     "sah": {
+      "language": "sah",
+      "value": "астрономия"
+     },
+     "sc": {
+      "language": "sc",
+      "value": "astronomia"
+     },
+     "scn": {
+      "language": "scn",
+      "value": "astronumìa"
+     },
+     "sco": {
+      "language": "sco",
+      "value": "astronomy"
+     },
+     "sg": {
+      "language": "sg",
+      "value": "sêndâtongo"
+     },
+     "sh": {
+      "language": "sh",
+      "value": "astronomija"
+     },
+     "si": {
+      "language": "si",
+      "value": "තාරකා විද්‍යාව"
+     },
+     "sk": {
+      "language": "sk",
+      "value": "astronómia"
+     },
+     "sl": {
+      "language": "sl",
+      "value": "astronomija"
+     },
+     "sm": {
+      "language": "sm",
+      "value": "astronomy"
+     },
+     "sn": {
+      "language": "sn",
+      "value": "zvechadenga"
+     },
+     "so": {
+      "language": "so",
+      "value": "xiddigis"
+     },
+     "sq": {
+      "language": "sq",
+      "value": "astronomi"
+     },
+     "sr": {
+      "language": "sr",
+      "value": "астрономија"
+     },
+     "stq": {
+      "language": "stq",
+      "value": "Stiernkunde"
+     },
+     "su": {
+      "language": "su",
+      "value": "astronomi"
+     },
+     "sw": {
+      "language": "sw",
+      "value": "astronomia"
+     },
+     "szl": {
+      "language": "szl",
+      "value": "astrōnōmijŏ"
+     },
+     "ta": {
+      "language": "ta",
+      "value": "வானியல்"
+     },
+     "te": {
+      "language": "te",
+      "value": "ఖగోళ శాస్త్రము"
+     },
+     "tet": {
+      "language": "tet",
+      "value": "astronomia"
+     },
+     "tg": {
+      "language": "tg",
+      "value": "ахтаршиносӣ"
+     },
+     "th": {
+      "language": "th",
+      "value": "ดาราศาสตร์"
+     },
+     "ti": {
+      "language": "ti",
+      "value": "አስትሮኖሚ"
+     },
+     "tk": {
+      "language": "tk",
+      "value": "astronomiýa"
+     },
+     "tl": {
+      "language": "tl",
+      "value": "astronomiya"
+     },
+     "tpi": {
+      "language": "tpi",
+      "value": "estronomi"
+     },
+     "tr": {
+      "language": "tr",
+      "value": "gök bilimi"
+     },
+     "tt": {
+      "language": "tt",
+      "value": "астрономия"
+     },
+     "ug": {
+      "language": "ug",
+      "value": "ئاسترونومىيە"
+     },
+     "uk": {
+      "language": "uk",
+      "value": "астрономія"
+     },
+     "ur": {
+      "language": "ur",
+      "value": "فلکیات"
+     },
+     "uz": {
+      "language": "uz",
+      "value": "astronomiya"
+     },
+     "vec": {
+      "language": "vec",
+      "value": "astronomia"
+     },
+     "vi": {
+      "language": "vi",
+      "value": "thiên văn học"
+     },
+     "vls": {
+      "language": "vls",
+      "value": "astronomie"
+     },
+     "vo": {
+      "language": "vo",
+      "value": "stelav"
+     },
+     "wa": {
+      "language": "wa",
+      "value": "astronomeye"
+     },
+     "war": {
+      "language": "war",
+      "value": "astronomiya"
+     },
+     "wo": {
+      "language": "wo",
+      "value": "saytubiddiw"
+     },
+     "xh": {
+      "language": "xh",
+      "value": "iastronomi"
+     },
+     "xmf": {
+      "language": "xmf",
+      "value": "ასტრონომია"
+     },
+     "yi": {
+      "language": "yi",
+      "value": "אסטראנאמיע"
+     },
+     "yo": {
+      "language": "yo",
+      "value": "ìtòràwọ̀"
+     },
+     "zea": {
+      "language": "zea",
+      "value": "staerrekunde"
+     },
+     "zh": {
+      "language": "zh",
+      "value": "天文學"
+     },
+     "zh-cn": {
+      "language": "zh-cn",
+      "value": "天文学"
+     },
+     "zh-tw": {
+      "language": "zh-tw",
+      "value": "天文學"
+     },
+     "zh-sg": {
+      "language": "zh-sg",
+      "value": "天文學"
+     },
+     "zh-mo": {
+      "language": "zh-mo",
+      "value": "天文學"
+     },
+     "zh-hans": {
+      "language": "zh-hans",
+      "value": "天文学"
+     },
+     "zh-hant": {
+      "language": "zh-hant",
+      "value": "天文學"
+     },
+     "zh-hk": {
+      "language": "zh-hk",
+      "value": "天文學"
+     },
+     "zh-my": {
+      "language": "zh-my",
+      "value": "天文學"
+     },
+     "lij": {
+      "language": "lij",
+      "value": "astronomia"
+     },
+     "as": {
+      "language": "as",
+      "value": "জ্যোতিৰ্বিজ্ঞান"
+     },
+     "os": {
+      "language": "os",
+      "value": "астрономи"
+     },
+     "ce": {
+      "language": "ce",
+      "value": "астрономи"
+     },
+     "pms": {
+      "language": "pms",
+      "value": "astronomìa"
+     },
+     "or": {
+      "language": "or",
+      "value": "ଖଗୋଳ"
+     },
+     "gsw": {
+      "language": "gsw",
+      "value": "Astronomi"
+     },
+     "bxr": {
+      "language": "bxr",
+      "value": "одон орон шудалал"
+     },
+     "mhr": {
+      "language": "mhr",
+      "value": "астрономий"
+     },
+     "mo": {
+      "language": "mo",
+      "value": "астрономие ши астрофизикэ"
+     },
+     "rup": {
+      "language": "rup",
+      "value": "astronomie"
+     },
+     "cdo": {
+      "language": "cdo",
+      "value": "tiĕng-ùng"
+     },
+     "kaa": {
+      "language": "kaa",
+      "value": "astronomiya"
+     },
+     "om": {
+      "language": "om",
+      "value": "astironoomii"
+     },
+     "bjn": {
+      "language": "bjn",
+      "value": "astronomi"
+     },
+     "azb": {
+      "language": "azb",
+      "value": "آسترونومی"
+     },
+     "wuu": {
+      "language": "wuu",
+      "value": "天文學"
+     },
+     "min": {
+      "language": "min",
+      "value": "astronomi"
+     },
+     "bho": {
+      "language": "bho",
+      "value": "खगोलिकी"
+     },
+     "pih": {
+      "language": "pih",
+      "value": "estronomii"
+     },
+     "jam": {
+      "language": "jam",
+      "value": "aschranami"
+     },
+     "tcy": {
+      "language": "tcy",
+      "value": "ಖಗೋಳ ಶಾಸ್ತ್ರ"
+     },
+     "olo": {
+      "language": "olo",
+      "value": "tiähtitiedo"
+     },
+     "pnt": {
+      "language": "pnt",
+      "value": "αστρονομία"
+     },
+     "tt-cyrl": {
+      "language": "tt-cyrl",
+      "value": "астрономия"
+     },
+     "tt-latn": {
+      "language": "tt-latn",
+      "value": "astronomiä"
+     },
+     "tg-cyrl": {
+      "language": "tg-cyrl",
+      "value": "астрономия"
+     },
+     "sd": {
+      "language": "sd",
+      "value": "فلڪيات"
+     },
+     "lzh": {
+      "language": "lzh",
+      "value": "天文學"
+     },
+     "bi": {
+      "language": "bi",
+      "value": "astronomi"
+     },
+     "din": {
+      "language": "din",
+      "value": "ŋiɛ̈ckanhial"
+     },
+     "kab": {
+      "language": "kab",
+      "value": "tasnallunt"
+     },
+     "km": {
+      "language": "km",
+      "value": "តារាសាស្ត្រ"
+     },
+     "lfn": {
+      "language": "lfn",
+      "value": "astronomia"
+     },
+     "lg": {
+      "language": "lg",
+      "value": "essomabwengula"
+     },
+     "ts": {
+      "language": "ts",
+      "value": "dyondzo-tinyeleti"
+     },
+     "za": {
+      "language": "za",
+      "value": "denhvwnz"
+     },
+     "hyw": {
+      "language": "hyw",
+      "value": "աստղագիտութիւն"
+     },
+     "nqo": {
+      "language": "nqo",
+      "value": "ߛߊ߲ߡߊߛߓߍ"
+     },
+     "gcr": {
+      "language": "gcr",
+      "value": "lastronnonmi"
+     },
+     "fj": {
+      "language": "fj",
+      "value": "maliwalala"
+     },
+     "mi": {
+      "language": "mi",
+      "value": "tātai arorangi"
+     },
+     "inh": {
+      "language": "inh",
+      "value": "айламIилма"
+     },
+     "lld": {
+      "language": "lld",
+      "value": "astronomia"
+     },
+     "de-ch": {
+      "language": "de-ch",
+      "value": "Astronomie"
+     },
+     "skr": {
+      "language": "skr",
+      "value": "فلکیات"
+     },
+     "mad": {
+      "language": "mad",
+      "value": "astronomi"
+     },
+     "zu": {
+      "language": "zu",
+      "value": "izinkanyezi"
+     },
+     "pap": {
+      "language": "pap",
+      "value": "astronomia"
+     },
+     "bcl": {
+      "language": "bcl",
+      "value": "astronomiya"
+     },
+     "se": {
+      "language": "se",
+      "value": "astronomiija"
+     },
+     "smn": {
+      "language": "smn",
+      "value": "täsnitieđâ"
+     },
+     "sms": {
+      "language": "sms",
+      "value": "täʹsnntiõđ"
+     },
+     "mni": {
+      "language": "mni",
+      "value": "ꯈꯦꯟꯆꯣꯡꯂꯣꯟ"
+     },
+     "crh": {
+      "language": "crh",
+      "value": "felekiyat"
+     },
+     "ms-arab": {
+      "language": "ms-arab",
+      "value": "استرونومي"
+     },
+     "ks": {
+      "language": "ks",
+      "value": "فلکِیات"
+     },
+     "nia": {
+      "language": "nia",
+      "value": "astronomi"
+     },
+     "hsb": {
+      "language": "hsb",
+      "value": "astronomija"
+     },
+     "blk": {
+      "language": "blk",
+      "value": "နက္ခတ္တဗေဒ"
+     },
+     "vep": {
+      "language": "vep",
+      "value": "astronomii"
+     },
+     "anp": {
+      "language": "anp",
+      "value": "खगोल शास्त्र"
+     },
+     "gpe": {
+      "language": "gpe",
+      "value": "astronomy"
+     },
+     "tly": {
+      "language": "tly",
+      "value": "astronomijə"
+     },
+     "mzn": {
+      "language": "mzn",
+      "value": "اساره‌دونی"
+     },
+     "shi": {
+      "language": "shi",
+      "value": "tasnaggurt"
+     },
+     "cbk-zam": {
+      "language": "cbk-zam",
+      "value": "Astronomia"
+     },
+     "ff": {
+      "language": "ff",
+      "value": "astoronomy"
+     },
+     "bew": {
+      "language": "bew",
+      "value": "èlmu palak"
+     },
+     "dtp": {
+      "language": "dtp",
+      "value": "astoronomi"
+     },
+     "udm": {
+      "language": "udm",
+      "value": "астрономия"
+     },
+     "mag": {
+      "language": "mag",
+      "value": "खगोलशास्त्र"
+     },
+     "btm": {
+      "language": "btm",
+      "value": "astronomi"
+     },
+     "iba": {
+      "language": "iba",
+      "value": "astronomi"
+     },
+     "crh-ro": {
+      "language": "crh-ro",
+      "value": "felekiyat"
+     },
+     "ban": {
+      "language": "ban",
+      "value": "astronomi"
+     },
+     "knc": {
+      "language": "knc",
+      "value": "astronomy"
+     },
+     "grc": {
+      "language": "grc",
+      "value": "ἀστρονομία"
+     },
+     "sma": {
+      "language": "sma",
+      "value": "astronomije"
+     },
+     "smj": {
+      "language": "smj",
+      "value": "astronomija"
+     },
+     "zgh": {
+      "language": "zgh",
+      "value": "ⵜⴰⵙⵏⵉⵜⵔⵉⵜ"
+     },
+     "sje": {
+      "language": "sje",
+      "value": "astronomija"
+     },
+     "pcm": {
+      "language": "pcm",
+      "value": "astronomi"
+     },
+     "dz": {
+      "language": "dz",
+      "value": "གནམ་རིག་"
+     },
+     "rki": {
+      "language": "rki",
+      "value": "နက္ခတ္တဗေဒ"
+     },
+     "tok": {
+      "language": "tok",
+      "value": "sona mun"
+     },
+     "ary": {
+      "language": "ary",
+      "value": "علم د لفلك"
+     },
+     "shn": {
+      "language": "shn",
+      "value": "ပၢႆးလႅင်လၢဝ်"
+     },
+     "mnw": {
+      "language": "mnw",
+      "value": "ပညာအာကာသ"
+     },
+     "ab": {
+      "language": "ab",
+      "value": "Астрономиа"
      }
     },
     "sitelinks": {

@@ -1,0 +1,332 @@
+{
+ "url": "https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&ids=Q1666254&props=sitelinks%7Clabels",
+ "status": 200,
+ "body": {
+  "entities": {
+   "Q1666254": {
+    "type": "item",
+    "id": "Q1666254",
+    "labels": {
+     "fr": {
+      "language": "fr",
+      "value": "jeûne intermittent"
+     },
+     "en": {
+      "language": "en",
+      "value": "intermittent fasting"
+     },
+     "de": {
+      "language": "de",
+      "value": "Intermittierendes Fasten"
+     },
+     "es": {
+      "language": "es",
+      "value": "Ayuno intermitente"
+     },
+     "bg": {
+      "language": "bg",
+      "value": "Периодично гладуване"
+     },
+     "bn": {
+      "language": "bn",
+      "value": "সবিরাম উপবাস"
+     },
+     "ar": {
+      "language": "ar",
+      "value": "الصوم المتقطع"
+     },
+     "zh-tw": {
+      "language": "zh-tw",
+      "value": "間歇性斷食"
+     },
+     "eo": {
+      "language": "eo",
+      "value": "fojfoja fasto"
+     },
+     "ja": {
+      "language": "ja",
+      "value": "インターミッテントファスティング"
+     },
+     "he": {
+      "language": "he",
+      "value": "צום לסירוגין"
+     },
+     "th": {
+      "language": "th",
+      "value": "การอดอาหารเป็นพัก ๆ"
+     },
+     "ast": {
+      "language": "ast",
+      "value": "Ayunu intermitente"
+     },
+     "zh-hant": {
+      "language": "zh-hant",
+      "value": "間歇性斷食"
+     },
+     "zh": {
+      "language": "zh",
+      "value": "間歇性斷食"
+     },
+     "ko": {
+      "language": "ko",
+      "value": "간헐적 단식"
+     },
+     "fa": {
+      "language": "fa",
+      "value": "روزه منقطع"
+     },
+     "ms": {
+      "language": "ms",
+      "value": "puasa sela"
+     },
+     "it": {
+      "language": "it",
+      "value": "Digiuno intermittente"
+     },
+     "uk": {
+      "language": "uk",
+      "value": "Інтервальне голодування"
+     },
+     "cs": {
+      "language": "cs",
+      "value": "Přerušovaný půst"
+     },
+     "ru": {
+      "language": "ru",
+      "value": "Периодическое голодание"
+     },
+     "mr": {
+      "language": "mr",
+      "value": "असंतत उपवास"
+     },
+     "pt": {
+      "language": "pt",
+      "value": "jejum intermitente"
+     },
+     "eu": {
+      "language": "eu",
+      "value": "Aldizkako baraualdi"
+     },
+     "nl": {
+      "language": "nl",
+      "value": "Intermitterend vasten"
+     },
+     "da": {
+      "language": "da",
+      "value": "periodisk faste"
+     },
+     "ro": {
+      "language": "ro",
+      "value": "post intermitent"
+     },
+     "vi": {
+      "language": "vi",
+      "value": "Nhịn ăn gián đoạn"
+     },
+     "sq": {
+      "language": "sq",
+      "value": "Agjërimi me ndërprerje"
+     },
+     "nb": {
+      "language": "nb",
+      "value": "periodisk faste"
+     },
+     "nn": {
+      "language": "nn",
+      "value": "periodisk faste"
+     },
+     "sl": {
+      "language": "sl",
+      "value": "prekinitveni post"
+     },
+     "ca": {
+      "language": "ca",
+      "value": "dejuni intermitent"
+     },
+     "hi": {
+      "language": "hi",
+      "value": "आंतरायिक उपवास"
+     },
+     "id": {
+      "language": "id",
+      "value": "Puasa intermiten"
+     },
+     "hu": {
+      "language": "hu",
+      "value": "Időszakos böjt"
+     },
+     "xh": {
+      "language": "xh",
+      "value": "Intermitent fasting"
+     },
+     "lv": {
+      "language": "lv",
+      "value": "periodiska badošanās"
+     },
+     "fi": {
+      "language": "fi",
+      "value": "pätkäpaasto"
+     }
+    },
+    "sitelinks": {
+     "arwiki": {
+      "site": "arwiki",
+      "title": "صوم متقطع",
+      "badges": []
+     },
+     "astwiki": {
+      "site": "astwiki",
+      "title": "Ayunu intermitente",
+      "badges": []
+     },
+     "bgwiki": {
+      "site": "bgwiki",
+      "title": "Периодично гладуване",
+      "badges": []
+     },
+     "bnwiki": {
+      "site": "bnwiki",
+      "title": "সবিরাম উপবাস",
+      "badges": []
+     },
+     "cswiki": {
+      "site": "cswiki",
+      "title": "Přerušovaný půst",
+      "badges": []
+     },
+     "dawiki": {
+      "site": "dawiki",
+      "title": "Periodisk faste",
+      "badges": []
+     },
+     "dewiki": {
+      "site": "dewiki",
+      "title": "Intermittierendes Fasten",
+      "badges": []
+     },
+     "enwiki": {
+      "site": "enwiki",
+      "title": "Intermittent fasting",
+      "badges": []
+     },
+     "eswiki": {
+      "site": "eswiki",
+      "title": "Ayuno intermitente",
+      "badges": []
+     },
+     "euwiki": {
+      "site": "euwiki",
+      "title": "Aldizkako barau",
+      "badges": []
+     },
+     "fawiki": {
+      "site": "fawiki",
+      "title": "روزه‌گیری مقطعی",
+      "badges": []
+     },
+     "fiwiki": {
+      "site": "fiwiki",
+      "title": "Pätkäpaasto",
+      "badges": []
+     },
+     "frwiki": {
+      "site": "frwiki",
+      "title": "Jeûne intermittent",
+      "badges": []
+     },
+     "hewiki": {
+      "site": "hewiki",
+      "title": "צום לסירוגין",
+      "badges": []
+     },
+     "hiwiki": {
+      "site": "hiwiki",
+      "title": "आंतरायिक उपवास",
+      "badges": []
+     },
+     "huwiki": {
+      "site": "huwiki",
+      "title": "Időszakos böjt",
+      "badges": []
+     },
+     "idwiki": {
+      "site": "idwiki",
+      "title": "Puasa intermiten",
+      "badges": []
+     },
+     "itwiki": {
+      "site": "itwiki",
+      "title": "Digiuno intermittente",
+      "badges": []
+     },
+     "jawiki": {
+      "site": "jawiki",
+      "title": "断続的断食",
+      "badges": []
+     },
+     "kowiki": {
+      "site": "kowiki",
+      "title": "간헐적 단식",
+      "badges": []
+     },
+     "mrwiki": {
+      "site": "mrwiki",
+      "title": "असंतत उपवास",
+      "badges": []
+     },
+     "mswiki": {
+      "site": "mswiki",
+      "title": "Puasa berkala",
+      "badges": []
+     },
+     "rowiki": {
+      "site": "rowiki",
+      "title": "Post intermitent",
+      "badges": []
+     },
+     "ruwiki": {
+      "site": "ruwiki",
+      "title": "Периодическое голодание",
+      "badges": []
+     },
+     "slwiki": {
+      "site": "slwiki",
+      "title": "Prekinitveni post",
+      "badges": []
+     },
+     "sqwiki": {
+      "site": "sqwiki",
+      "title": "Agjërimi me ndërprerje",
+      "badges": []
+     },
+     "thwiki": {
+      "site": "thwiki",
+      "title": "การอดอาหารเป็นพัก ๆ",
+      "badges": []
+     },
+     "ukwiki": {
+      "site": "ukwiki",
+      "title": "Інтервальне голодування",
+      "badges": []
+     },
+     "viwiki": {
+      "site": "viwiki",
+      "title": "Nhịn ăn gián đoạn",
+      "badges": []
+     },
+     "xhwiki": {
+      "site": "xhwiki",
+      "title": "Intermitent fasting",
+      "badges": []
+     },
+     "zhwiki": {
+      "site": "zhwiki",
+      "title": "間歇性斷食",
+      "badges": []
+     }
+    }
+   }
+  },
+  "success": 1
+ }
+}
