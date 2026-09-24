@@ -5,7 +5,7 @@ import { loadDataset } from "../dataset.js";
 import { success, type Envelope } from "../output.js";
 import { httpStats } from "../wiki/http.js";
 import { ACCESS_VALUES, AGENT_VALUES } from "../wiki/pageviews.js";
-import { lastCompletePeriod, shiftPeriod } from "../wiki/periods.js";
+import { lastCompletePeriod, shiftPeriod, toPeriod } from "../wiki/periods.js";
 import { count, oneOf, SELECTION_HELP, SELECTION_OPTIONS, selectionFrom } from "./selection.js";
 
 const DEFAULT_MONTHS = 60;
@@ -22,7 +22,8 @@ views, seasonally adjusted. With several editions, also ranks them.
 ${SELECTION_HELP}
 
 Options:
-  --start <month>      YYYY-MM (default: ${DEFAULT_MONTHS} months before the last complete month)
+  --months <n>         Number of months up to --end (default ${DEFAULT_MONTHS}), e.g. 24 for "the last two years"
+  --start <month>      YYYY-MM, instead of --months
   --end <month>        YYYY-MM (default: last complete month)
   --redirects <n>      Also count views of each article's n most-viewed redirects (default 0)
   --access <a>         all-access (default) | desktop | mobile-app | mobile-web
@@ -40,6 +41,7 @@ export async function analyzeCommand(argv: string[], now = Date.now()): Promise<
     strict: true,
     options: {
       ...SELECTION_OPTIONS,
+      months: { type: "string" },
       start: { type: "string" },
       end: { type: "string" },
       redirects: { type: "string", default: "0" },
@@ -50,6 +52,10 @@ export async function analyzeCommand(argv: string[], now = Date.now()): Promise<
   });
 
   const selection = selectionFrom(values);
+  if (values.months !== undefined && values.start !== undefined) throw new Error("Use either --months or --start, not both.");
+  const months = values.months === undefined ? DEFAULT_MONTHS : count("months", values.months);
+  if (months < 1) throw new Error("--months must be at least 1.");
+  const end = values.end ? toPeriod(values.end, "monthly", "end") : lastCompletePeriod("monthly", now);
   const cache = new Cache();
   const before = httpStats();
   try {
@@ -60,7 +66,7 @@ export async function analyzeCommand(argv: string[], now = Date.now()): Promise<
         granularity: "monthly",
         access: oneOf("access", values.access, ACCESS_VALUES),
         agent: oneOf("agent", values.agent, AGENT_VALUES),
-        start: values.start ?? shiftPeriod(lastCompletePeriod("monthly", now), "monthly", -(DEFAULT_MONTHS - 1)),
+        start: values.start ?? shiftPeriod(end, "monthly", -(months - 1)),
         end: values.end,
         redirects: count("redirects", values.redirects),
         aggregates: true,
