@@ -41,6 +41,17 @@ export interface EditionAnalysis {
   step: { period: string; change: number; event: string | null } | null;
   confidence: { level: ConfidenceLevel; score: number; reasons: string[] };
   summary: string;
+  /** Monthly values for charts (views per million edition views); not part of the analyze output. */
+  series: EditionSeries;
+}
+
+export interface EditionSeries {
+  periods: string[];
+  perMillion: number[];
+  /** Seasonally adjusted; null when the history is too short to adjust. */
+  adjusted: number[] | null;
+  /** Fitted Theil–Sen trend; null without a trend. */
+  trend: number[] | null;
 }
 
 export function loadKnownEvents(): KnownEvent[] {
@@ -114,7 +125,8 @@ export function analyzeEdition(article: ArticleData, aggregate: AggregateData, e
     penalize(80, `Only ${sum(views) === 0 ? 0 : n} months with data; a trend needs at least ${MIN_TREND_MONTHS}.`);
     const level = levelOf(score);
     const empty = { ...base, trend: null, yoy: null, seasonality: null, spikes: [], step: null };
-    return { ...empty, confidence: { level, score: Math.max(0, score), reasons }, summary: describe(empty, level) };
+    const series = { periods, perMillion: views.map((v, i) => (v / Math.max(1, total[i]!)) * 1e6), adjusted: null, trend: null };
+    return { ...empty, confidence: { level, score: Math.max(0, score), reasons }, summary: describe(empty, level), series };
   }
 
   // Work on log scale: growth becomes % per year and editions of any size compare.
@@ -224,7 +236,13 @@ export function analyzeEdition(article: ArticleData, aggregate: AggregateData, e
     spikes: spikes.map((s) => ({ period: periods[s.index]!, ratio: round2(Math.exp(s.excess)) })),
     step,
   };
-  return { ...result, confidence: { level, score, reasons }, summary: describe(result, level) };
+  const series: EditionSeries = {
+    periods,
+    perMillion: views.map((v, i) => (v / total[i]!) * 1e6),
+    adjusted: seasonality ? adjusted.map(Math.exp) : null,
+    trend: periods.map((_, i) => Math.exp(ts.intercept + ts.slope * i)),
+  };
+  return { ...result, confidence: { level, score, reasons }, summary: describe(result, level), series };
 }
 
 const DIRECTION_ORDER: Record<Direction, number> = { growing: 0, stable: 1, unclear: 2, declining: 3 };

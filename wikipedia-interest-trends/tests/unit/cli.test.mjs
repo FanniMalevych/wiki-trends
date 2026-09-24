@@ -24,8 +24,10 @@ test("unknown command returns a JSON error envelope", () => {
   assert.match(out.errors[0], /Unknown command "bogus"/);
 });
 
-test("known but unimplemented command returns a JSON error envelope", () => {
-  const r = run("chart");
-  assert.equal(r.status, 2);
-  assert.equal(JSON.parse(r.stdout).ok, false);
+test("every command has its own --help", () => {
+  for (const cmd of ["resolve", "fetch", "analyze", "chart", "report", "cache"]) {
+    const r = run(cmd, "--help");
+    assert.equal(r.status, 0, cmd);
+    assert.match(r.stdout, /Usage/, cmd);
+  }
 });

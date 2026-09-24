@@ -32,21 +32,19 @@ Per edition: trend.direction (growing | declining | stable | unclear),
 trend.perYear and ci95 (% per year), yoy (%), confidence.level (high |
 medium | low) with confidence.reasons, and a one-line summary.
 `;
-export async function analyzeCommand(argv, now = Date.now()) {
-    const { values } = parseArgs({
-        args: argv,
-        strict: true,
-        options: {
-            ...SELECTION_OPTIONS,
-            months: { type: "string" },
-            start: { type: "string" },
-            end: { type: "string" },
-            redirects: { type: "string", default: "0" },
-            access: { type: "string", default: "all-access" },
-            agent: { type: "string", default: "user" },
-            verbose: { type: "boolean", default: false },
-        },
-    });
+/** Options shared by every command that analyzes a topic (analyze, chart, report). */
+export const ANALYSIS_OPTIONS = {
+    ...SELECTION_OPTIONS,
+    months: { type: "string" },
+    start: { type: "string" },
+    end: { type: "string" },
+    redirects: { type: "string", default: "0" },
+    access: { type: "string", default: "all-access" },
+    agent: { type: "string", default: "user" },
+    verbose: { type: "boolean", default: false },
+};
+/** Loads the data for the selected topic or articles and analyzes each edition. */
+export async function runAnalysis(values, now) {
     const selection = selectionFrom(values);
     if (values.months !== undefined && values.start !== undefined)
         throw new Error("Use either --months or --start, not both.");
@@ -57,7 +55,7 @@ export async function analyzeCommand(argv, now = Date.now()) {
     const cache = new Cache();
     const before = httpStats();
     try {
-        const d = await loadDataset(cache, selection, {
+        const dataset = await loadDataset(cache, selection, {
             granularity: "monthly",
             access: oneOf("access", values.access, ACCESS_VALUES),
             agent: oneOf("agent", values.agent, AGENT_VALUES),
@@ -67,20 +65,25 @@ export async function analyzeCommand(argv, now = Date.now()) {
             aggregates: true,
         }, now);
         const events = loadKnownEvents();
-        const totals = new Map(d.aggregates.map((g) => [g.project, g]));
-        const editions = d.articles.map((a) => analyzeEdition(a, totals.get(a.project), events));
+        const totals = new Map(dataset.aggregates.map((g) => [g.project, g]));
+        const editions = dataset.articles.map((a) => analyzeEdition(a, totals.get(a.project), events));
         const after = httpStats();
-        return success({
-            ...(d.qid !== null && { qid: d.qid, label: d.label }),
-            start: d.start,
-            end: d.end,
-            editions,
-            ...(editions.length > 1 && { ranking: rankEditions(editions) }),
-            ...(d.missing.length > 0 && { missing: d.missing }),
-            ...(values.verbose && { requests: after.network + after.replayed - before.network - before.replayed }),
-        }, d.warnings);
+        return { dataset, editions, requests: after.network + after.replayed - before.network - before.replayed };
     }
     finally {
         cache.close();
     }
+}
+export async function analyzeCommand(argv, now = Date.now()) {
+    const { values } = parseArgs({ args: argv, strict: true, options: ANALYSIS_OPTIONS });
+    const { dataset: d, editions, requests } = await runAnalysis(values, now);
+    return success({
+        ...(d.qid !== null && { qid: d.qid, label: d.label }),
+        start: d.start,
+        end: d.end,
+        editions: editions.map(({ series: _, ...analysis }) => analysis),
+        ...(editions.length > 1 && { ranking: rankEditions(editions) }),
+        ...(d.missing.length > 0 && { missing: d.missing }),
+        ...(values.verbose && { requests }),
+    }, d.warnings);
 }

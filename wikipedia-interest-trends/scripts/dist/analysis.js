@@ -80,7 +80,8 @@ export function analyzeEdition(article, aggregate, events) {
         penalize(80, `Only ${sum(views) === 0 ? 0 : n} months with data; a trend needs at least ${MIN_TREND_MONTHS}.`);
         const level = levelOf(score);
         const empty = { ...base, trend: null, yoy: null, seasonality: null, spikes: [], step: null };
-        return { ...empty, confidence: { level, score: Math.max(0, score), reasons }, summary: describe(empty, level) };
+        const series = { periods, perMillion: views.map((v, i) => (v / Math.max(1, total[i])) * 1e6), adjusted: null, trend: null };
+        return { ...empty, confidence: { level, score: Math.max(0, score), reasons }, summary: describe(empty, level), series };
     }
     // Work on log scale: growth becomes % per year and editions of any size compare.
     // The share of edition views cancels edition-wide swings (bot filtering, search changes).
@@ -179,7 +180,13 @@ export function analyzeEdition(article, aggregate, events) {
         spikes: spikes.map((s) => ({ period: periods[s.index], ratio: round2(Math.exp(s.excess)) })),
         step,
     };
-    return { ...result, confidence: { level, score, reasons }, summary: describe(result, level) };
+    const series = {
+        periods,
+        perMillion: views.map((v, i) => (v / total[i]) * 1e6),
+        adjusted: seasonality ? adjusted.map(Math.exp) : null,
+        trend: periods.map((_, i) => Math.exp(ts.intercept + ts.slope * i)),
+    };
+    return { ...result, confidence: { level, score, reasons }, summary: describe(result, level), series };
 }
 const DIRECTION_ORDER = { growing: 0, stable: 1, unclear: 2, declining: 3 };
 const LEVEL_ORDER = { high: 0, medium: 1, low: 2 };

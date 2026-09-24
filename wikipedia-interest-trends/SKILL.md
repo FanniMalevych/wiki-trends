@@ -34,6 +34,12 @@ All commands run from this skill's directory and print one line of JSON: `{ok, d
 
 6. **Several languages:** use `data.ranking` (already ordered: growing before stable before unclear before declining, then by confidence). Recommend the top 1–2 to investigate and say why, including confidence.
 
+7. **Shareable report** (when the user asks for a report, chart, PDF or something to share): run `report` with the same options, plus your recommendation as `--note`:
+   ```bash
+   node scripts/dist/cli.js report --title "Astronomy" --from en --lang uk --note "Your 1–2 sentence recommendation."
+   ```
+   Give the user `data.file`. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.
+
 ## When a topic has no article in some languages
 
 First report the gap: no article usually means the topic is not covered in that language.

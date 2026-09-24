@@ -150,3 +150,6 @@ vite.config.ts.timestamp-*
 
 # End-to-end agent test transcripts (commit selected runs as evidence explicitly)
 wikipedia-interest-trends/tests/e2e/results/
+
+# Charts and reports written by the skill
+wit-output/

@@ -54,6 +54,31 @@ node scripts/dist/cli.js analyze --title "Intermittent fasting" --from en --lang
 - `ranking[]` (only with 2+ editions): `rank`, `project`, `direction`, `perYear`, `confidence`, `monthlyViews`, `perMillion`
 - `missing[]`: requested editions without a usable article, each with a `note`
 
+## report — one-page shareable HTML report
+
+```bash
+node scripts/dist/cli.js report --title "Astronomy" --from en --lang uk,pl,cs \
+  --note "Ukrainian interest is falling; Polish is the better candidate to validate next."
+```
+
+Same options as analyze, plus:
+
+| Option | Default | Meaning |
+|---|---|---|
+| `--note <text>` | none | A paragraph for the "Analyst note" box at the top (your recommendation). Repeatable |
+| `--out <path>` | `wit-output/<topic>_<languages>_<end>.html` | Output file, relative to the current directory |
+
+The report has takeaways, a chart per edition, a ranked table, reliability caveats, missing editions and the method. It is self-contained (no external files) and prints to one A4 page; use the browser's "Save as PDF" for a PDF.
+`data`: `file` (absolute path), `editions[]` (`project`, `summary`, `confidence`), `missing[]`.
+
+## chart — SVG chart only
+
+```bash
+node scripts/dist/cli.js chart --title "Astronomy" --from en --lang uk --out astronomy.svg
+```
+
+Same options as report except `--note`; default file `wit-output/<topic>_<languages>_<end>.svg`. One panel per edition: monthly views per million edition views, the seasonally adjusted line, the trend and spike months. Hovering a month shows its values.
+
 ## resolve — find the article in each language
 
 ```bash

@@ -2,6 +2,7 @@
 import { ANALYZE_HELP, analyzeCommand } from "./commands/analyze.js";
 import { CACHE_HELP, cacheCommand } from "./commands/cache.js";
 import { FETCH_HELP, fetchCommand } from "./commands/fetch.js";
+import { CHART_HELP, chartCommand, REPORT_HELP, reportCommand } from "./commands/render.js";
 import { RESOLVE_HELP, resolveCommand } from "./commands/resolve.js";
 import { VERSION } from "./meta.js";
 import { emit, failure } from "./output.js";
@@ -17,14 +18,14 @@ const COMMANDS = {
         help: ANALYZE_HELP,
         run: analyzeCommand,
     },
-    chart: { summary: "Render a chart (SVG/PNG) from analyzed series" },
-    report: { summary: "Build a one-page shareable report (HTML/PDF)" },
+    chart: { summary: "Write an SVG chart of the trend in each edition", help: CHART_HELP, run: chartCommand },
+    report: { summary: "Write a one-page shareable HTML report (prints to one A4 page)", help: REPORT_HELP, run: reportCommand },
     cache: { summary: "Inspect or clear the local cache", help: CACHE_HELP, run: cacheCommand },
 };
 function helpText() {
     const width = Math.max(...Object.keys(COMMANDS).map((c) => c.length));
     const rows = Object.entries(COMMANDS)
-        .map(([name, spec]) => `  ${name.padEnd(width)}  ${spec.summary}${spec.run ? "" : " (not implemented yet)"}`)
+        .map(([name, spec]) => `  ${name.padEnd(width)}  ${spec.summary}`)
         .join("\n");
     return `wikipedia-interest-trends ${VERSION}
 
@@ -59,12 +60,8 @@ async function main(argv) {
         emit(failure([`Unknown command "${first}". Run with --help to list commands.`]));
         return 1;
     }
-    if (!spec.run) {
-        emit(failure([`Command "${first}" is not implemented yet.`]));
-        return 2;
-    }
     if (rest.some(isHelp)) {
-        process.stdout.write(spec.help ?? `${spec.summary}\n`);
+        process.stdout.write(spec.help);
         return 0;
     }
     let envelope;
