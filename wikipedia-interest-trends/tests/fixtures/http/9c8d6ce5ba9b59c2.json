@@ -1,0 +1,14 @@
+{
+ "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&list=search&srsearch=Intermitent+fastin&srnamespace=0&srlimit=10&srprop=&srinfo=suggestion",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "query": {
+   "searchinfo": {
+    "suggestion": "intermittant fasting",
+    "suggestionsnippet": "<em>intermittant fasting</em>"
+   },
+   "search": []
+  }
+ }
+}

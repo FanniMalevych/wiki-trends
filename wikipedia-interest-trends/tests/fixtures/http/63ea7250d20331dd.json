@@ -1,0 +1,62 @@
+{
+ "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/5%3A2_diet/monthly/20250101/20250630",
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "project": "en.wikipedia",
+    "article": "5:2_diet",
+    "granularity": "monthly",
+    "timestamp": "2025010100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 409
+   },
+   {
+    "project": "en.wikipedia",
+    "article": "5:2_diet",
+    "granularity": "monthly",
+    "timestamp": "2025020100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 318
+   },
+   {
+    "project": "en.wikipedia",
+    "article": "5:2_diet",
+    "granularity": "monthly",
+    "timestamp": "2025030100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 389
+   },
+   {
+    "project": "en.wikipedia",
+    "article": "5:2_diet",
+    "granularity": "monthly",
+    "timestamp": "2025040100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 320
+   },
+   {
+    "project": "en.wikipedia",
+    "article": "5:2_diet",
+    "granularity": "monthly",
+    "timestamp": "2025050100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 337
+   },
+   {
+    "project": "en.wikipedia",
+    "article": "5:2_diet",
+    "granularity": "monthly",
+    "timestamp": "2025060100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 287
+   }
+  ]
+ }
+}

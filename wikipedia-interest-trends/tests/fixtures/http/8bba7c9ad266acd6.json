@@ -1,0 +1,69 @@
+{
+ "url": "https://pl.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&list=search&srsearch=Post+przerywany&srnamespace=0&srlimit=10&srprop=&srinfo=suggestion",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "continue": {
+   "sroffset": 10,
+   "continue": "-||"
+  },
+  "query": {
+   "searchinfo": {
+    "suggestion": "port przerywana",
+    "suggestionsnippet": "<em>port przerywana</em>"
+   },
+   "search": [
+    {
+     "ns": 0,
+     "title": "Charlie Kirk",
+     "pageid": 5954562
+    },
+    {
+     "ns": 0,
+     "title": "Aborcja",
+     "pageid": 195
+    },
+    {
+     "ns": 0,
+     "title": "Insulinooporność",
+     "pageid": 477520
+    },
+    {
+     "ns": 0,
+     "title": "Lot United Airlines 93",
+     "pageid": 1349973
+    },
+    {
+     "ns": 0,
+     "title": "Platforma Obywatelska",
+     "pageid": 4832
+    },
+    {
+     "ns": 0,
+     "title": "Strefa 51",
+     "pageid": 457485
+    },
+    {
+     "ns": 0,
+     "title": "Fidżi",
+     "pageid": 67584
+    },
+    {
+     "ns": 0,
+     "title": "Aborcja w Polsce",
+     "pageid": 3807132
+    },
+    {
+     "ns": 0,
+     "title": "Kuchnia średniowiecza",
+     "pageid": 2056985
+    },
+    {
+     "ns": 0,
+     "title": "Agencja Wywiadu",
+     "pageid": 73725
+    }
+   ]
+  }
+ }
+}

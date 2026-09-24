@@ -1,0 +1,20 @@
+{
+ "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&list=search&srsearch=intermittant+fasting&srnamespace=0&srlimit=10&srprop=&srinfo=suggestion",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "query": {
+   "searchinfo": {
+    "suggestion": "intermittent fasting",
+    "suggestionsnippet": "intermittent fasting"
+   },
+   "search": [
+    {
+     "ns": 0,
+     "title": "Intermittent fasting",
+     "pageid": 20104879
+    }
+   ]
+  }
+ }
+}

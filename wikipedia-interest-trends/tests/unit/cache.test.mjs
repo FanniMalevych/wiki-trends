@@ -54,9 +54,9 @@ test("stats and clear by project", () => {
   const cs = stats.projects.find((p) => p.project === "cs.wikipedia");
   assert.deepEqual({ ...cs }, { project: "cs.wikipedia", granularity: "monthly", articles: 1, points: 3, first: "2024-01", last: "2024-02" });
 
-  assert.equal(cache.clear("cs.wikipedia"), 2);
+  assert.deepEqual(cache.clear("cs.wikipedia"), { series: 2, lookups: 0 });
   assert.equal(cache.stats().points, 1);
-  assert.equal(cache.clear(), 1);
+  assert.deepEqual(cache.clear(), { series: 1, lookups: 0 });
   assert.equal(cache.stats().series, 0);
   cache.close();
 });
@@ -69,4 +69,44 @@ test("reopening an existing cache file keeps its data", () => {
   const second = new Cache(join(dir, "wit.sqlite"));
   assert.equal(second.load(key(), "2024-01", "2024-01").get("2024-01").views, 9);
   second.close();
+});
+
+test("stored API responses round-trip and are cleared per edition", () => {
+  const cache = tempCache();
+  cache.putResponse("https://cs.wikipedia.org/w/api.php?a=1", { q: 1 }, 10);
+  cache.putResponse("https://cs.wikipedia.org/w/api.php?a=1", { q: 2 }, 20);
+  cache.putResponse("https://pl.wikipedia.org/w/api.php?a=1", { q: 3 }, 10);
+  cache.putResponse("https://www.wikidata.org/w/api.php?ids=Q1", { e: 1 }, 10);
+  assert.deepEqual(cache.getResponse("https://cs.wikipedia.org/w/api.php?a=1"), { body: { q: 2 }, fetchedAt: 20 });
+  assert.equal(cache.getResponse("https://cs.wikipedia.org/w/api.php?a=2"), undefined);
+  assert.equal(cache.stats().lookups, 3);
+
+  assert.deepEqual(cache.clear("cs.wikipedia"), { series: 0, lookups: 1 });
+  assert.ok(cache.getResponse("https://pl.wikipedia.org/w/api.php?a=1"));
+  assert.ok(cache.getResponse("https://www.wikidata.org/w/api.php?ids=Q1"));
+  assert.deepEqual(cache.clear(), { series: 0, lookups: 2 });
+  cache.close();
+});
+
+test("a v1 cache file is upgraded in place without losing data", async () => {
+  const { DatabaseSync } = await import("node:sqlite");
+  const path = join(mkdtempSync(join(tmpdir(), "wit-cache-")), "wit.sqlite");
+  const v1 = new DatabaseSync(path);
+  v1.exec(`
+    CREATE TABLE series (id INTEGER PRIMARY KEY, kind TEXT NOT NULL, project TEXT NOT NULL, article TEXT NOT NULL,
+      access TEXT NOT NULL, agent TEXT NOT NULL, granularity TEXT NOT NULL,
+      UNIQUE (kind, project, article, access, agent, granularity));
+    CREATE TABLE points (series_id INTEGER NOT NULL REFERENCES series(id) ON DELETE CASCADE, period TEXT NOT NULL,
+      views INTEGER NOT NULL, fetched_at INTEGER NOT NULL, PRIMARY KEY (series_id, period)) WITHOUT ROWID;
+    INSERT INTO series VALUES (1, 'article', 'cs.wikipedia', 'Foo', 'all-access', 'user', 'monthly');
+    INSERT INTO points VALUES (1, '2024-01', 42, 1);
+    PRAGMA user_version = 1;
+  `);
+  v1.close();
+
+  const cache = new Cache(path);
+  assert.equal(cache.load(key(), "2024-01", "2024-01").get("2024-01").views, 42);
+  cache.putResponse("https://x.test/", {}, 1);
+  assert.equal(cache.stats().lookups, 1);
+  cache.close();
 });

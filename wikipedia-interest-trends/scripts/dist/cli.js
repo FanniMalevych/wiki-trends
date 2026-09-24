@@ -2,11 +2,16 @@
 import "./quiet.js";
 import { CACHE_HELP, cacheCommand } from "./commands/cache.js";
 import { FETCH_HELP, fetchCommand } from "./commands/fetch.js";
+import { RESOLVE_HELP, resolveCommand } from "./commands/resolve.js";
 import { VERSION } from "./meta.js";
 import { emit, failure } from "./output.js";
 const COMMANDS = {
-    resolve: { summary: "Map an article title to its Wikidata QID and titles in other language editions" },
-    fetch: { summary: "Download pageviews for articles (cached locally in SQLite)", help: FETCH_HELP, run: fetchCommand },
+    resolve: {
+        summary: "Find the article about a topic in each language edition (via Wikidata)",
+        help: RESOLVE_HELP,
+        run: resolveCommand,
+    },
+    fetch: { summary: "Download pageviews for a topic or articles (cached locally)", help: FETCH_HELP, run: fetchCommand },
     analyze: { summary: "Normalize, deseasonalize and fit a trend with a confidence score" },
     compare: { summary: "Compare trends for one topic across language editions" },
     chart: { summary: "Render a chart (SVG/PNG) from analyzed series" },

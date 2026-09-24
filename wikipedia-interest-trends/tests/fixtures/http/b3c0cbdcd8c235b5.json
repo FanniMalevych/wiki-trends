@@ -1,0 +1,224 @@
+{
+ "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/uk.wikipedia/all-access/user/%D0%86%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B5_%D0%B3%D0%BE%D0%BB%D0%BE%D0%B4%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F/monthly/20230901/20250831",
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2023090100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 214
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2023100100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 155
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2023110100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 210
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2023120100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 155
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024010100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 223
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024020100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 285
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024030100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 313
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024040100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 767
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024050100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 1232
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024060100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 867
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024070100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 592
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024080100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 490
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024090100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 740
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024100100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 812
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024110100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 856
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2024120100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 705
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025010100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 1668
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025020100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 791
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025030100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 1287
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025040100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 818
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025050100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 510
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025060100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 203
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025070100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 207
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Інтервальне_голодування",
+    "granularity": "monthly",
+    "timestamp": "2025080100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 192
+   }
+  ]
+ }
+}

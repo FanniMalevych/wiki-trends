@@ -2,7 +2,32 @@ import { mkdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { SKILL_ROOT } from "../meta.js";
-const SCHEMA_VERSION = 1;
+// Each entry upgrades the schema by one version; never edit a shipped entry.
+const MIGRATIONS = [
+    `CREATE TABLE series (
+     id INTEGER PRIMARY KEY,
+     kind TEXT NOT NULL,
+     project TEXT NOT NULL,
+     article TEXT NOT NULL,
+     access TEXT NOT NULL,
+     agent TEXT NOT NULL,
+     granularity TEXT NOT NULL,
+     UNIQUE (kind, project, article, access, agent, granularity)
+   );
+   CREATE TABLE points (
+     series_id INTEGER NOT NULL REFERENCES series(id) ON DELETE CASCADE,
+     period TEXT NOT NULL,
+     views INTEGER NOT NULL,
+     fetched_at INTEGER NOT NULL,
+     PRIMARY KEY (series_id, period)
+   ) WITHOUT ROWID;`,
+    // v2: raw MediaWiki/Wikidata responses, keyed by request URL
+    `CREATE TABLE responses (
+     url TEXT PRIMARY KEY,
+     body TEXT NOT NULL,
+     fetched_at INTEGER NOT NULL
+   );`,
+];
 export function defaultCachePath() {
     return join(process.env.WIT_CACHE_DIR || join(SKILL_ROOT, ".cache"), "wit.sqlite");
 }
@@ -22,30 +47,12 @@ export class Cache {
     }
     migrate() {
         const { user_version } = this.db.prepare("PRAGMA user_version").get();
-        if (user_version === SCHEMA_VERSION)
-            return;
-        if (user_version !== 0)
-            throw new Error(`Unsupported cache schema v${user_version} at ${this.path}. Delete the file.`);
-        this.db.exec(`
-      CREATE TABLE series (
-        id INTEGER PRIMARY KEY,
-        kind TEXT NOT NULL,
-        project TEXT NOT NULL,
-        article TEXT NOT NULL,
-        access TEXT NOT NULL,
-        agent TEXT NOT NULL,
-        granularity TEXT NOT NULL,
-        UNIQUE (kind, project, article, access, agent, granularity)
-      );
-      CREATE TABLE points (
-        series_id INTEGER NOT NULL REFERENCES series(id) ON DELETE CASCADE,
-        period TEXT NOT NULL,
-        views INTEGER NOT NULL,
-        fetched_at INTEGER NOT NULL,
-        PRIMARY KEY (series_id, period)
-      ) WITHOUT ROWID;
-      PRAGMA user_version = ${SCHEMA_VERSION};
-    `);
+        if (user_version > MIGRATIONS.length) {
+            throw new Error(`Cache at ${this.path} was written by a newer version (schema v${user_version}). Delete the file.`);
+        }
+        for (let v = user_version; v < MIGRATIONS.length; v++) {
+            this.db.exec(`BEGIN; ${MIGRATIONS[v]} PRAGMA user_version = ${v + 1}; COMMIT;`);
+        }
     }
     seriesId(key, create) {
         const params = [key.kind, key.project, key.article, key.access, key.agent, key.granularity];
@@ -88,9 +95,20 @@ export class Cache {
             throw err;
         }
     }
+    getResponse(url) {
+        const row = this.db.prepare("SELECT body, fetched_at FROM responses WHERE url = ?").get(url);
+        return row && { body: JSON.parse(row.body), fetchedAt: row.fetched_at };
+    }
+    putResponse(url, body, fetchedAt) {
+        this.db
+            .prepare("INSERT INTO responses (url, body, fetched_at) VALUES (?, ?, ?) " +
+            "ON CONFLICT (url) DO UPDATE SET body = excluded.body, fetched_at = excluded.fetched_at")
+            .run(url, JSON.stringify(body), fetchedAt);
+    }
     stats() {
         const totals = this.db
-            .prepare("SELECT (SELECT COUNT(*) FROM series) AS series, (SELECT COUNT(*) FROM points) AS points")
+            .prepare("SELECT (SELECT COUNT(*) FROM series) AS series, (SELECT COUNT(*) FROM points) AS points, " +
+            "(SELECT COUNT(*) FROM responses) AS lookups")
             .get();
         const projects = this.db
             .prepare(`SELECT s.project, s.granularity,
@@ -111,13 +129,19 @@ export class Cache {
         }
         return { path: this.path, bytes, ...totals, projects };
     }
-    /** Deletes cached series (all, or one project's). Returns the number of series removed. */
+    /**
+     * Deletes cached series and title lookups (all, or one project's).
+     * Wikidata lookups span every edition, so they are only removed by a full clear.
+     */
     clear(project) {
-        const result = project
+        const series = project
             ? this.db.prepare("DELETE FROM series WHERE project = ?").run(project)
             : this.db.prepare("DELETE FROM series").run();
+        const lookups = project
+            ? this.db.prepare("DELETE FROM responses WHERE url LIKE ?").run(`https://${project}.org/%`)
+            : this.db.prepare("DELETE FROM responses").run();
         this.db.exec("VACUUM");
-        return Number(result.changes);
+        return { series: Number(series.changes), lookups: Number(lookups.changes) };
     }
     close() {
         this.db.close();
