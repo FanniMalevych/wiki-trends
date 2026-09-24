@@ -1,0 +1,25 @@
+{
+  "name": "wikipedia-interest-trends",
+  "version": "0.1.0",
+  "description": "Agent Skill: analyze Wikipedia pageview trends across language editions and produce charts and short reports.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "bin": {
+    "wit": "scripts/dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "node -e \"require('node:fs').rmSync('scripts/dist',{recursive:true,force:true})\"",
+    "rebuild": "npm run clean && npm run build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test \"tests/unit/**/*.test.mjs\""
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}
