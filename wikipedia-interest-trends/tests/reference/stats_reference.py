@@ -7,7 +7,8 @@ written from their published source rather than from our TypeScript. Uses the
 exact math.erfc, so it also checks our erfc approximation.
 
 Regenerate:  python3 tests/reference/stats_reference.py > tests/fixtures/stats-reference.json
-If scipy and pymannkendall are installed, --check compares against the real libraries.
+If scipy and pymannkendall are installed, --check compares against the real libraries
+(last run: scipy 1.18.1, pymannkendall 1.4.3, 2026-09-24 - all match).
 """
 import json
 import math
@@ -142,16 +143,25 @@ def main():
             "mannKendallHamedRao": mann_kendall(y, hamed_rao=True),
         })
     if "--check" in sys.argv:
+        # Compare with the real libraries. pymannkendall computes p as 2*(1 - cdf(z)),
+        # which loses precision below ~1e-10 (it returns 0 for p ~ 2e-20), so p-values
+        # are checked against SciPy's exact normal tail instead; S, Var(S) and z against
+        # pymannkendall itself.
         import pymannkendall as pmk
         from scipy import stats
         for c in cases:
             ref = stats.theilslopes(c["y"])
-            assert math.isclose(ref.slope, c["theilSen"]["slope"]) and math.isclose(ref.low_slope, c["theilSen"]["low"])
-            assert math.isclose(ref.high_slope, c["theilSen"]["high"]), c["name"]
-            assert math.isclose(pmk.original_test(c["y"]).p, c["mannKendall"]["p"], rel_tol=1e-9), c["name"]
-            if c["name"] != "increasing":  # see the deliberate deviation in mann_kendall
-                assert math.isclose(pmk.hamed_rao_modification_test(c["y"]).p, c["mannKendallHamedRao"]["p"], rel_tol=1e-9), c["name"]
-        print("reference matches scipy and pymannkendall", file=sys.stderr)
+            for ours, theirs in [("slope", ref.slope), ("intercept", ref.intercept), ("low", ref.low_slope), ("high", ref.high_slope)]:
+                assert math.isclose(theirs, c["theilSen"][ours], rel_tol=1e-12, abs_tol=1e-15), (c["name"], ours)
+            for key, test in [("mannKendall", pmk.original_test), ("mannKendallHamedRao", pmk.hamed_rao_modification_test)]:
+                if key == "mannKendallHamedRao" and c["name"] == "increasing":
+                    continue  # see the deliberate deviation in mann_kendall
+                r, o = test(c["y"]), c[key]
+                assert r.s == o["s"], (c["name"], key, "s")
+                assert math.isclose(r.var_s, o["varS"], rel_tol=1e-9), (c["name"], key, "varS")
+                assert math.isclose(r.z, o["z"], rel_tol=1e-9), (c["name"], key, "z")
+                assert math.isclose(2 * stats.norm.sf(abs(o["z"])), o["p"], rel_tol=1e-9), (c["name"], key, "p")
+        print("reference matches scipy (Theil-Sen, exact p-values) and pymannkendall (S, Var(S), z)", file=sys.stderr)
     json.dump({"generatedBy": "tests/reference/stats_reference.py", "cases": cases}, sys.stdout, indent=1)
     print()
 

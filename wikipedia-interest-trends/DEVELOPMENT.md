@@ -41,7 +41,12 @@ Work went in phases, each proposed as a plan, approved by the developer, impleme
 
 **Integration tests use recorded real responses.** `npm run fixtures:record` saves real API responses; tests replay them offline, so they are realistic and deterministic. Integration tests run the real CLI and check that nothing is printed to stderr (agents often read both streams).
 
-**Statistics: checked against an independent implementation.** `tests/reference/stats_reference.py` is a plain-Python transcription of SciPy's `theilslopes` and pymannkendall's Hamed–Rao test, written from their published source rather than from our TypeScript. On seven series, including real Czech pageviews, our results match to 1e-12 (slopes, intervals, variances) and 2e-7 (p-values; the gap is our `erfc` approximation, checked against Python's exact `math.erfc`). Small cases were also checked by hand. Its `--check` mode compares the reference with the real SciPy and pymannkendall packages; **that has not been run yet** because it needs those packages installed.
+**Statistics: checked against an independent implementation and the real libraries.** `tests/reference/stats_reference.py` is a plain-Python transcription of SciPy's `theilslopes` and pymannkendall's Hamed–Rao test, written from their published source rather than from our TypeScript. On seven series, including real Czech pageviews, our results match to 1e-12 (slopes, intervals, variances) and 2e-7 (p-values; the gap is our `erfc` approximation, checked against Python's exact `math.erfc`). Small cases were also checked by hand. Its `--check` mode then compared the same seven series with the real libraries (SciPy 1.18.1, pymannkendall 1.4.3):
+
+- **Theil–Sen:** slope, intercept and both interval bounds match SciPy exactly.
+- **Mann–Kendall:** S, Var(S) and z match pymannkendall for both the plain and the Hamed–Rao test.
+- **p-values:** they match, except below about 10⁻¹⁰, where pymannkendall is imprecise (it computes 2·(1 − cdf), and returns 0 where the exact value is 2×10⁻²⁰). Ours agree with SciPy's exact normal tail; the check now uses that as the reference. This never affects results, which only use p < 0.05 and p < 0.01.
+- **One deliberate difference:** for a perfectly straight line, pymannkendall's Hamed–Rao test returns NaN (the autocorrelation is 0/0); ours skips the correction.
 
 **Analysis: synthetic data with known answers,** plus real data inspected by eye. Unit tests plant a trend, seasonality, spikes, a level shift, a shrinking edition, low traffic and short histories, and check each is recovered. The surprising Ukrainian astronomy result (declining about 29% a year) was checked against the raw monthly numbers before it was accepted.
 
