@@ -8,7 +8,8 @@ The assignment asks how AI tools were used during development and how their outp
 |---|---|
 | Developer | Goals and priorities, all product decisions (stack, scope, defaults, which model to test on), approving each phase's plan, reviewing its results, commits |
 | Claude Code (Claude Opus 5.5, in the Claude desktop app) | Implementation, tests, documentation, design proposals and self-review, running the checks listed below |
-| Gemini 3.5 Flash (Google AI Studio, free tier) | End-to-end test agent: a different, cheap model that had to use the skill from `SKILL.md` alone |
+| Claude Haiku 4.5 (Anthropic API) | End-to-end test agent: the cheap model named in the assignment, which had to use the skill from `SKILL.md` alone |
+| Gemini 3.5 Flash (Google AI Studio, free tier) | First end-to-end test agent, from a different vendor |
 | Python standard library | Independent reference for the statistics (`tests/reference/stats_reference.py`) |
 | Anthropic's data-visualization guidance and palette validator | Chart colors checked for color-blind separation and contrast |
 
@@ -66,16 +67,33 @@ The AI's output was wrong in these cases; each was caught by the check named, an
 | `cache stats` counted data points as articles | Manual run |
 | Chart: overlapping year labels, "−0%", an over-stretched single panel, wasted axis range | Rendering the report and looking at it |
 | Test harness: a grader regex that never matched, retrying for 8 minutes on an exhausted daily quota, no request timeout | Unit tests and the first live runs |
+| Spike detection flagged 1.2× wobbles in smooth series as "spikes" | Reading the Haiku answers against the data |
+| `SKILL.md` left room for two mistakes: calling `perMillion` "per population", and not giving the report's path | Reading the Haiku answers; the failed check in run 2 |
 
 ## End-to-end results
 
-On Gemini 3.5 Flash (free tier):
+`npm run e2e` runs the 8 conversations in `tests/evals/evals.json`: the assignment's three example queries, a follow-up question, a disambiguation page, a misspelled title, a shareable report, and an unrelated question the skill must ignore. The model sees only the skill's name and description and has two tools, read a file in the skill and run its CLI, against live Wikimedia data.
 
-- **Astronomy in Ukrainian: passed.** The model read `SKILL.md`, ran `analyze` once and reported the decline with its confidence and reasons, using 2 tool calls.
-- **Intermittent fasting, Polish vs Czech: correct answer, but inefficient.** It computed a 25-month window instead of 24 and guessed four Polish titles. This led to the `--months` option and clearer rules for missing articles in `SKILL.md`.
-- **Remaining cases: not run yet.** The free tier's daily quota ran out.
+**Claude Haiku 4.5, 2026-09-24:**
 
-_To be updated after the full run of `tests/evals/evals.json`, with the model, date and pass rate._
+| Run | Result | Cost |
+|---|---|---|
+| 1 | 8/8 | $0.094 |
+| 2 (after the spike fix below) | 7/8: the report was written, but the answer did not say where | $0.083 |
+| Report case after tightening `SKILL.md` | 1/1 | $0.016 |
+| 3, final | **8/8** | **$0.093** |
+
+A full run costs about 9 US cents, or 1–2 cents per question, with 3–5 model requests and 1–3 CLI calls per question. The final transcripts and the run history are in [tests/e2e/evidence/2026-09-24-claude-haiku-4-5/](tests/e2e/evidence/2026-09-24-claude-haiku-4-5/).
+
+The automatic checks only cover behaviour (read `SKILL.md`, used the right command, mentioned what it had to). The answers were also read and their numbers compared with the tool output. No invented numbers were found; every claim checked, including "all three peak in September", was in the output. Reading them led to three fixes:
+
+- **The model misread `perMillion` as "interest per population".** `SKILL.md` now says it is per million views of that edition.
+- **A report answer omitted the file's path.** `SKILL.md` now makes including it mandatory, and the next runs did.
+- **"8 spike months at 1.2×" for Czech astronomy overstated small wobbles in a very smooth series.** Spikes must now also be at least 1.5× the expected level.
+
+Earlier, on **Gemini 3.5 Flash** (free tier), the astronomy question passed. The fasting question produced a correct but inefficient answer: the model computed a 25-month window instead of 24 and guessed four Polish titles. That led to `analyze --months` and clearer rules for missing articles. The free tier's 20 requests a day were not enough for a full run.
+
+Model answers vary between runs, so a pass is evidence, not a guarantee. The worst case seen was the one failed check in run 2.
 
 ## Known limitations
 

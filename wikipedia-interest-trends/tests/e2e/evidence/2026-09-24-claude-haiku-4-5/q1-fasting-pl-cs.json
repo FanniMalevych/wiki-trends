@@ -1,0 +1,175 @@
+{
+ "case": {
+  "id": "q1-fasting-pl-cs",
+  "turns": [
+   "Compare growth of interest in intermittent fasting in Polish vs. Czech Wikipedia over the last two years."
+  ],
+  "expect": {
+   "readSkill": true,
+   "calls": {
+    "analyze": 1
+   },
+   "cliOk": "analyze",
+   "answer": [
+    "czech|\\bcs\\b",
+    "polish|\\bpl\\b",
+    "no (polish )?article|not covered|missing|does(n't| not) (have|exist)|no .*article",
+    "confiden"
+   ],
+   "maxToolCalls": 8
+  }
+ },
+ "model": "claude-haiku-4-5",
+ "provider": "anthropic",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Compare growth of interest in intermittent fasting in Polish vs. Czech Wikipedia over the last two years."
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "I'll help you compare the interest trends in intermittent fasting between Polish and Czech Wikipedia. Let me start by reading the skill documentation to understand how to use it properly."
+    },
+    {
+     "type": "tool_use",
+     "id": "toolu_01QWv7k55DJQV5ZEdUvu1p58",
+     "name": "read_file",
+     "input": {
+      "path": "SKILL.md"
+     },
+     "caller": {
+      "type": "direct"
+     }
+    }
+   ]
+  },
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "tool_result",
+     "tool_use_id": "toolu_01QWv7k55DJQV5ZEdUvu1p58",
+     "content": "---\nname: wikipedia-interest-trends\ndescription: Measures whether public interest in a topic is growing, stable or declining in one or more Wikipedia language editions, using Wikipedia pageview statistics, and says how far each trend can be trusted. Use when asked whether interest in a topic is rising, to compare interest between languages or countries, or to pick which language audiences to investigate next (e.g. for a course, product or localization decision).\n---\n\n# Wikipedia Interest Trends\n\nPageviews show **attention**, not willingness to pay. Present results as a signal for what to validate next, never as proof of demand.\n\nAll commands run from this skill's directory and print one line of JSON: `{ok, data, warnings, errors}`. Never compute trend numbers yourself: use the command output.\n\n## Workflow\n\n1. **Identify the topic and languages.**\n   - Topic → an English Wikipedia article title (e.g. \"Intermittent fasting\", \"Astronomy\").\n   - Languages → edition codes (see the table below), e.g. Polish = `pl`, Czech = `cs`.\n   - Period → `--months`: \"last two years\" = `--months 24`, \"last year\" = `--months 12`. No period given → omit it (default: 5 years, the most reliable).\n\n2. **Run `analyze`** (it finds the article in each language automatically):\n   ```bash\n   node scripts/dist/cli.js analyze --title \"Intermittent fasting\" --from en --lang pl,cs\n   ```\n   Up to 20 languages per call. Do not calculate dates yourself.\n\n3. **If `ok` is false,** read `errors[0]`. It says what to do: pick one of the suggested titles (disambiguation page or misspelling) and run again.\n\n4. **Report each edition** in `data.editions`:\n   - `summary` — one sentence; quote it or paraphrase it closely.\n   - `trend.direction` (growing / declining / stable / unclear) and `trend.perYear` with `trend.ci95` (% per year).\n   - `confidence.level` (high / medium / low) and the 1–3 most important `confidence.reasons`.\n   - `monthlyViews` (audience size) and `perMillion`: views per million of **that edition's** views (the topic's share of attention there, comparable across languages; not per population).\n\n5. **Report gaps.** Every entry in `data.missing` and every item in `warnings` must be mentioned: a language with no article usually means the topic is not covered there.\n\n6. **Several languages:** use `data.ranking` (already ordered: growing before stable before unclear before declining, then by confidence). Recommend the top 1–2 to investigate and say why, including confidence.\n\n7. **Shareable report** (when the user asks for a report, chart, PDF or something to share): run `report` with the same options, plus your recommendation as `--note`:\n   ```bash\n   node scripts/dist/cli.js report --title \"Astronomy\" --from en --lang uk --note \"Your 1–2 sentence recommendation.\"\n   ```\n   **Always put the exact path from `data.file` in your answer**; without it the user cannot find the report. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.\n\n## When a topic has no article in some languages\n\nFirst report the gap: no article usually means the topic is not covered in that language.\nThen, if a result for that language matters, try **one** broader English title with `analyze` (e.g. \"Intermittent fasting\" → \"Fasting\", \"English as a second or foreign language\" → \"English language\") and say clearly that it measures the broader topic. Do not guess titles in other languages and do not use `resolve` to search: `analyze` finds each language's article itself.\n\n## Follow-up questions\n\nRun `analyze` again with the changed options (other languages, other period). Data already downloaded is reused from a local cache, so repeating or widening a query is cheap.\n\n## Interpreting results\n\n- Trends are measured as a **share of all views in that edition**, so a shrinking or growing Wikipedia does not create a fake trend. `trend.rawViewsPerYear` is the raw count trend, for reference only.\n- `confidence.level` is how far the direction can be trusted. `low` or `unclear` → say the data does not support a conclusion.\n- Low traffic (under ~100 views/month) is noisy: do not rank audiences on it alone.\n- Data after May 2025 is affected by a Wikimedia bot-detection change. The analysis accounts for it and mentions it in the reasons; repeat that caveat briefly.\n- More detail: [references/interpretation.md](references/interpretation.md). All commands and options: [references/cli.md](references/cli.md).\n\n## Language codes\n\n| Language | Code | Language | Code | Language | Code |\n|---|---|---|---|---|---|\n| English | en | Polish | pl | Ukrainian | uk |\n| German | de | Czech | cs | Russian | ru |\n| French | fr | Slovak | sk | Turkish | tr |\n| Spanish | es | Hungarian | hu | Arabic | ar |\n| Italian | it | Romanian | ro | Hindi | hi |\n| Portuguese | pt | Dutch | nl | Japanese | ja |\n| Swedish | sv | Greek | el | Chinese | zh |\n| Norwegian (Bokmål) | no | Finnish | fi | Korean | ko |\n"
+    }
+   ]
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "Now I'll run the analysis to compare intermittent fasting interest in Polish and Czech Wikipedia over the last two years:"
+    },
+    {
+     "type": "tool_use",
+     "id": "toolu_01WaCSgBUskR5RbsamG76iZk",
+     "name": "run_cli",
+     "input": {
+      "args": [
+       "analyze",
+       "--title",
+       "Intermittent fasting",
+       "--from",
+       "en",
+       "--lang",
+       "pl,cs",
+       "--months",
+       "24"
+      ]
+     },
+     "caller": {
+      "type": "direct"
+     }
+    }
+   ]
+  },
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "tool_result",
+     "tool_use_id": "toolu_01WaCSgBUskR5RbsamG76iZk",
+     "content": "{\"ok\":true,\"data\":{\"qid\":\"Q1666254\",\"label\":\"intermittent fasting\",\"start\":\"2024-09\",\"end\":\"2026-08\",\"editions\":[{\"project\":\"cs.wikipedia\",\"article\":\"Přerušovaný_půst\",\"months\":24,\"monthlyViews\":183,\"perMillion\":3.08,\"trend\":{\"direction\":\"declining\",\"perYear\":-47,\"ci95\":[-58.7,-29.3],\"p\":0.00039,\"rawViewsPerYear\":-53.6},\"yoy\":{\"share\":-47,\"views\":-53.6},\"seasonality\":null,\"spikes\":[{\"period\":\"2025-04\",\"ratio\":3.37}],\"step\":null,\"confidence\":{\"level\":\"medium\",\"score\":60,\"reasons\":[\"24 months of data; trend of the share of edition views (Theil–Sen −47%/yr, Mann–Kendall p < 0.001).\",\"Only 24 months: too short to separate the yearly pattern from the trend (needs 36).\",\"Modest traffic (about 183 views/month).\",\"1 spike month(s), e.g. 2025-04 (3.4×), account for 10% of views; the trend estimate is robust to them.\",\"16 of 24 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"cs.wikipedia \\\"Přerušovaný půst\\\": interest declining about −47%/yr (95% CI −59% to −29%) relative to all traffic in this edition; confidence medium.\"}],\"missing\":[{\"project\":\"pl.wikipedia\",\"status\":\"missing\",\"title\":null,\"note\":\"No pl.wikipedia article is linked to Q1666254 and the item has no \\\"pl\\\" name, so the topic is probably not covered there.\"}]},\"warnings\":[\"No pl.wikipedia article is linked to Q1666254 and the item has no \\\"pl\\\" name, so the topic is probably not covered there.\"],\"errors\":[]}\n\nexit code: 0"
+    }
+   ]
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "Based on the analysis, here are the results:\n\n## Comparison of Intermittent Fasting Interest: Polish vs. Czech Wikipedia\n\n**Czech Wikipedia (cs.wikipedia):**\nInterest in intermittent fasting on Czech Wikipedia is **declining significantly** over the last two years. The trend shows a loss of about **47% per year** relative to all traffic in the edition (with a 95% confidence interval of −59% to −29%). The article \"Přerušovaný půst\" (intermittent fasting in Czech) receives about 183 monthly views. However, confidence in this decline is **medium** because:\n- 24 months is a relatively short period (ideally 36 months would be needed to clearly separate yearly patterns from the overall trend)\n- Traffic is modest, which can be noisy\n- There was a spike in April 2025 (3.4× the usual views)\n- May 2025 onwards was affected by a Wikimedia bot-detection update, though this affects shares less than raw counts\n\n**Polish Wikipedia (pl.wikipedia):**\n**No article on intermittent fasting exists** on Polish Wikipedia. The topic is not covered there, so no comparison data is available.\n\n## Implication\n\nThe data shows interest in intermittent fasting is **declining on Czech Wikipedia**, but you cannot make a direct Polish-Czech comparison because Polish Wikipedia lacks an article on this topic. If you want to understand Polish interest in related topics, you might try analyzing a broader term like \"Fasting\" to see if there's any coverage or interest signal there."
+    }
+   ]
+  }
+ ],
+ "toolCalls": [
+  {
+   "turn": 0,
+   "name": "read_file",
+   "arguments": "{\"path\":\"SKILL.md\"}",
+   "output": "---\nname: wikipedia-interest-trends\ndescription: Measures whether public interest in a topic is growing, stable or declining in one or more Wikipedia language editions, using Wikipedia pageview statistics, and says how far each trend can be trusted. Use when asked whether interest in a topic is rising, to compare interest between languages or countries, or to pick which language audiences to investigate next (e.g. for a course, product or localization decision).\n---\n\n# Wikipedia Interest Trends\n\nPageviews show **attention**, not willingness to pay. Present results as a signal for what to validate next, never as proof of demand.\n\nAll commands run from this skill's directory and print one line of JSON: `{ok, data, warnings, errors}`. Never compute trend numbers yourself: use the command output.\n\n## Workflow\n\n1. **Identify the topic and languages.**\n   - Topic → an English Wikipedia article title (e.g. \"Intermittent fasting\", \"Astronomy\").\n   - Languages → edition codes (see the table below), e.g. Polish = `pl`, Czech = `cs`.\n   - Period → `--months`: \"last two years\" = `--months 24`, \"last year\" = `--months 12`. No period given → omit it (default: 5 years, the most reliable).\n\n2. **Run `analyze`** (it finds the article in each language automatically):\n   ```bash\n   node scripts/dist/cli.js analyze --title \"Intermittent fasting\" --from en --lang pl,cs\n   ```\n   Up to 20 languages per call. Do not calculate dates yourself.\n\n3. **If `ok` is false,** read `errors[0]`. It says what to do: pick one of the suggested titles (disambiguation page or misspelling) and run again.\n\n4. **Report each edition** in `data.editions`:\n   - `summary` — one sentence; quote it or paraphrase it closely.\n   - `trend.direction` (growing / declining / stable / unclear) and `trend.perYear` with `trend.ci95` (% per year).\n   - `confidence.level` (high / medium / low) and the 1–3 most important `confidence.reasons`.\n   - `monthlyViews` (audience size) and `perMillion`: views per million of **that edition's** views (the topic's share of attention there, comparable across languages; not per population).\n\n5. **Report gaps.** Every entry in `data.missing` and every item in `warnings` must be mentioned: a language with no article usually means the topic is not covered there.\n\n6. **Several languages:** use `data.ranking` (already ordered: growing before stable before unclear before declining, then by confidence). Recommend the top 1–2 to investigate and say why, including confidence.\n\n7. **Shareable report** (when the user asks for a report, chart, PDF or something to share): run `report` with the same options, plus your recommendation as `--note`:\n   ```bash\n   node scripts/dist/cli.js report --title \"Astronomy\" --from en --lang uk --note \"Your 1–2 sentence recommendation.\"\n   ```\n   **Always put the exact path from `data.file` in your answer**; without it the user cannot find the report. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.\n\n## When a topic has no article in some languages\n\nFirst report the gap: no article usually means the topic is not covered in that language.\nThen, if a result for that language matters, try **one** broader English title with `analyze` (e.g. \"Intermittent fasting\" → \"Fasting\", \"English as a second or foreign language\" → \"English language\") and say clearly that it measures the broader topic. Do not guess titles in other languages and do not use `resolve` to search: `analyze` finds each language's article itself.\n\n## Follow-up questions\n\nRun `analyze` again with the changed options (other languages, other period). Data already downloaded is reused from a local cache, so repeating or widening a query is cheap.\n\n## Interpreting results\n\n- Trends are measured as a **share of all views in that edition**, so a shrinking or growing Wikipedia does not create a fake trend. `trend.rawViewsPerYear` is the raw count trend, for reference only.\n- `confidence.level` is how far the direction can be trusted. `low` or `unclear` → say the data does not support a conclusion.\n- Low traffic (under ~100 views/month) is noisy: do not rank audiences on it alone.\n- Data after May 2025 is affected by a Wikimedia bot-detection change. The analysis accounts for it and mentions it in the reasons; repeat that caveat briefly.\n- More detail: [references/interpretation.md](references/interpretation.md). All commands and options: [references/cli.md](references/cli.md).\n\n## Language codes\n\n| Language | Code | Language | Code | Language | Code |\n|---|---|---|---|---|---|\n| English | en | Polish | pl | Ukrainian | uk |\n| German | de | Czech | cs | Russian | ru |\n| French | fr | Slovak | sk | Turkish | tr |\n| Spanish | es | Hungarian | hu | Arabic | ar |\n| Italian | it | Romanian | ro | Hindi | hi |\n| Portuguese | pt | Dutch | nl | Japanese | ja |\n| Swedish | sv | Greek | el | Chinese | zh |\n| Norwegian (Bokmål) | no | Finnish | fi | Korean | ko |\n"
+  },
+  {
+   "turn": 0,
+   "name": "run_cli",
+   "arguments": "{\"args\":[\"analyze\",\"--title\",\"Intermittent fasting\",\"--from\",\"en\",\"--lang\",\"pl,cs\",\"--months\",\"24\"]}",
+   "output": "{\"ok\":true,\"data\":{\"qid\":\"Q1666254\",\"label\":\"intermittent fasting\",\"start\":\"2024-09\",\"end\":\"2026-08\",\"editions\":[{\"project\":\"cs.wikipedia\",\"article\":\"Přerušovaný_půst\",\"months\":24,\"monthlyViews\":183,\"perMillion\":3.08,\"trend\":{\"direction\":\"declining\",\"perYear\":-47,\"ci95\":[-58.7,-29.3],\"p\":0.00039,\"rawViewsPerYear\":-53.6},\"yoy\":{\"share\":-47,\"views\":-53.6},\"seasonality\":null,\"spikes\":[{\"period\":\"2025-04\",\"ratio\":3.37}],\"step\":null,\"confidence\":{\"level\":\"medium\",\"score\":60,\"reasons\":[\"24 months of data; trend of the share of edition views (Theil–Sen −47%/yr, Mann–Kendall p < 0.001).\",\"Only 24 months: too short to separate the yearly pattern from the trend (needs 36).\",\"Modest traffic (about 183 views/month).\",\"1 spike month(s), e.g. 2025-04 (3.4×), account for 10% of views; the trend estimate is robust to them.\",\"16 of 24 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"cs.wikipedia \\\"Přerušovaný půst\\\": interest declining about −47%/yr (95% CI −59% to −29%) relative to all traffic in this edition; confidence medium.\"}],\"missing\":[{\"project\":\"pl.wikipedia\",\"status\":\"missing\",\"title\":null,\"note\":\"No pl.wikipedia article is linked to Q1666254 and the item has no \\\"pl\\\" name, so the topic is probably not covered there.\"}]},\"warnings\":[\"No pl.wikipedia article is linked to Q1666254 and the item has no \\\"pl\\\" name, so the topic is probably not covered there.\"],\"errors\":[]}\n\nexit code: 0"
+  }
+ ],
+ "answers": [
+  "Based on the analysis, here are the results:\n\n## Comparison of Intermittent Fasting Interest: Polish vs. Czech Wikipedia\n\n**Czech Wikipedia (cs.wikipedia):**\nInterest in intermittent fasting on Czech Wikipedia is **declining significantly** over the last two years. The trend shows a loss of about **47% per year** relative to all traffic in the edition (with a 95% confidence interval of −59% to −29%). The article \"Přerušovaný půst\" (intermittent fasting in Czech) receives about 183 monthly views. However, confidence in this decline is **medium** because:\n- 24 months is a relatively short period (ideally 36 months would be needed to clearly separate yearly patterns from the overall trend)\n- Traffic is modest, which can be noisy\n- There was a spike in April 2025 (3.4× the usual views)\n- May 2025 onwards was affected by a Wikimedia bot-detection update, though this affects shares less than raw counts\n\n**Polish Wikipedia (pl.wikipedia):**\n**No article on intermittent fasting exists** on Polish Wikipedia. The topic is not covered there, so no comparison data is available.\n\n## Implication\n\nThe data shows interest in intermittent fasting is **declining on Czech Wikipedia**, but you cannot make a direct Polish-Czech comparison because Polish Wikipedia lacks an article on this topic. If you want to understand Polish interest in related topics, you might try analyzing a broader term like \"Fasting\" to see if there's any coverage or interest signal there."
+ ],
+ "usage": {
+  "requests": 3,
+  "input": 6171,
+  "output": 556,
+  "cacheRead": 0,
+  "cacheWrite": 0
+ },
+ "checks": [
+  {
+   "check": "readSkill",
+   "pass": true,
+   "detail": "read SKILL.md"
+  },
+  {
+   "check": "calls.analyze",
+   "pass": true,
+   "detail": "1 call(s), expected at least 1"
+  },
+  {
+   "check": "cliOk",
+   "pass": true,
+   "detail": "a analyze call succeeded"
+  },
+  {
+   "check": "answer /czech|\\bcs\\b/",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "answer /polish|\\bpl\\b/",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "answer /no (polish )?article|not covered|missing|does(n't| not) (have|exist)|no .*article/",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "answer /confiden/",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "maxToolCalls",
+   "pass": true,
+   "detail": "2 tool call(s), limit 8"
+  }
+ ]
+}

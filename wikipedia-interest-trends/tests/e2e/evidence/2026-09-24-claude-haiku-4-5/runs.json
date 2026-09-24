@@ -1,0 +1,42 @@
+{
+ "model": "claude-haiku-4-5",
+ "provider": "anthropic",
+ "runs": [
+  {
+   "run": "run 1: first full run",
+   "folder": "2026-09-24T16-35-54",
+   "passed": 8,
+   "total": 8,
+   "costUsd": 0.0938,
+   "failed": {}
+  },
+  {
+   "run": "run 2: after the spike fix",
+   "folder": "2026-09-24T16-38-32",
+   "passed": 7,
+   "total": 8,
+   "costUsd": 0.0834,
+   "failed": {
+    "report-shareable": [
+     "answer /wit-output/.*\\.html|\\.html/"
+    ]
+   }
+  },
+  {
+   "run": "report case after the SKILL.md fix",
+   "folder": "2026-09-24T16-39-57",
+   "passed": 1,
+   "total": 1,
+   "costUsd": 0.0156,
+   "failed": {}
+  },
+  {
+   "run": "run 3: final (transcripts in this folder)",
+   "folder": "2026-09-24T16-40-18",
+   "passed": 8,
+   "total": 8,
+   "costUsd": 0.0932,
+   "failed": {}
+  }
+ ]
+}

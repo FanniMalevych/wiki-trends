@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // End-to-end agent tests: a real model uses the skill through tool calls.
 //
-//   npm run e2e                                  all cases on Gemini (free tier)
+//   npm run e2e                                  all cases on Claude Haiku 4.5
+//   npm run e2e -- --provider gemini             all cases on Gemini (free tier)
 //   npm run e2e -- --case q2-astronomy-uk        one case
 //   npm run e2e -- --provider openrouter --model <id>
 //   npm run e2e -- --list-models                 models available for the key
@@ -13,13 +14,13 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { PROVIDERS, QuotaExhaustedError, runConversation, systemPrompt } from "./agent.mjs";
+import { costOf, listModels, PROVIDERS, QuotaExhaustedError, runConversation, systemPrompt } from "./agent.mjs";
 import { grade } from "./grade.mjs";
 
 const skillDir = fileURLToPath(new URL("../../", import.meta.url));
 const { values } = parseArgs({
   options: {
-    provider: { type: "string", default: "gemini" },
+    provider: { type: "string", default: "anthropic" },
     model: { type: "string" },
     case: { type: "string", multiple: true },
     "list-models": { type: "boolean", default: false },
@@ -45,9 +46,7 @@ const apiKey = process.env[provider.keyVar];
 if (!apiKey) throw new Error(`${provider.keyVar} is not set. Add it to ${join(skillDir, ".env")} (see .env.example).`);
 
 if (values["list-models"]) {
-  const res = await fetch(provider.modelsUrl, { headers: { Authorization: `Bearer ${apiKey}` } });
-  if (!res.ok) throw new Error(`Listing models failed: HTTP ${res.status} ${(await res.text()).slice(0, 300)}`);
-  for (const m of (await res.json()).data ?? []) console.log(m.id);
+  for (const id of await listModels(provider, apiKey)) console.log(id);
   process.exit(0);
 }
 
@@ -82,13 +81,18 @@ for (const c of selected) {
   const passed = checks.every((x) => x.pass);
   for (const x of checks) console.log(`  ${x.pass ? "✔" : "✖"} ${x.check}${x.detail ? ` — ${x.detail}` : ""}`);
   if (result.answers?.length) console.log(`  answer: ${result.answers.at(-1).replaceAll("\n", " ").slice(0, 300)}…`);
-  console.log(`  ${passed ? "PASS" : "FAIL"} in ${Math.round((Date.now() - started) / 1000)}s, ${JSON.stringify(result.usage)}\n`);
+  const cost = result.usage.requests ? costOf(provider, model, result.usage) : null;
+  console.log(`  ${passed ? "PASS" : "FAIL"} in ${Math.round((Date.now() - started) / 1000)}s, ${JSON.stringify(result.usage)}${cost === null ? "" : `, $${cost}`}\n`);
 
   writeFileSync(join(outDir, `${c.id}.json`), JSON.stringify({ case: c, model, provider: values.provider, ...result, checks }, null, 1));
-  summary.push({ id: c.id, passed, failed: checks.filter((x) => !x.pass).map((x) => x.check), toolCalls: result.toolCalls.length, usage: result.usage });
+  summary.push({ id: c.id, passed, failed: checks.filter((x) => !x.pass).map((x) => x.check), toolCalls: result.toolCalls.length, usage: result.usage, cost });
 }
 
 const passedCount = summary.filter((s) => s.passed).length;
-writeFileSync(join(outDir, "summary.json"), JSON.stringify({ provider: values.provider, model, date: today, passed: passedCount, total: summary.length, cases: summary }, null, 1));
-console.log(`${passedCount}/${summary.length} cases passed.`);
+const totalCost = summary.every((s) => s.cost !== null) ? Math.round(summary.reduce((t, s) => t + (s.cost ?? 0), 0) * 10000) / 10000 : null;
+writeFileSync(
+  join(outDir, "summary.json"),
+  JSON.stringify({ provider: values.provider, model, date: today, passed: passedCount, total: summary.length, costUsd: totalCost, cases: summary }, null, 1),
+);
+console.log(`${passedCount}/${summary.length} cases passed.${totalCost === null ? "" : ` Cost: $${totalCost}.`}`);
 process.exitCode = passedCount === summary.length ? 0 : 1;

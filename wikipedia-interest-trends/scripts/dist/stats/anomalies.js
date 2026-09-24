@@ -1,16 +1,18 @@
 import { MAD_SCALE, mad, mean, rollingMedian } from "./basic.js";
 /**
- * Points far from a centered 5-point rolling median, measured in robust
- * standard deviations (MAD). The window ignores up to two unusual neighbours,
- * so short bursts are still caught.
+ * Points far from a centered 5-point rolling median: more than `threshold`
+ * robust standard deviations (MAD) away, and at least `minExcess` in size, so a
+ * very smooth series does not turn small wobbles into "spikes". On log data the
+ * default minimum is a factor of 1.5. The window ignores up to two unusual
+ * neighbours, so short bursts are still caught.
  */
-export function detectSpikes(y, threshold = 3.5) {
+export function detectSpikes(y, { threshold = 3.5, minExcess = Math.log(1.5) } = {}) {
     const level = rollingMedian(y, 5);
     const residuals = y.map((v, i) => v - level[i]);
     const scale = MAD_SCALE * mad(residuals);
     if (scale === 0)
         return [];
-    return residuals.flatMap((r, index) => (Math.abs(r) / scale > threshold ? [{ index, z: r / scale, excess: r }] : []));
+    return residuals.flatMap((r, index) => Math.abs(r) / scale > threshold && Math.abs(r) >= minExcess ? [{ index, z: r / scale, excess: r }] : []);
 }
 /** Residuals of v after least-squares regression on [1, i]. */
 function residualizeOnLine(v) {

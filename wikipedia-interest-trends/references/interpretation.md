@@ -27,7 +27,7 @@ The score starts at 100 and loses points for each weakness, which is listed in `
 | Fewer than 36 months (no seasonal adjustment) | −25, and capped at medium |
 | Low traffic (under 100 views/month) / modest (under 1000) | −30 / −10 |
 | Only moderately significant (0.01 ≤ p < 0.05) | −10 |
-| Spike months carry over 10% / 20% of views | −10 / −20 |
+| Spike months (at least 1.5× the expected level) carry over 10% / 20% of views | −10 / −20 |
 | Sudden level change | −20, or −10 if it matches a known measurement event |
 | Last 12 months move against the trend by over 5% | −15 |
 | Raw and share trends point in opposite directions | −5 |

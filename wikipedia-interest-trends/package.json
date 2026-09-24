@@ -24,6 +24,7 @@
     "e2e": "node tests/e2e/run.mjs"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0"
   }

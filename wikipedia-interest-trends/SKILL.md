@@ -28,7 +28,7 @@ All commands run from this skill's directory and print one line of JSON: `{ok, d
    - `summary` — one sentence; quote it or paraphrase it closely.
    - `trend.direction` (growing / declining / stable / unclear) and `trend.perYear` with `trend.ci95` (% per year).
    - `confidence.level` (high / medium / low) and the 1–3 most important `confidence.reasons`.
-   - `monthlyViews` (audience size) and `perMillion` (interest relative to the edition's size, comparable across languages).
+   - `monthlyViews` (audience size) and `perMillion`: views per million of **that edition's** views (the topic's share of attention there, comparable across languages; not per population).
 
 5. **Report gaps.** Every entry in `data.missing` and every item in `warnings` must be mentioned: a language with no article usually means the topic is not covered there.
 
@@ -38,7 +38,7 @@ All commands run from this skill's directory and print one line of JSON: `{ok, d
    ```bash
    node scripts/dist/cli.js report --title "Astronomy" --from en --lang uk --note "Your 1–2 sentence recommendation."
    ```
-   Give the user `data.file`. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.
+   **Always put the exact path from `data.file` in your answer**; without it the user cannot find the report. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.
 
 ## When a topic has no article in some languages
 

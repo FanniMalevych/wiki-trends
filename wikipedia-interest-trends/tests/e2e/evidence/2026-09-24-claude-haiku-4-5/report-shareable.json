@@ -1,0 +1,207 @@
+{
+ "case": {
+  "id": "report-shareable",
+  "turns": [
+   "We're choosing where to launch an astronomy course. Make a short shareable report comparing interest in astronomy on the Ukrainian, Polish and Czech Wikipedias, with your recommendation."
+  ],
+  "expect": {
+   "readSkill": true,
+   "calls": {
+    "report": 1
+   },
+   "cliOk": "report",
+   "answer": [
+    "wit-output/.*\\.html|\\.html",
+    "recommend|suggest|prioriti|best candidate"
+   ],
+   "maxToolCalls": 8
+  }
+ },
+ "model": "claude-haiku-4-5",
+ "provider": "anthropic",
+ "messages": [
+  {
+   "role": "user",
+   "content": "We're choosing where to launch an astronomy course. Make a short shareable report comparing interest in astronomy on the Ukrainian, Polish and Czech Wikipedias, with your recommendation."
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "I'll analyze the astronomy interest trends across these three Wikipedia language editions for you."
+    },
+    {
+     "type": "tool_use",
+     "id": "toolu_01YGwa5bJw6fEGuJZBH6kFah",
+     "name": "read_file",
+     "input": {
+      "path": "SKILL.md"
+     },
+     "caller": {
+      "type": "direct"
+     }
+    }
+   ]
+  },
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "tool_result",
+     "tool_use_id": "toolu_01YGwa5bJw6fEGuJZBH6kFah",
+     "content": "---\nname: wikipedia-interest-trends\ndescription: Measures whether public interest in a topic is growing, stable or declining in one or more Wikipedia language editions, using Wikipedia pageview statistics, and says how far each trend can be trusted. Use when asked whether interest in a topic is rising, to compare interest between languages or countries, or to pick which language audiences to investigate next (e.g. for a course, product or localization decision).\n---\n\n# Wikipedia Interest Trends\n\nPageviews show **attention**, not willingness to pay. Present results as a signal for what to validate next, never as proof of demand.\n\nAll commands run from this skill's directory and print one line of JSON: `{ok, data, warnings, errors}`. Never compute trend numbers yourself: use the command output.\n\n## Workflow\n\n1. **Identify the topic and languages.**\n   - Topic → an English Wikipedia article title (e.g. \"Intermittent fasting\", \"Astronomy\").\n   - Languages → edition codes (see the table below), e.g. Polish = `pl`, Czech = `cs`.\n   - Period → `--months`: \"last two years\" = `--months 24`, \"last year\" = `--months 12`. No period given → omit it (default: 5 years, the most reliable).\n\n2. **Run `analyze`** (it finds the article in each language automatically):\n   ```bash\n   node scripts/dist/cli.js analyze --title \"Intermittent fasting\" --from en --lang pl,cs\n   ```\n   Up to 20 languages per call. Do not calculate dates yourself.\n\n3. **If `ok` is false,** read `errors[0]`. It says what to do: pick one of the suggested titles (disambiguation page or misspelling) and run again.\n\n4. **Report each edition** in `data.editions`:\n   - `summary` — one sentence; quote it or paraphrase it closely.\n   - `trend.direction` (growing / declining / stable / unclear) and `trend.perYear` with `trend.ci95` (% per year).\n   - `confidence.level` (high / medium / low) and the 1–3 most important `confidence.reasons`.\n   - `monthlyViews` (audience size) and `perMillion`: views per million of **that edition's** views (the topic's share of attention there, comparable across languages; not per population).\n\n5. **Report gaps.** Every entry in `data.missing` and every item in `warnings` must be mentioned: a language with no article usually means the topic is not covered there.\n\n6. **Several languages:** use `data.ranking` (already ordered: growing before stable before unclear before declining, then by confidence). Recommend the top 1–2 to investigate and say why, including confidence.\n\n7. **Shareable report** (when the user asks for a report, chart, PDF or something to share): run `report` with the same options, plus your recommendation as `--note`:\n   ```bash\n   node scripts/dist/cli.js report --title \"Astronomy\" --from en --lang uk --note \"Your 1–2 sentence recommendation.\"\n   ```\n   **Always put the exact path from `data.file` in your answer**; without it the user cannot find the report. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.\n\n## When a topic has no article in some languages\n\nFirst report the gap: no article usually means the topic is not covered in that language.\nThen, if a result for that language matters, try **one** broader English title with `analyze` (e.g. \"Intermittent fasting\" → \"Fasting\", \"English as a second or foreign language\" → \"English language\") and say clearly that it measures the broader topic. Do not guess titles in other languages and do not use `resolve` to search: `analyze` finds each language's article itself.\n\n## Follow-up questions\n\nRun `analyze` again with the changed options (other languages, other period). Data already downloaded is reused from a local cache, so repeating or widening a query is cheap.\n\n## Interpreting results\n\n- Trends are measured as a **share of all views in that edition**, so a shrinking or growing Wikipedia does not create a fake trend. `trend.rawViewsPerYear` is the raw count trend, for reference only.\n- `confidence.level` is how far the direction can be trusted. `low` or `unclear` → say the data does not support a conclusion.\n- Low traffic (under ~100 views/month) is noisy: do not rank audiences on it alone.\n- Data after May 2025 is affected by a Wikimedia bot-detection change. The analysis accounts for it and mentions it in the reasons; repeat that caveat briefly.\n- More detail: [references/interpretation.md](references/interpretation.md). All commands and options: [references/cli.md](references/cli.md).\n\n## Language codes\n\n| Language | Code | Language | Code | Language | Code |\n|---|---|---|---|---|---|\n| English | en | Polish | pl | Ukrainian | uk |\n| German | de | Czech | cs | Russian | ru |\n| French | fr | Slovak | sk | Turkish | tr |\n| Spanish | es | Hungarian | hu | Arabic | ar |\n| Italian | it | Romanian | ro | Hindi | hi |\n| Portuguese | pt | Dutch | nl | Japanese | ja |\n| Swedish | sv | Greek | el | Chinese | zh |\n| Norwegian (Bokmål) | no | Finnish | fi | Korean | ko |\n"
+    }
+   ]
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "Now I'll analyze the astronomy interest trends for Ukrainian, Polish, and Czech:"
+    },
+    {
+     "type": "tool_use",
+     "id": "toolu_012iJhwFPZkeeaumrFacU5Gt",
+     "name": "run_cli",
+     "input": {
+      "args": [
+       "analyze",
+       "--title",
+       "Astronomy",
+       "--from",
+       "en",
+       "--lang",
+       "uk,pl,cs"
+      ]
+     },
+     "caller": {
+      "type": "direct"
+     }
+    }
+   ]
+  },
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "tool_result",
+     "tool_use_id": "toolu_012iJhwFPZkeeaumrFacU5Gt",
+     "content": "{\"ok\":true,\"data\":{\"qid\":\"Q333\",\"label\":\"astronomy\",\"start\":\"2021-09\",\"end\":\"2026-08\",\"editions\":[{\"project\":\"uk.wikipedia\",\"article\":\"Астрономія\",\"months\":60,\"monthlyViews\":559,\"perMillion\":9.89,\"trend\":{\"direction\":\"declining\",\"perYear\":-28.6,\"ci95\":[-36.7,-20.2],\"p\":0.0000168,\"rawViewsPerYear\":-36.2},\"yoy\":{\"share\":-46.4,\"views\":-59.6},\"seasonality\":{\"strength\":0.92,\"peak\":\"Sep\",\"low\":\"Jul\"},\"spikes\":[{\"period\":\"2021-12\",\"ratio\":1.65}],\"step\":{\"period\":\"2023-03\",\"change\":94,\"event\":null},\"confidence\":{\"level\":\"medium\",\"score\":65,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −29%/yr, Mann–Kendall p < 0.001).\",\"Modest traffic (about 559 views/month).\",\"1 spike month(s), e.g. 2021-12 (1.6×), account for 2% of views; the trend estimate is robust to them.\",\"Sudden level change in 2023-03 (+94% relative to the trend): check for a real-world event, an article rename or merge, or a new link from a popular page.\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"uk.wikipedia \\\"Астрономія\\\": interest declining about −29%/yr (95% CI −37% to −20%) relative to all traffic in this edition; confidence medium.\"},{\"project\":\"pl.wikipedia\",\"article\":\"Astronomia\",\"months\":60,\"monthlyViews\":1431,\"perMillion\":7.61,\"trend\":{\"direction\":\"declining\",\"perYear\":-15.8,\"ci95\":[-19.3,-12.1],\"p\":0.0000014,\"rawViewsPerYear\":-20.4},\"yoy\":{\"share\":-8,\"views\":-16.1},\"seasonality\":{\"strength\":0.59,\"peak\":\"Sep\",\"low\":\"Jul\"},\"spikes\":[{\"period\":\"2025-11\",\"ratio\":1.84}],\"step\":null,\"confidence\":{\"level\":\"high\",\"score\":95,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −16%/yr, Mann–Kendall p < 0.001).\",\"1 spike month(s), e.g. 2025-11 (1.8×), account for 1% of views; the trend estimate is robust to them.\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"pl.wikipedia \\\"Astronomia\\\": interest declining about −16%/yr (95% CI −19% to −12%) relative to all traffic in this edition; confidence high.\"},{\"project\":\"cs.wikipedia\",\"article\":\"Astronomie\",\"months\":60,\"monthlyViews\":516,\"perMillion\":8.68,\"trend\":{\"direction\":\"declining\",\"perYear\":-16.2,\"ci95\":[-21,-11],\"p\":0.00000523,\"rawViewsPerYear\":-19.3},\"yoy\":{\"share\":-23.7,\"views\":-33.3},\"seasonality\":{\"strength\":0.81,\"peak\":\"Sep\",\"low\":\"Aug\"},\"spikes\":[{\"period\":\"2026-07\",\"ratio\":1.65}],\"step\":{\"period\":\"2025-03\",\"change\":-28.5,\"event\":null},\"confidence\":{\"level\":\"medium\",\"score\":65,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −16%/yr, Mann–Kendall p < 0.001).\",\"Modest traffic (about 516 views/month).\",\"1 spike month(s), e.g. 2026-07 (1.6×), account for 0% of views; the trend estimate is robust to them.\",\"Sudden level change in 2025-03 (−28% relative to the trend): check for a real-world event, an article rename or merge, or a new link from a popular page.\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"cs.wikipedia \\\"Astronomie\\\": interest declining about −16%/yr (95% CI −21% to −11%) relative to all traffic in this edition; confidence medium.\"}],\"ranking\":[{\"rank\":1,\"project\":\"pl.wikipedia\",\"direction\":\"declining\",\"perYear\":-15.8,\"confidence\":\"high\",\"monthlyViews\":1431,\"perMillion\":7.61},{\"rank\":2,\"project\":\"cs.wikipedia\",\"direction\":\"declining\",\"perYear\":-16.2,\"confidence\":\"medium\",\"monthlyViews\":516,\"perMillion\":8.68},{\"rank\":3,\"project\":\"uk.wikipedia\",\"direction\":\"declining\",\"perYear\":-28.6,\"confidence\":\"medium\",\"monthlyViews\":559,\"perMillion\":9.89}]},\"warnings\":[],\"errors\":[]}\n\nexit code: 0"
+    }
+   ]
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "Now let me create a shareable report with my recommendation:"
+    },
+    {
+     "type": "tool_use",
+     "id": "toolu_01AtRsQ1s1ukmNr1yazYs3wC",
+     "name": "run_cli",
+     "input": {
+      "args": [
+       "report",
+       "--title",
+       "Astronomy",
+       "--from",
+       "en",
+       "--lang",
+       "uk,pl,cs",
+       "--note",
+       "Polish Wikipedia shows stable, high-confidence declining interest; Ukrainian shows steeper decline with a concerning 2023 disruption. Czech has modest traffic. For course launch, Polish offers the largest audience (1,431 views/month) with the most reliable data, though all three editions show declining interest—validate actual course demand before proceeding."
+      ]
+     },
+     "caller": {
+      "type": "direct"
+     }
+    }
+   ]
+  },
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "tool_result",
+     "tool_use_id": "toolu_01AtRsQ1s1ukmNr1yazYs3wC",
+     "content": "{\"ok\":true,\"data\":{\"file\":\"/Volumes/Data/genesis_task/wiki-trends/wikipedia-interest-trends/wit-output/astronomy_uk-pl-cs_2026-08.html\",\"editions\":[{\"project\":\"uk.wikipedia\",\"summary\":\"uk.wikipedia \\\"Астрономія\\\": interest declining about −29%/yr (95% CI −37% to −20%) relative to all traffic in this edition; confidence medium.\",\"confidence\":\"medium\"},{\"project\":\"pl.wikipedia\",\"summary\":\"pl.wikipedia \\\"Astronomia\\\": interest declining about −16%/yr (95% CI −19% to −12%) relative to all traffic in this edition; confidence high.\",\"confidence\":\"high\"},{\"project\":\"cs.wikipedia\",\"summary\":\"cs.wikipedia \\\"Astronomie\\\": interest declining about −16%/yr (95% CI −21% to −11%) relative to all traffic in this edition; confidence medium.\",\"confidence\":\"medium\"}]},\"warnings\":[],\"errors\":[]}\n\nexit code: 0"
+    }
+   ]
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "## Astronomy Course Launch Report\n\n**Bottom line:** Polish Wikipedia is your best bet—it has the strongest data and the largest audience—but all three markets show declining interest in astronomy. Before investing, validate that people actually want to enroll.\n\n### The findings\n\n**Polish (pl.wikipedia)** ✓ **Recommended first market**\n- **Traffic:** 1,431 views/month (largest of the three)\n- **Trend:** Declining −16% per year (high confidence)\n- **Why it wins:** Highest-quality data (high confidence score) and biggest audience. The decline is steady and reliable.\n\n**Czech (cs.wikipedia)**\n- **Traffic:** 516 views/month  \n- **Trend:** Declining −16% per year (medium confidence)\n- **Issue:** A significant drop in March 2025 suggests a Wikipedia page change; unclear if real interest or technical artifact.\n\n**Ukrainian (uk.wikipedia)**\n- **Traffic:** 559 views/month\n- **Trend:** Declining −29% per year (steeper, but medium confidence)\n- **Issue:** Major disruption in March 2023 and weaker traffic; harder to trust the steep decline.\n\n### Recommendation\n\n**Launch in Poland first.** It offers 2–3× the audience size of the other two, with the clearest trend. However, **the declining interest across all three markets is a red flag**—pageviews alone don't predict course enrollment. Before committing resources:\n\n1. **Survey learners directly** in Poland to confirm demand for an astronomy course\n2. **Investigate why interest is declining** on Wikipedia (shift to other platforms? or real topic fatigue?)\n3. **Consider the broader skill** Polish speakers may have: are they astronomy enthusiasts, or just casual Wikipedia browsers?\n\n**📊 Full report:** `/Volumes/Data/genesis_task/wiki-trends/wikipedia-interest-trends/wit-output/astronomy_uk-pl-cs_2026-08.html`\n\nSave as PDF from your browser to share with your team."
+    }
+   ]
+  }
+ ],
+ "toolCalls": [
+  {
+   "turn": 0,
+   "name": "read_file",
+   "arguments": "{\"path\":\"SKILL.md\"}",
+   "output": "---\nname: wikipedia-interest-trends\ndescription: Measures whether public interest in a topic is growing, stable or declining in one or more Wikipedia language editions, using Wikipedia pageview statistics, and says how far each trend can be trusted. Use when asked whether interest in a topic is rising, to compare interest between languages or countries, or to pick which language audiences to investigate next (e.g. for a course, product or localization decision).\n---\n\n# Wikipedia Interest Trends\n\nPageviews show **attention**, not willingness to pay. Present results as a signal for what to validate next, never as proof of demand.\n\nAll commands run from this skill's directory and print one line of JSON: `{ok, data, warnings, errors}`. Never compute trend numbers yourself: use the command output.\n\n## Workflow\n\n1. **Identify the topic and languages.**\n   - Topic → an English Wikipedia article title (e.g. \"Intermittent fasting\", \"Astronomy\").\n   - Languages → edition codes (see the table below), e.g. Polish = `pl`, Czech = `cs`.\n   - Period → `--months`: \"last two years\" = `--months 24`, \"last year\" = `--months 12`. No period given → omit it (default: 5 years, the most reliable).\n\n2. **Run `analyze`** (it finds the article in each language automatically):\n   ```bash\n   node scripts/dist/cli.js analyze --title \"Intermittent fasting\" --from en --lang pl,cs\n   ```\n   Up to 20 languages per call. Do not calculate dates yourself.\n\n3. **If `ok` is false,** read `errors[0]`. It says what to do: pick one of the suggested titles (disambiguation page or misspelling) and run again.\n\n4. **Report each edition** in `data.editions`:\n   - `summary` — one sentence; quote it or paraphrase it closely.\n   - `trend.direction` (growing / declining / stable / unclear) and `trend.perYear` with `trend.ci95` (% per year).\n   - `confidence.level` (high / medium / low) and the 1–3 most important `confidence.reasons`.\n   - `monthlyViews` (audience size) and `perMillion`: views per million of **that edition's** views (the topic's share of attention there, comparable across languages; not per population).\n\n5. **Report gaps.** Every entry in `data.missing` and every item in `warnings` must be mentioned: a language with no article usually means the topic is not covered there.\n\n6. **Several languages:** use `data.ranking` (already ordered: growing before stable before unclear before declining, then by confidence). Recommend the top 1–2 to investigate and say why, including confidence.\n\n7. **Shareable report** (when the user asks for a report, chart, PDF or something to share): run `report` with the same options, plus your recommendation as `--note`:\n   ```bash\n   node scripts/dist/cli.js report --title \"Astronomy\" --from en --lang uk --note \"Your 1–2 sentence recommendation.\"\n   ```\n   **Always put the exact path from `data.file` in your answer**; without it the user cannot find the report. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.\n\n## When a topic has no article in some languages\n\nFirst report the gap: no article usually means the topic is not covered in that language.\nThen, if a result for that language matters, try **one** broader English title with `analyze` (e.g. \"Intermittent fasting\" → \"Fasting\", \"English as a second or foreign language\" → \"English language\") and say clearly that it measures the broader topic. Do not guess titles in other languages and do not use `resolve` to search: `analyze` finds each language's article itself.\n\n## Follow-up questions\n\nRun `analyze` again with the changed options (other languages, other period). Data already downloaded is reused from a local cache, so repeating or widening a query is cheap.\n\n## Interpreting results\n\n- Trends are measured as a **share of all views in that edition**, so a shrinking or growing Wikipedia does not create a fake trend. `trend.rawViewsPerYear` is the raw count trend, for reference only.\n- `confidence.level` is how far the direction can be trusted. `low` or `unclear` → say the data does not support a conclusion.\n- Low traffic (under ~100 views/month) is noisy: do not rank audiences on it alone.\n- Data after May 2025 is affected by a Wikimedia bot-detection change. The analysis accounts for it and mentions it in the reasons; repeat that caveat briefly.\n- More detail: [references/interpretation.md](references/interpretation.md). All commands and options: [references/cli.md](references/cli.md).\n\n## Language codes\n\n| Language | Code | Language | Code | Language | Code |\n|---|---|---|---|---|---|\n| English | en | Polish | pl | Ukrainian | uk |\n| German | de | Czech | cs | Russian | ru |\n| French | fr | Slovak | sk | Turkish | tr |\n| Spanish | es | Hungarian | hu | Arabic | ar |\n| Italian | it | Romanian | ro | Hindi | hi |\n| Portuguese | pt | Dutch | nl | Japanese | ja |\n| Swedish | sv | Greek | el | Chinese | zh |\n| Norwegian (Bokmål) | no | Finnish | fi | Korean | ko |\n"
+  },
+  {
+   "turn": 0,
+   "name": "run_cli",
+   "arguments": "{\"args\":[\"analyze\",\"--title\",\"Astronomy\",\"--from\",\"en\",\"--lang\",\"uk,pl,cs\"]}",
+   "output": "{\"ok\":true,\"data\":{\"qid\":\"Q333\",\"label\":\"astronomy\",\"start\":\"2021-09\",\"end\":\"2026-08\",\"editions\":[{\"project\":\"uk.wikipedia\",\"article\":\"Астрономія\",\"months\":60,\"monthlyViews\":559,\"perMillion\":9.89,\"trend\":{\"direction\":\"declining\",\"perYear\":-28.6,\"ci95\":[-36.7,-20.2],\"p\":0.0000168,\"rawViewsPerYear\":-36.2},\"yoy\":{\"share\":-46.4,\"views\":-59.6},\"seasonality\":{\"strength\":0.92,\"peak\":\"Sep\",\"low\":\"Jul\"},\"spikes\":[{\"period\":\"2021-12\",\"ratio\":1.65}],\"step\":{\"period\":\"2023-03\",\"change\":94,\"event\":null},\"confidence\":{\"level\":\"medium\",\"score\":65,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −29%/yr, Mann–Kendall p < 0.001).\",\"Modest traffic (about 559 views/month).\",\"1 spike month(s), e.g. 2021-12 (1.6×), account for 2% of views; the trend estimate is robust to them.\",\"Sudden level change in 2023-03 (+94% relative to the trend): check for a real-world event, an article rename or merge, or a new link from a popular page.\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"uk.wikipedia \\\"Астрономія\\\": interest declining about −29%/yr (95% CI −37% to −20%) relative to all traffic in this edition; confidence medium.\"},{\"project\":\"pl.wikipedia\",\"article\":\"Astronomia\",\"months\":60,\"monthlyViews\":1431,\"perMillion\":7.61,\"trend\":{\"direction\":\"declining\",\"perYear\":-15.8,\"ci95\":[-19.3,-12.1],\"p\":0.0000014,\"rawViewsPerYear\":-20.4},\"yoy\":{\"share\":-8,\"views\":-16.1},\"seasonality\":{\"strength\":0.59,\"peak\":\"Sep\",\"low\":\"Jul\"},\"spikes\":[{\"period\":\"2025-11\",\"ratio\":1.84}],\"step\":null,\"confidence\":{\"level\":\"high\",\"score\":95,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −16%/yr, Mann–Kendall p < 0.001).\",\"1 spike month(s), e.g. 2025-11 (1.8×), account for 1% of views; the trend estimate is robust to them.\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"pl.wikipedia \\\"Astronomia\\\": interest declining about −16%/yr (95% CI −19% to −12%) relative to all traffic in this edition; confidence high.\"},{\"project\":\"cs.wikipedia\",\"article\":\"Astronomie\",\"months\":60,\"monthlyViews\":516,\"perMillion\":8.68,\"trend\":{\"direction\":\"declining\",\"perYear\":-16.2,\"ci95\":[-21,-11],\"p\":0.00000523,\"rawViewsPerYear\":-19.3},\"yoy\":{\"share\":-23.7,\"views\":-33.3},\"seasonality\":{\"strength\":0.81,\"peak\":\"Sep\",\"low\":\"Aug\"},\"spikes\":[{\"period\":\"2026-07\",\"ratio\":1.65}],\"step\":{\"period\":\"2025-03\",\"change\":-28.5,\"event\":null},\"confidence\":{\"level\":\"medium\",\"score\":65,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −16%/yr, Mann–Kendall p < 0.001).\",\"Modest traffic (about 516 views/month).\",\"1 spike month(s), e.g. 2026-07 (1.6×), account for 0% of views; the trend estimate is robust to them.\",\"Sudden level change in 2025-03 (−28% relative to the trend): check for a real-world event, an article rename or merge, or a new link from a popular page.\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"cs.wikipedia \\\"Astronomie\\\": interest declining about −16%/yr (95% CI −21% to −11%) relative to all traffic in this edition; confidence medium.\"}],\"ranking\":[{\"rank\":1,\"project\":\"pl.wikipedia\",\"direction\":\"declining\",\"perYear\":-15.8,\"confidence\":\"high\",\"monthlyViews\":1431,\"perMillion\":7.61},{\"rank\":2,\"project\":\"cs.wikipedia\",\"direction\":\"declining\",\"perYear\":-16.2,\"confidence\":\"medium\",\"monthlyViews\":516,\"perMillion\":8.68},{\"rank\":3,\"project\":\"uk.wikipedia\",\"direction\":\"declining\",\"perYear\":-28.6,\"confidence\":\"medium\",\"monthlyViews\":559,\"perMillion\":9.89}]},\"warnings\":[],\"errors\":[]}\n\nexit code: 0"
+  },
+  {
+   "turn": 0,
+   "name": "run_cli",
+   "arguments": "{\"args\":[\"report\",\"--title\",\"Astronomy\",\"--from\",\"en\",\"--lang\",\"uk,pl,cs\",\"--note\",\"Polish Wikipedia shows stable, high-confidence declining interest; Ukrainian shows steeper decline with a concerning 2023 disruption. Czech has modest traffic. For course launch, Polish offers the largest audience (1,431 views/month) with the most reliable data, though all three editions show declining interest—validate actual course demand before proceeding.\"]}",
+   "output": "{\"ok\":true,\"data\":{\"file\":\"/Volumes/Data/genesis_task/wiki-trends/wikipedia-interest-trends/wit-output/astronomy_uk-pl-cs_2026-08.html\",\"editions\":[{\"project\":\"uk.wikipedia\",\"summary\":\"uk.wikipedia \\\"Астрономія\\\": interest declining about −29%/yr (95% CI −37% to −20%) relative to all traffic in this edition; confidence medium.\",\"confidence\":\"medium\"},{\"project\":\"pl.wikipedia\",\"summary\":\"pl.wikipedia \\\"Astronomia\\\": interest declining about −16%/yr (95% CI −19% to −12%) relative to all traffic in this edition; confidence high.\",\"confidence\":\"high\"},{\"project\":\"cs.wikipedia\",\"summary\":\"cs.wikipedia \\\"Astronomie\\\": interest declining about −16%/yr (95% CI −21% to −11%) relative to all traffic in this edition; confidence medium.\",\"confidence\":\"medium\"}]},\"warnings\":[],\"errors\":[]}\n\nexit code: 0"
+  }
+ ],
+ "answers": [
+  "## Astronomy Course Launch Report\n\n**Bottom line:** Polish Wikipedia is your best bet—it has the strongest data and the largest audience—but all three markets show declining interest in astronomy. Before investing, validate that people actually want to enroll.\n\n### The findings\n\n**Polish (pl.wikipedia)** ✓ **Recommended first market**\n- **Traffic:** 1,431 views/month (largest of the three)\n- **Trend:** Declining −16% per year (high confidence)\n- **Why it wins:** Highest-quality data (high confidence score) and biggest audience. The decline is steady and reliable.\n\n**Czech (cs.wikipedia)**\n- **Traffic:** 516 views/month  \n- **Trend:** Declining −16% per year (medium confidence)\n- **Issue:** A significant drop in March 2025 suggests a Wikipedia page change; unclear if real interest or technical artifact.\n\n**Ukrainian (uk.wikipedia)**\n- **Traffic:** 559 views/month\n- **Trend:** Declining −29% per year (steeper, but medium confidence)\n- **Issue:** Major disruption in March 2023 and weaker traffic; harder to trust the steep decline.\n\n### Recommendation\n\n**Launch in Poland first.** It offers 2–3× the audience size of the other two, with the clearest trend. However, **the declining interest across all three markets is a red flag**—pageviews alone don't predict course enrollment. Before committing resources:\n\n1. **Survey learners directly** in Poland to confirm demand for an astronomy course\n2. **Investigate why interest is declining** on Wikipedia (shift to other platforms? or real topic fatigue?)\n3. **Consider the broader skill** Polish speakers may have: are they astronomy enthusiasts, or just casual Wikipedia browsers?\n\n**📊 Full report:** `/Volumes/Data/genesis_task/wiki-trends/wikipedia-interest-trends/wit-output/astronomy_uk-pl-cs_2026-08.html`\n\nSave as PDF from your browser to share with your team."
+ ],
+ "usage": {
+  "requests": 4,
+  "input": 11081,
+  "output": 799,
+  "cacheRead": 0,
+  "cacheWrite": 0
+ },
+ "checks": [
+  {
+   "check": "readSkill",
+   "pass": true,
+   "detail": "read SKILL.md"
+  },
+  {
+   "check": "calls.report",
+   "pass": true,
+   "detail": "1 call(s), expected at least 1"
+  },
+  {
+   "check": "cliOk",
+   "pass": true,
+   "detail": "a report call succeeded"
+  },
+  {
+   "check": "answer /wit-output/.*\\.html|\\.html/",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "answer /recommend|suggest|prioriti|best candidate/",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "maxToolCalls",
+   "pass": true,
+   "detail": "3 tool call(s), limit 8"
+  }
+ ]
+}

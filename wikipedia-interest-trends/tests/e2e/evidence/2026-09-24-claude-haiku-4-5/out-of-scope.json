@@ -1,0 +1,66 @@
+{
+ "case": {
+  "id": "out-of-scope",
+  "turns": [
+   "What is the capital of France?"
+  ],
+  "expect": {
+   "readSkill": false,
+   "calls": {},
+   "answer": [
+    "paris"
+   ],
+   "maxToolCalls": 0
+  }
+ },
+ "model": "claude-haiku-4-5",
+ "provider": "anthropic",
+ "messages": [
+  {
+   "role": "user",
+   "content": "What is the capital of France?"
+  },
+  {
+   "role": "assistant",
+   "content": [
+    {
+     "type": "text",
+     "text": "The capital of France is **Paris**.\n\nParis is the largest city in France and has been the capital since the 12th century. It is located in the north-central part of the country along the Seine River and is known as a major center for art, fashion, gastronomy, and culture."
+    }
+   ]
+  }
+ ],
+ "toolCalls": [],
+ "answers": [
+  "The capital of France is **Paris**.\n\nParis is the largest city in France and has been the capital since the 12th century. It is located in the north-central part of the country along the Seine River and is known as a major center for art, fashion, gastronomy, and culture."
+ ],
+ "usage": {
+  "requests": 1,
+  "input": 912,
+  "output": 66,
+  "cacheRead": 0,
+  "cacheWrite": 0
+ },
+ "checks": [
+  {
+   "check": "readSkill",
+   "pass": true,
+   "detail": "did not read SKILL.md"
+  },
+  {
+   "check": "calls.none",
+   "pass": true,
+   "detail": "0 CLI call(s), expected none"
+  },
+  {
+   "check": "answer /paris/",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "maxToolCalls",
+   "pass": true,
+   "detail": "0 tool call(s), limit 0"
+  }
+ ]
+}

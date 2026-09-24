@@ -96,6 +96,13 @@ test("spike detection finds planted spikes and dips only", () => {
   close(spikes[0].excess, 1.2, 0.1, "excess");
 });
 
+test("spike detection ignores small wobbles in a very smooth series", () => {
+  const y = Array.from({ length: 48 }, (_, i) => 6 + 0.001 * Math.sin(i));
+  y[20] += Math.log(1.2); // statistically extreme, but only 1.2×
+  y[30] += Math.log(1.8);
+  assert.deepEqual(detectSpikes(y).map((s) => s.index), [30]);
+});
+
 test("step detection finds a level shift but not a smooth trend", () => {
   const rnd = noise(4);
   const trend = Array.from({ length: 60 }, (_, i) => 5 + 0.02 * i + 0.05 * rnd());
