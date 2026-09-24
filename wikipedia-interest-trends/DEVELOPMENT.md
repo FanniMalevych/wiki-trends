@@ -13,7 +13,20 @@ The assignment asks how AI tools were used during development and how their outp
 | Python standard library | Independent reference for the statistics (`tests/reference/stats_reference.py`) |
 | Anthropic's data-visualization guidance and palette validator | Chart colors checked for color-blind separation and contrast |
 
-**Research phase.** _To be completed by the author: how the brief and the research notes (Agent Skills format, Pageviews API, statistical methods, tooling choices) were produced, and with which tools._
+**Research phase.** Before implementation, the brief and research notes were prepared with Claude. They covered:
+- the Agent Skills format;
+- the Wikimedia Pageviews and Wikidata APIs;
+- statistical methods for trend reliability;
+- Wikimedia's May 2025 bot-detection change;
+- tooling and testing options.
+
+The notes were treated as hypotheses, not facts. Each was checked during implementation, and several were revised:
+- Every API assumption was probed live before use. The Polish "intermittent fasting" example turned out to have no article at all.
+- STL was replaced by a robust month-of-year adjustment, better suited to 36–60 monthly points.
+- Vega with a native image converter was dropped in favour of plain SVG, to keep zero runtime dependencies.
+- `node:sqlite` turned out to need Node 22.13 or later to run without a flag.
+- The Hamed–Rao correction was added to Mann–Kendall, because the plain test overstates significance on monthly data.
+- End-to-end tests ran on Claude Haiku 4.5 and Gemini instead of OpenRouter.
 
 ## How the work was organised
 
