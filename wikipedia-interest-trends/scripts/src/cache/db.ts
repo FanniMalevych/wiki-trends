@@ -1,6 +1,7 @@
-import { mkdirSync, statSync } from "node:fs";
+import { accessSync, constants, mkdirSync, statSync } from "node:fs";
+import { homedir } from "node:os";
 import { dirname, join } from "node:path";
-import { DatabaseSync } from "node:sqlite";
+import type { DatabaseSync } from "node:sqlite";
 import { SKILL_ROOT } from "../meta.js";
 import type { Point, SeriesKey } from "../wiki/pageviews.js";
 
@@ -36,8 +37,46 @@ export interface CachedPoint {
   fetchedAt: number;
 }
 
+function isWritableDir(dir: string): boolean {
+  try {
+    mkdirSync(dir, { recursive: true });
+    accessSync(dir, constants.W_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * WIT_CACHE_DIR if set; otherwise <skill>/.cache, falling back to the user's
+ * cache directory when the skill is installed read-only.
+ */
 export function defaultCachePath(): string {
-  return join(process.env.WIT_CACHE_DIR || join(SKILL_ROOT, ".cache"), "wit.sqlite");
+  const local = join(SKILL_ROOT, ".cache");
+  const dir =
+    process.env.WIT_CACHE_DIR ||
+    (isWritableDir(local) ? local : join(process.env.XDG_CACHE_HOME || join(homedir(), ".cache"), "wikipedia-interest-trends"));
+  return join(dir, "wit.sqlite");
+}
+
+/**
+ * Loads node:sqlite on first use. Node 22 prints an ExperimentalWarning to
+ * stderr when it loads; agents often read stderr together with stdout, so that
+ * one warning is filtered while loading. (A static import cannot be guarded
+ * this way: ES modules load built-ins before any module code runs.)
+ */
+function openDatabase(path: string): DatabaseSync {
+  const emitWarning = process.emitWarning;
+  process.emitWarning = ((warning: string | Error, ...rest: unknown[]) => {
+    const message = typeof warning === "string" ? warning : warning.message;
+    if (!message.includes("SQLite is an experimental feature")) Reflect.apply(emitWarning, process, [warning, ...rest]);
+  }) as typeof process.emitWarning;
+  try {
+    const sqlite = process.getBuiltinModule("node:sqlite") as typeof import("node:sqlite");
+    return new sqlite.DatabaseSync(path);
+  } finally {
+    process.emitWarning = emitWarning;
+  }
 }
 
 /**
@@ -51,7 +90,7 @@ export class Cache {
   constructor(path = defaultCachePath()) {
     this.path = path;
     mkdirSync(dirname(path), { recursive: true });
-    this.db = new DatabaseSync(path);
+    this.db = openDatabase(path);
     this.db.exec("PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON;");
     this.migrate();
   }

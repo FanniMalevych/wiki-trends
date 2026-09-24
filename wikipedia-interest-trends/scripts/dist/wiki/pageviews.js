@@ -3,15 +3,18 @@ import { apiRange, periodFromTimestamp } from "./periods.js";
 const BASE = "https://wikimedia.org/api/rest_v1/metrics/pageviews";
 export const ACCESS_VALUES = ["all-access", "desktop", "mobile-app", "mobile-web"];
 export const AGENT_VALUES = ["all-agents", "user", "spider", "automated"];
-/** Accepts "pl", "pl.wikipedia" or "pl.wikipedia.org" and returns "pl.wikipedia". */
+/**
+ * Accepts "pl", "pl.wikipedia", "pl.wikipedia.org" or a Wikipedia URL and returns
+ * "pl.wikipedia". Only Wikipedia is supported: title handling and the Wikidata
+ * mapping assume Wikipedia's conventions (e.g. Wiktionary keeps lower-case titles).
+ */
 export function normalizeProject(input) {
-    let p = input.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/\/.*$/, "");
-    p = p.replace(/\.org$/, "");
-    if (!p.includes("."))
-        p += ".wikipedia";
-    if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(p))
-        throw new Error(`Invalid project "${input}". Use e.g. "pl" or "pl.wikipedia".`);
-    return p;
+    const host = input.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/[/?#].*$/, "").replace(/\.org$/, "");
+    const lang = host.endsWith(".wikipedia") ? host.slice(0, -".wikipedia".length) : host;
+    if (!/^[a-z][a-z0-9-]*$/.test(lang)) {
+        throw new Error(`Invalid edition "${input}". Use a Wikipedia language code such as "pl" or "pl.wikipedia".`);
+    }
+    return `${lang}.wikipedia`;
 }
 /**
  * Canonical page title as the API stores it: underscores for spaces and an

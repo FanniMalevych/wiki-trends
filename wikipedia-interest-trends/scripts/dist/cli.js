@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import "./quiet.js";
 import { CACHE_HELP, cacheCommand } from "./commands/cache.js";
 import { FETCH_HELP, fetchCommand } from "./commands/fetch.js";
 import { RESOLVE_HELP, resolveCommand } from "./commands/resolve.js";

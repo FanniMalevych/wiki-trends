@@ -39,7 +39,7 @@ test("a title maps to each requested edition; missing ones are explained", () =>
   assert.deepEqual([d.found, d.missing], [2, 1]);
   assert.match(r.out.warnings[0], /No article in: pl\.wikipedia/);
 
-  assert.equal(run("--title", "intermittent fasting", "--from", "en", "--lang", "pl,cs,uk").out.data.requests, 0);
+  assert.equal(run("--title", "intermittent fasting", "--from", "en", "--lang", "pl,cs,uk", "--verbose").out.data.requests, 0);
 });
 
 test("a Wikidata ID without --lang lists every edition", () => {

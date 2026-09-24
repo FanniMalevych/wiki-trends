@@ -15,6 +15,7 @@ Options:
   --qid <Q>         Wikidata item ID instead of a title, e.g. Q1666254
   --lang <codes>    Editions to report, comma-separated or repeated (e.g. pl,cs,uk).
                     Default: every edition that has the article.
+  --verbose         Include request details
 
 Editions without an article are listed with status "missing". Their
 "candidates" are unverified search results; never use them without checking.
@@ -37,6 +38,7 @@ export async function resolveCommand(argv: string[], now = Date.now()): Promise<
       from: { type: "string" },
       qid: { type: "string" },
       lang: { type: "string", multiple: true },
+      verbose: { type: "boolean", default: false },
     },
   });
   if (values.title !== undefined && values.qid !== undefined) throw new Error("Use either --title or --qid, not both.");
@@ -47,9 +49,9 @@ export async function resolveCommand(argv: string[], now = Date.now()): Promise<
     const topic = await resolveTopic(
       cache,
       {
-        ...(values.title !== undefined ? { title: values.title } : {}),
-        ...(values.from !== undefined ? { from: normalizeProject(values.from) } : {}),
-        ...(values.qid !== undefined ? { qid: values.qid } : {}),
+        ...(values.title !== undefined && { title: values.title }),
+        ...(values.from !== undefined && { from: normalizeProject(values.from) }),
+        ...(values.qid !== undefined && { qid: values.qid }),
         projects: parseLangs(values.lang),
       },
       now,
@@ -67,7 +69,7 @@ export async function resolveCommand(argv: string[], now = Date.now()): Promise<
         ...topic,
         found: topic.editions.length - missing.length,
         missing: missing.length,
-        requests: after.network + after.replayed - before.network - before.replayed,
+        ...(values.verbose && { requests: after.network + after.replayed - before.network - before.replayed }),
       },
       warnings,
     );

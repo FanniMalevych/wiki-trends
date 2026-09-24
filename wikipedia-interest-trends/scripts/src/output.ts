@@ -1,5 +1,6 @@
 // Every command prints exactly one JSON envelope on stdout so an agent can
-// parse results without scraping text.
+// parse results without scraping text. It is compact (one line) to save the
+// agent's context; pipe through `jq` to read it yourself.
 
 export interface Envelope<T = unknown> {
   ok: boolean;
@@ -17,5 +18,5 @@ export function failure(errors: string[], warnings: string[] = []): Envelope<nul
 }
 
 export function emit(envelope: Envelope): void {
-  process.stdout.write(JSON.stringify(envelope, null, 2) + "\n");
+  process.stdout.write(JSON.stringify(envelope) + "\n");
 }

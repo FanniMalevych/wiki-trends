@@ -101,6 +101,34 @@ export function defaultRange(granularity: Granularity, now: number): { start: st
   return { start: shiftPeriod(end, granularity, -(span - 1)), end };
 }
 
+/**
+ * Turns optional user dates into a period range inside the available data,
+ * explaining any adjustment in `warnings`.
+ */
+export function resolveRange(
+  granularity: Granularity,
+  startInput: string | undefined,
+  endInput: string | undefined,
+  now: number,
+): { start: string; end: string; warnings: string[] } {
+  const defaults = defaultRange(granularity, now);
+  let start = startInput ? toPeriod(startInput, granularity, "start") : defaults.start;
+  let end = endInput ? toPeriod(endInput, granularity, "end") : defaults.end;
+  const earliest = firstAvailablePeriod(granularity);
+  const latest = lastCompletePeriod(granularity, now);
+  const warnings: string[] = [];
+  if (start < earliest) {
+    warnings.push(`Start moved from ${start} to ${earliest}: pageview data begins in July 2015.`);
+    start = earliest;
+  }
+  if (end > latest) {
+    warnings.push(`End moved from ${end} to ${latest}, the last complete ${granularity === "monthly" ? "month" : "day"}.`);
+    end = latest;
+  }
+  if (start > end) throw new Error(`Start ${start} is after end ${end}.`);
+  return { start, end, warnings };
+}
+
 /** API timestamp "YYYYMMDDHH" -> period key. */
 export function periodFromTimestamp(timestamp: string, granularity: Granularity): string {
   const y = timestamp.slice(0, 4);

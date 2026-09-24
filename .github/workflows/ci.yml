@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    defaults:
+      run:
+        working-directory: wikipedia-interest-trends
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: wikipedia-interest-trends/package-lock.json
+      - run: npm ci
+      - run: npm test
+      # The skill ships prebuilt JS; fail if it was not rebuilt after a source change.
+      - run: npm run check

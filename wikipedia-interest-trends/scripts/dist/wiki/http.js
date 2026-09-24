@@ -31,8 +31,20 @@ export function httpMode() {
 function fixturesDir() {
     return process.env.WIT_FIXTURES_DIR || join(SKILL_ROOT, "tests", "fixtures", "http");
 }
+/**
+ * Readable name derived from the URL (e.g. "pageviews-per-article-cs.wikipedia-…")
+ * plus a short hash, since titles in non-Latin scripts reduce to dashes.
+ */
 function fixturePath(url) {
-    return join(fixturesDir(), createHash("sha256").update(url).digest("hex").slice(0, 16) + ".json");
+    const slug = decodeURIComponent(url)
+        .replace("https://wikimedia.org/api/rest_v1/metrics/", "")
+        .replace(/^https:\/\//, "")
+        .replace("/w/api.php?format=json&formatversion=2&", "-")
+        .replace(/[^A-Za-z0-9.]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 90);
+    const hash = createHash("sha256").update(url).digest("hex").slice(0, 8);
+    return join(fixturesDir(), `${slug}-${hash}.json`);
 }
 function retryDelayMs(attempt, retryAfter) {
     const base = Number(process.env.WIT_HTTP_RETRY_BASE_MS ?? 1000);

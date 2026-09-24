@@ -9,8 +9,10 @@ test("normalizeProject accepts short and full forms", () => {
   assert.equal(normalizeProject(" PL.wikipedia "), "pl.wikipedia");
   assert.equal(normalizeProject("uk.wikipedia.org"), "uk.wikipedia");
   assert.equal(normalizeProject("https://cs.wikipedia.org/wiki/Foo"), "cs.wikipedia");
-  assert.equal(normalizeProject("de.wikiversity"), "de.wikiversity");
-  assert.throws(() => normalizeProject("pl wiki"), /Invalid project/);
+  assert.equal(normalizeProject("zh-min-nan"), "zh-min-nan.wikipedia");
+  assert.throws(() => normalizeProject("pl wiki"), /Invalid edition/);
+  assert.throws(() => normalizeProject("de.wikiversity"), /Invalid edition/);
+  assert.throws(() => normalizeProject("en.wiktionary.org"), /Invalid edition/);
 });
 
 test("normalizeTitle matches how the API stores titles", () => {

@@ -166,6 +166,10 @@ const stems = (text: string) =>
 /**
  * True when the title shares word stems (first 4 letters) with the query:
  * one for a one-word query, otherwise at least two.
+ *
+ * A cheap heuristic for languages that separate words with spaces. For Chinese,
+ * Japanese or Thai a whole phrase becomes one "word", so related titles are
+ * often dropped; that errs toward offering no suggestion rather than a wrong one.
  */
 export function looksRelated(title: string, query: string): boolean {
   const q = stems(query);
