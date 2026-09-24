@@ -3,34 +3,57 @@
   "cases": [
     {
       "id": "q1-fasting-pl-cs",
-      "turns": ["Compare growth of interest in intermittent fasting in Polish vs. Czech Wikipedia over the last two years."],
+      "turns": [
+        "Compare growth of interest in intermittent fasting in Polish vs. Czech Wikipedia over the last two years."
+      ],
       "expect": {
         "readSkill": true,
-        "calls": { "analyze": 1 },
+        "calls": {
+          "analyze": 1
+        },
         "cliOk": "analyze",
-        "answer": ["czech|\\bcs\\b", "polish|\\bpl\\b", "no (polish )?article|not covered|missing|does(n't| not) (have|exist)|no .*article", "confiden"],
+        "answer": [
+          "czech|\\bcs\\b",
+          "polish|\\bpl\\b",
+          "no (polish )?article|not covered|missing|does(n't| not) (have|exist)|no .*article",
+          "confiden"
+        ],
         "maxToolCalls": 8
       }
     },
     {
       "id": "q2-astronomy-uk",
-      "turns": ["We're considering an astronomy course — is interest growing in Ukrainian Wikipedia, and how much can we trust that trend?"],
+      "turns": [
+        "We're considering an astronomy course — is interest growing in Ukrainian Wikipedia, and how much can we trust that trend?"
+      ],
       "expect": {
         "readSkill": true,
-        "calls": { "analyze": 1 },
+        "calls": {
+          "analyze": 1
+        },
         "cliOk": "analyze",
-        "answer": ["declin|decreas|falling|dropp", "confiden|reliab|trust"],
+        "answer": [
+          "declin|decreas|falling|dropp",
+          "confiden|reliab|trust"
+        ],
         "maxToolCalls": 8
       }
     },
     {
       "id": "q3-learning-english",
-      "turns": ["Compare interest in \"learning English\" across the German, Spanish, French, Polish and Ukrainian Wikipedias and recommend which audiences to investigate next."],
+      "turns": [
+        "Compare interest in \"learning English\" across the German, Spanish, French, Polish and Ukrainian Wikipedias and recommend which audiences to investigate next."
+      ],
       "expect": {
         "readSkill": true,
-        "calls": { "analyze": 1 },
+        "calls": {
+          "analyze": 1
+        },
         "cliOk": "analyze",
-        "answer": ["recommend|suggest|investigate|prioriti", "german|spanish|\\bde\\b|\\bes\\b"],
+        "answer": [
+          "recommend|suggest|investigate|prioriti",
+          "german|spanish|\\bde\\b|\\bes\\b"
+        ],
         "maxToolCalls": 12
       }
     },
@@ -42,40 +65,80 @@
       ],
       "expect": {
         "readSkill": true,
-        "calls": { "analyze": 2 },
+        "calls": {
+          "analyze": 2
+        },
         "cliOk": "analyze",
-        "answer": ["ukrain|\\buk\\b", "german|\\bde\\b"],
+        "answer": [
+          "ukrain|\\buk\\b",
+          "german|\\bde\\b"
+        ],
         "maxToolCalls": 10
       }
     },
     {
       "id": "disambiguation-mercury",
-      "turns": ["Is interest in Mercury growing on German Wikipedia?"],
+      "turns": [
+        "Is interest in Mercury growing on German Wikipedia?"
+      ],
       "expect": {
         "readSkill": true,
-        "calls": { "analyze": 1 },
-        "answer": ["planet|element|freddie|which mercury|ambiguous|several"],
+        "calls": {
+          "analyze": 1
+        },
+        "answer": [
+          "planet|element|freddie|which mercury|ambiguous|several"
+        ],
         "maxToolCalls": 10
       }
     },
     {
       "id": "typo-title",
-      "turns": ["How is interest in 'intermitent fastin' trending in Spanish Wikipedia?"],
+      "turns": [
+        "How is interest in 'intermitent fastin' trending in Spanish Wikipedia?"
+      ],
       "expect": {
         "readSkill": true,
-        "calls": { "analyze": 1 },
+        "calls": {
+          "analyze": 1
+        },
         "cliOk": "analyze",
-        "answer": ["spanish|\\bes\\b", "growing|declin|stable|unclear|no clear"],
+        "answer": [
+          "spanish|\\bes\\b",
+          "growing|declin|stable|unclear|no clear"
+        ],
         "maxToolCalls": 10
       }
     },
     {
+      "id": "report-shareable",
+      "turns": [
+        "We're choosing where to launch an astronomy course. Make a short shareable report comparing interest in astronomy on the Ukrainian, Polish and Czech Wikipedias, with your recommendation."
+      ],
+      "expect": {
+        "readSkill": true,
+        "calls": {
+          "report": 1
+        },
+        "cliOk": "report",
+        "answer": [
+          "wit-output/.*\\.html|\\.html",
+          "recommend|suggest|prioriti|best candidate"
+        ],
+        "maxToolCalls": 8
+      }
+    },
+    {
       "id": "out-of-scope",
-      "turns": ["What is the capital of France?"],
+      "turns": [
+        "What is the capital of France?"
+      ],
       "expect": {
         "readSkill": false,
         "calls": {},
-        "answer": ["paris"],
+        "answer": [
+          "paris"
+        ],
         "maxToolCalls": 0
       }
     }
