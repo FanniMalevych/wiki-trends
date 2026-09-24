@@ -1,0 +1,269 @@
+{
+ "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/uk.wikipedia/all-access/user/%D0%90%D1%81%D1%82%D1%80%D0%BE%D1%84%D1%96%D0%B7%D0%B8%D0%BA%D0%B0/daily/20240201/20240229",
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 26
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020200",
+    "access": "all-access",
+    "agent": "user",
+    "views": 13
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020300",
+    "access": "all-access",
+    "agent": "user",
+    "views": 7
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020400",
+    "access": "all-access",
+    "agent": "user",
+    "views": 10
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020500",
+    "access": "all-access",
+    "agent": "user",
+    "views": 19
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020600",
+    "access": "all-access",
+    "agent": "user",
+    "views": 16
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020700",
+    "access": "all-access",
+    "agent": "user",
+    "views": 10
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020800",
+    "access": "all-access",
+    "agent": "user",
+    "views": 10
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024020900",
+    "access": "all-access",
+    "agent": "user",
+    "views": 18
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021000",
+    "access": "all-access",
+    "agent": "user",
+    "views": 12
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 6
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021200",
+    "access": "all-access",
+    "agent": "user",
+    "views": 19
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021300",
+    "access": "all-access",
+    "agent": "user",
+    "views": 20
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021400",
+    "access": "all-access",
+    "agent": "user",
+    "views": 13
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021500",
+    "access": "all-access",
+    "agent": "user",
+    "views": 9
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021600",
+    "access": "all-access",
+    "agent": "user",
+    "views": 8
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021700",
+    "access": "all-access",
+    "agent": "user",
+    "views": 10
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021800",
+    "access": "all-access",
+    "agent": "user",
+    "views": 8
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024021900",
+    "access": "all-access",
+    "agent": "user",
+    "views": 13
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022000",
+    "access": "all-access",
+    "agent": "user",
+    "views": 6
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 7
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022200",
+    "access": "all-access",
+    "agent": "user",
+    "views": 16
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022300",
+    "access": "all-access",
+    "agent": "user",
+    "views": 7
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022400",
+    "access": "all-access",
+    "agent": "user",
+    "views": 9
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022500",
+    "access": "all-access",
+    "agent": "user",
+    "views": 3
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022600",
+    "access": "all-access",
+    "agent": "user",
+    "views": 13
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022700",
+    "access": "all-access",
+    "agent": "user",
+    "views": 11
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022800",
+    "access": "all-access",
+    "agent": "user",
+    "views": 17
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрофізика",
+    "granularity": "daily",
+    "timestamp": "2024022900",
+    "access": "all-access",
+    "agent": "user",
+    "views": 16
+   }
+  ]
+ }
+}

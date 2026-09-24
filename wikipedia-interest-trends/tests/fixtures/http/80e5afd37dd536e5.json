@@ -1,0 +1,104 @@
+{
+ "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/aggregate/cs.wikipedia/all-access/user/monthly/20230101/20231231",
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023010100",
+    "views": 88450481
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023020100",
+    "views": 70763319
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023030100",
+    "views": 79896897
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023040100",
+    "views": 73188455
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023050100",
+    "views": 79591717
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023060100",
+    "views": 69659903
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023070100",
+    "views": 64427276
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023080100",
+    "views": 65786236
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023090100",
+    "views": 63649046
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023100100",
+    "views": 74637445
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023110100",
+    "views": 73550281
+   },
+   {
+    "project": "cs.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2023120100",
+    "views": 71402931
+   }
+  ]
+ }
+}

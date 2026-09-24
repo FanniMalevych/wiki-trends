@@ -1,0 +1,269 @@
+{
+ "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/uk.wikipedia/all-access/user/%D0%90%D1%81%D1%82%D1%80%D0%BE%D0%BD%D0%BE%D0%BC%D1%96%D1%8F/daily/20240201/20240229",
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 134
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020200",
+    "access": "all-access",
+    "agent": "user",
+    "views": 93
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020300",
+    "access": "all-access",
+    "agent": "user",
+    "views": 58
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020400",
+    "access": "all-access",
+    "agent": "user",
+    "views": 93
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020500",
+    "access": "all-access",
+    "agent": "user",
+    "views": 152
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020600",
+    "access": "all-access",
+    "agent": "user",
+    "views": 154
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020700",
+    "access": "all-access",
+    "agent": "user",
+    "views": 130
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020800",
+    "access": "all-access",
+    "agent": "user",
+    "views": 176
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024020900",
+    "access": "all-access",
+    "agent": "user",
+    "views": 106
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021000",
+    "access": "all-access",
+    "agent": "user",
+    "views": 51
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 81
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021200",
+    "access": "all-access",
+    "agent": "user",
+    "views": 170
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021300",
+    "access": "all-access",
+    "agent": "user",
+    "views": 171
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021400",
+    "access": "all-access",
+    "agent": "user",
+    "views": 149
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021500",
+    "access": "all-access",
+    "agent": "user",
+    "views": 162
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021600",
+    "access": "all-access",
+    "agent": "user",
+    "views": 88
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021700",
+    "access": "all-access",
+    "agent": "user",
+    "views": 83
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021800",
+    "access": "all-access",
+    "agent": "user",
+    "views": 86
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024021900",
+    "access": "all-access",
+    "agent": "user",
+    "views": 122
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022000",
+    "access": "all-access",
+    "agent": "user",
+    "views": 96
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022100",
+    "access": "all-access",
+    "agent": "user",
+    "views": 103
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022200",
+    "access": "all-access",
+    "agent": "user",
+    "views": 123
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022300",
+    "access": "all-access",
+    "agent": "user",
+    "views": 94
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022400",
+    "access": "all-access",
+    "agent": "user",
+    "views": 66
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022500",
+    "access": "all-access",
+    "agent": "user",
+    "views": 93
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022600",
+    "access": "all-access",
+    "agent": "user",
+    "views": 97
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022700",
+    "access": "all-access",
+    "agent": "user",
+    "views": 80
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022800",
+    "access": "all-access",
+    "agent": "user",
+    "views": 91
+   },
+   {
+    "project": "uk.wikipedia",
+    "article": "Астрономія",
+    "granularity": "daily",
+    "timestamp": "2024022900",
+    "access": "all-access",
+    "agent": "user",
+    "views": 104
+   }
+  ]
+ }
+}

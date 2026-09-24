@@ -25,7 +25,7 @@ test("unknown command returns a JSON error envelope", () => {
 });
 
 test("known but unimplemented command returns a JSON error envelope", () => {
-  const r = run("fetch");
+  const r = run("analyze");
   assert.equal(r.status, 2);
   assert.equal(JSON.parse(r.stdout).ok, false);
 });

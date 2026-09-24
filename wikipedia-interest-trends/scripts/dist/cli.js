@@ -1,28 +1,28 @@
 #!/usr/bin/env node
-import { readFileSync } from "node:fs";
+import "./quiet.js";
+import { CACHE_HELP, cacheCommand } from "./commands/cache.js";
+import { FETCH_HELP, fetchCommand } from "./commands/fetch.js";
+import { VERSION } from "./meta.js";
 import { emit, failure } from "./output.js";
 const COMMANDS = {
-    resolve: "Map an article title to its Wikidata QID and titles in other language editions",
-    fetch: "Download pageviews for articles (cached locally in SQLite)",
-    analyze: "Normalize, deseasonalize and fit a trend with a confidence score",
-    compare: "Compare trends for one topic across language editions",
-    chart: "Render a chart (SVG/PNG) from analyzed series",
-    report: "Build a one-page shareable report (HTML/PDF)",
-    cache: "Inspect or clear the local cache",
+    resolve: { summary: "Map an article title to its Wikidata QID and titles in other language editions" },
+    fetch: { summary: "Download pageviews for articles (cached locally in SQLite)", help: FETCH_HELP, run: fetchCommand },
+    analyze: { summary: "Normalize, deseasonalize and fit a trend with a confidence score" },
+    compare: { summary: "Compare trends for one topic across language editions" },
+    chart: { summary: "Render a chart (SVG/PNG) from analyzed series" },
+    report: { summary: "Build a one-page shareable report (HTML/PDF)" },
+    cache: { summary: "Inspect or clear the local cache", help: CACHE_HELP, run: cacheCommand },
 };
-function packageVersion() {
-    const pkgUrl = new URL("../../package.json", import.meta.url);
-    return JSON.parse(readFileSync(pkgUrl, "utf8")).version;
-}
 function helpText() {
     const width = Math.max(...Object.keys(COMMANDS).map((c) => c.length));
     const rows = Object.entries(COMMANDS)
-        .map(([name, summary]) => `  ${name.padEnd(width)}  ${summary}`)
+        .map(([name, spec]) => `  ${name.padEnd(width)}  ${spec.summary}${spec.run ? "" : " (not implemented yet)"}`)
         .join("\n");
-    return `wikipedia-interest-trends ${packageVersion()}
+    return `wikipedia-interest-trends ${VERSION}
 
 Usage:
   node scripts/dist/cli.js <command> [options]
+  node scripts/dist/cli.js <command> --help
 
 Commands:
 ${rows}
@@ -35,24 +35,38 @@ Every command prints one JSON object: {ok, data, warnings[], errors[]}.
 See references/cli.md for full command reference.
 `;
 }
-function isCommand(value) {
-    return Object.hasOwn(COMMANDS, value);
-}
-function main(argv) {
-    const [first] = argv;
-    if (first === undefined || first === "-h" || first === "--help" || first === "help") {
+const isHelp = (arg) => arg === "-h" || arg === "--help" || arg === "help";
+async function main(argv) {
+    const [first, ...rest] = argv;
+    if (first === undefined || isHelp(first)) {
         process.stdout.write(helpText());
         return 0;
     }
     if (first === "-v" || first === "--version") {
-        process.stdout.write(packageVersion() + "\n");
+        process.stdout.write(VERSION + "\n");
         return 0;
     }
-    if (!isCommand(first)) {
+    const spec = Object.hasOwn(COMMANDS, first) ? COMMANDS[first] : undefined;
+    if (!spec) {
         emit(failure([`Unknown command "${first}". Run with --help to list commands.`]));
         return 1;
     }
-    emit(failure([`Command "${first}" is not implemented yet.`]));
-    return 2;
+    if (!spec.run) {
+        emit(failure([`Command "${first}" is not implemented yet.`]));
+        return 2;
+    }
+    if (rest.some(isHelp)) {
+        process.stdout.write(spec.help ?? `${spec.summary}\n`);
+        return 0;
+    }
+    let envelope;
+    try {
+        envelope = await spec.run(rest);
+    }
+    catch (err) {
+        envelope = failure([err.message]);
+    }
+    emit(envelope);
+    return envelope.ok ? 0 : 1;
 }
-process.exitCode = main(process.argv.slice(2));
+process.exitCode = await main(process.argv.slice(2));

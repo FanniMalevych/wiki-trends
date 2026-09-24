@@ -1,0 +1,32 @@
+{
+ "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/aggregate/pl.wikipedia/all-access/user/monthly/20240101/20240331",
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "project": "pl.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024010100",
+    "views": 258404661
+   },
+   {
+    "project": "pl.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024020100",
+    "views": 215496356
+   },
+   {
+    "project": "pl.wikipedia",
+    "access": "all-access",
+    "agent": "user",
+    "granularity": "monthly",
+    "timestamp": "2024030100",
+    "views": 222403572
+   }
+  ]
+ }
+}

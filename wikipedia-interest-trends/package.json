@@ -16,7 +16,10 @@
     "clean": "node -e \"require('node:fs').rmSync('scripts/dist',{recursive:true,force:true})\"",
     "rebuild": "npm run clean && npm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "npm run build && node --test \"tests/unit/**/*.test.mjs\""
+    "test": "npm run build && node --test \"tests/unit/**/*.test.mjs\" \"tests/integration/**/*.test.mjs\"",
+    "test:unit": "npm run build && node --test \"tests/unit/**/*.test.mjs\"",
+    "test:integration": "npm run build && node --test \"tests/integration/**/*.test.mjs\"",
+    "fixtures:record": "WIT_HTTP_MODE=record npm run test:integration"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
