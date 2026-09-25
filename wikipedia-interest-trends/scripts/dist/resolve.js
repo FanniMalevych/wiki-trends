@@ -1,4 +1,4 @@
-import { languageOf, lookupEntity, lookupPage, searchTitles, } from "./wiki/metadata.js";
+import { lookupEntity, lookupPage, searchTitles } from "./wiki/metadata.js";
 const quoteList = (titles) => titles.map((t) => `"${t}"`).join(", ");
 export function normalizeQid(input) {
     const match = /^q?(\d+)$/i.exec(input.trim());
@@ -24,27 +24,12 @@ export async function pageProblem(cache, page, requested, now) {
     }
     return null;
 }
-async function missingEdition(cache, project, qid, labels, now) {
-    const lang = languageOf(project);
-    const label = labels[lang];
-    if (!label) {
-        return {
-            project,
-            status: "missing",
-            title: null,
-            note: `No ${project} article is linked to ${qid} and the item has no "${lang}" name, so the topic is probably not covered there.`,
-        };
-    }
-    const candidates = await searchTitles(cache, project, label, now);
+function missingEdition(project, qid) {
     return {
         project,
         status: "missing",
         title: null,
-        candidates,
-        note: `No ${project} article is linked to ${qid}. ` +
-            (candidates.length
-                ? `Search results for its local name "${label}" are unverified; check one covers the same topic before using it.`
-                : `A search for its local name "${label}" found nothing.`),
+        note: `No ${project} article is linked to ${qid}, so the topic is probably not covered there under its own article.`,
     };
 }
 /** Maps a title in one edition, or a Wikidata ID, to the matching article in each edition. */
@@ -76,7 +61,7 @@ export async function resolveTopic(cache, input, now) {
     const editions = [];
     for (const project of projects) {
         const title = entity.sitelinks.get(project);
-        editions.push(title ? { project, status: "found", title } : await missingEdition(cache, project, entity.qid, entity.labels, now));
+        editions.push(title ? { project, status: "found", title } : missingEdition(project, entity.qid));
     }
     return {
         qid: entity.qid,

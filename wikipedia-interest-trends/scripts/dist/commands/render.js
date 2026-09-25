@@ -14,7 +14,7 @@ Options:
   --start, --end       YYYY-MM, instead of --months / last complete month
   --out <path>         Output file (default: wit-output/<topic>_<languages>_<end>.<ext>
                        in the current directory)
-  --redirects, --access, --agent, --verbose   As for analyze`;
+  --verbose            Include request details`;
 export const CHART_HELP = `Usage: cli.js chart (--title <t> --from <p> | --qid <Q>) --lang <codes> [options]
 
 Writes an SVG chart: one panel per edition with monthly views per million edition

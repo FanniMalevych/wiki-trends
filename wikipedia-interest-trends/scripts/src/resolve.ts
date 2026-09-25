@@ -1,18 +1,10 @@
 import type { Cache } from "./cache/db.js";
-import {
-  languageOf,
-  lookupEntity,
-  lookupPage,
-  searchTitles,
-  type PageInfo,
-} from "./wiki/metadata.js";
+import { lookupEntity, lookupPage, searchTitles, type PageInfo } from "./wiki/metadata.js";
 
 export interface Edition {
   project: string;
   status: "found" | "missing";
   title: string | null;
-  /** Unverified search results for a missing edition. */
-  candidates?: string[];
   note?: string;
 }
 
@@ -64,28 +56,12 @@ export async function pageProblem(cache: Cache, page: PageInfo, requested: strin
   return null;
 }
 
-async function missingEdition(cache: Cache, project: string, qid: string, labels: Record<string, string>, now: number): Promise<Edition> {
-  const lang = languageOf(project);
-  const label = labels[lang];
-  if (!label) {
-    return {
-      project,
-      status: "missing",
-      title: null,
-      note: `No ${project} article is linked to ${qid} and the item has no "${lang}" name, so the topic is probably not covered there.`,
-    };
-  }
-  const candidates = await searchTitles(cache, project, label, now);
+function missingEdition(project: string, qid: string): Edition {
   return {
     project,
     status: "missing",
     title: null,
-    candidates,
-    note:
-      `No ${project} article is linked to ${qid}. ` +
-      (candidates.length
-        ? `Search results for its local name "${label}" are unverified; check one covers the same topic before using it.`
-        : `A search for its local name "${label}" found nothing.`),
+    note: `No ${project} article is linked to ${qid}, so the topic is probably not covered there under its own article.`,
   };
 }
 
@@ -119,7 +95,7 @@ export async function resolveTopic(cache: Cache, input: TopicInput, now: number)
   for (const project of projects) {
     const title = entity.sitelinks.get(project);
     editions.push(
-      title ? { project, status: "found", title } : await missingEdition(cache, project, entity.qid, entity.labels, now),
+      title ? { project, status: "found", title } : missingEdition(project, entity.qid),
     );
   }
 

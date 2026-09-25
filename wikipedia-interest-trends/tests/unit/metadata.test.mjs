@@ -10,7 +10,6 @@ import {
   LOOKUP_TTL_MS,
   looksRelated,
   lookupPage,
-  rankRedirects,
   siteToProject,
 } from "../../scripts/dist/wiki/metadata.js";
 
@@ -66,14 +65,13 @@ afterEach(() => {
   cache.close();
 });
 
-test("lookupPage follows redirects and drops section redirects", async () => {
+test("lookupPage follows a redirected title", async () => {
   fakeApi(() => ({
     query: {
       redirects: [{ from: "IF diet", to: "Intermittent fasting" }],
       pages: [{
         title: "Intermittent fasting",
         pageprops: { wikibase_item: "Q1666254" },
-        redirects: [{ title: "5:2 diet" }, { title: "Bolus feeding", fragment: "Intermittent feeding" }],
       }],
     },
   }));
@@ -84,7 +82,6 @@ test("lookupPage follows redirects and drops section redirects", async () => {
     title: "Intermittent_fasting",
     redirectedFrom: "IF_diet",
     qid: "Q1666254",
-    redirects: ["5:2_diet"],
   });
 });
 
@@ -109,27 +106,6 @@ test("API errors inside a 200 response are raised", async () => {
   await assert.rejects(lookupPage(cache, "en.wikipedia", "Foo", 0), /API error badvalue/);
 });
 
-test("rankRedirects orders by recent views and drops unviewed titles", async () => {
-  fakeApi((u) => ({
-    query: {
-      pages: u.searchParams.get("titles").split("|").map((title) => ({
-        title,
-        pageviews: { d1: title === "B" ? 9 : title === "A" ? 2 : 0, d2: title === "A" ? 1 : null },
-      })),
-    },
-  }));
-  assert.deepEqual(await rankRedirects(cache, "en.wikipedia", ["A", "B", "C"], 0), [
-    { title: "B", views: 9 },
-    { title: "A", views: 3 },
-  ]);
-});
-
-test("rankRedirects batches 50 titles per request", async () => {
-  fakeApi(() => ({ query: { pages: [] } }));
-  await rankRedirects(cache, "en.wikipedia", Array.from({ length: 120 }, (_, i) => `T${i}`), 0);
-  assert.equal(requested.length, 2); // only the first 100 are considered
-});
-
 test("resolveTopic maps a title to each edition and explains gaps", async () => {
   fakeApi((u) => {
     if (u.host === "www.wikidata.org") {
@@ -143,7 +119,6 @@ test("resolveTopic maps a title to each edition and explains gaps", async () => 
         },
       };
     }
-    if (u.searchParams.get("list") === "search") return { query: { search: [{ title: "Temat" }, { title: "Unrelated" }] } };
     return { query: { pages: [{ title: "Topic", pageprops: { wikibase_item: "Q1" } }] } };
   });
   const topic = await resolveTopic(cache, { title: "topic", from: "en.wikipedia", projects: ["pl.wikipedia", "cs.wikipedia"] }, 0);
@@ -152,7 +127,7 @@ test("resolveTopic maps a title to each edition and explains gaps", async () => 
   assert.deepEqual(topic.source, { project: "en.wikipedia", title: "Topic", redirectedFrom: null });
   assert.deepEqual(topic.editions[1], { project: "cs.wikipedia", status: "found", title: "Téma_x" });
   assert.equal(topic.editions[0].status, "missing");
-  assert.deepEqual(topic.editions[0].candidates, ["Temat"]);
+  assert.match(topic.editions[0].note, /No pl\.wikipedia article is linked to Q1/);
   assert.equal(topic.editions.length, 2); // only the requested editions, although de exists
 });
 

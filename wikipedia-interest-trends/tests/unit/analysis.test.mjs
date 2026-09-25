@@ -22,7 +22,7 @@ function series({ start = "2021-09", months = 60, share, total = () => 50e6 }) {
   const views = periods.map((_, i) => Math.max(0, Math.round((share(i) * totals[i]) / 1e6)));
   const pts = (vals) => periods.map((period, i) => ({ period, views: vals[i] }));
   return [
-    { project: "xx.wikipedia", article: "Topic", redirectedFrom: null, redirects: [], redirectViews: 0, points: pts(views), cachedPeriods: 0, fetchedPeriods: 0 },
+    { project: "xx.wikipedia", article: "Topic", redirectedFrom: null, points: pts(views), cachedPeriods: 0, fetchedPeriods: 0 },
     { project: "xx.wikipedia", points: pts(totals), cachedPeriods: 0, fetchedPeriods: 0 },
   ];
 }

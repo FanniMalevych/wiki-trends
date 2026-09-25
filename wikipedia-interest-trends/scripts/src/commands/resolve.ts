@@ -18,8 +18,7 @@ Options:
                     Default: every edition that has the article.
   --verbose         Include request details
 
-Editions without an article are listed with status "missing". Their
-"candidates" are unverified search results; never use them without checking.
+Editions without an article are listed with status "missing".
 `;
 
 export async function resolveCommand(argv: string[], now = Date.now()): Promise<Envelope> {

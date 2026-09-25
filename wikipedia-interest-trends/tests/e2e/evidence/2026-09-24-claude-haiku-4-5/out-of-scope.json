@@ -25,19 +25,19 @@
    "content": [
     {
      "type": "text",
-     "text": "The capital of France is **Paris**.\n\nParis is the largest city in France and has been the capital since the 12th century. It is located in the north-central part of the country along the Seine River and is known as a major center for art, fashion, gastronomy, and culture."
+     "text": "The capital of France is **Paris**.\n\nParis is not only the capital but also the largest city in France. It's located in the north-central part of the country along the Seine River and is known for its historical significance, culture, architecture, and landmarks such as the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum."
     }
    ]
   }
  ],
  "toolCalls": [],
  "answers": [
-  "The capital of France is **Paris**.\n\nParis is the largest city in France and has been the capital since the 12th century. It is located in the north-central part of the country along the Seine River and is known as a major center for art, fashion, gastronomy, and culture."
+  "The capital of France is **Paris**.\n\nParis is not only the capital but also the largest city in France. It's located in the north-central part of the country along the Seine River and is known for its historical significance, culture, architecture, and landmarks such as the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum."
  ],
  "usage": {
   "requests": 1,
   "input": 912,
-  "output": 66,
+  "output": 77,
   "cacheRead": 0,
   "cacheWrite": 0
  },

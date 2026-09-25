@@ -4,7 +4,7 @@ import { loadDataset } from "../dataset.js";
 import { success } from "../output.js";
 import { httpStats } from "../wiki/http.js";
 import { ACCESS_VALUES, AGENT_VALUES } from "../wiki/pageviews.js";
-import { count, oneOf, SELECTION_HELP, SELECTION_OPTIONS, selectionFrom } from "./selection.js";
+import { oneOf, SELECTION_HELP, SELECTION_OPTIONS, selectionFrom } from "./selection.js";
 export const FETCH_HELP = `Usage:
   cli.js fetch --qid <Q> --lang <codes> [options]
   cli.js fetch --title <title> --from <p> --lang <codes> [options]
@@ -19,9 +19,6 @@ Options:
   --start <date>       YYYY-MM or YYYY-MM-DD (default: 24 months / 730 days ago)
   --end <date>         YYYY-MM or YYYY-MM-DD (default: last complete month / yesterday)
   --granularity <g>    monthly (default) | daily
-  --redirects <n>      Also count views of each article's n most-viewed redirects
-                       (default 0). Redirects can widen the topic (e.g. "5:2 diet"
-                       -> "Intermittent fasting") and differ between languages.
   --access <a>         all-access (default) | desktop | mobile-app | mobile-web
   --agent <a>          user (default) | all-agents | spider | automated
   --skip-aggregate     Do not fetch edition totals
@@ -61,7 +58,6 @@ export async function fetchCommand(argv, now = Date.now()) {
             start: { type: "string" },
             end: { type: "string" },
             granularity: { type: "string", default: "monthly" },
-            redirects: { type: "string", default: "0" },
             access: { type: "string", default: "all-access" },
             agent: { type: "string", default: "user" },
             "skip-aggregate": { type: "boolean", default: false },
@@ -69,7 +65,6 @@ export async function fetchCommand(argv, now = Date.now()) {
             verbose: { type: "boolean", default: false },
         },
     });
-    const redirects = count("redirects", values.redirects);
     const selection = selectionFrom(values);
     if ("articles" in selection && selection.articles.length === 0 && values["skip-aggregate"]) {
         throw new Error("Nothing to fetch: give --article or drop --skip-aggregate.");
@@ -83,7 +78,6 @@ export async function fetchCommand(argv, now = Date.now()) {
             agent: oneOf("agent", values.agent, AGENT_VALUES),
             start: values.start,
             end: values.end,
-            redirects,
             aggregates: !values["skip-aggregate"],
         }, now);
         const details = (s) => ({
@@ -98,23 +92,13 @@ export async function fetchCommand(argv, now = Date.now()) {
             end: d.end,
             access: d.access,
             agent: d.agent,
-            articles: d.articles.map((a) => {
-                const summary = summarize(a.points);
-                return {
-                    project: a.project,
-                    article: a.article,
-                    ...(a.redirectedFrom !== null && { redirectedFrom: a.redirectedFrom }),
-                    ...summary,
-                    ...(a.redirects.length > 0 && {
-                        redirects: {
-                            titles: a.redirects,
-                            views: a.redirectViews,
-                            share: summary.total ? Math.round((a.redirectViews / summary.total) * 1000) / 1000 : 0,
-                        },
-                    }),
-                    ...details(a),
-                };
-            }),
+            articles: d.articles.map((a) => ({
+                project: a.project,
+                article: a.article,
+                ...(a.redirectedFrom !== null && { redirectedFrom: a.redirectedFrom }),
+                ...summarize(a.points),
+                ...details(a),
+            })),
             aggregates: d.aggregates.map((g) => ({ project: g.project, ...summarize(g.points), ...details(g) })),
             ...(d.missing.length > 0 && { missing: d.missing }),
             ...(values.verbose && {

@@ -42,4 +42,4 @@ high ≥ 70, medium 40–69, low < 40.
 - **Spikes** are usually news or social media. The trend is robust to them, but a topic driven by bursts is weaker evidence of steady interest.
 - **May 2025 bot-detection change:** Wikimedia reported about 8% fewer human pageviews after improving bot detection. Shares are affected much less than raw counts.
 - **One language is not one country:** Spanish, English, French and Arabic editions are read across many countries.
-- **Redirects** are not counted by default. `--redirects n` adds the most-viewed alternative titles but can widen the topic (e.g. "5:2 diet" counted as "Intermittent fasting").
+- **Views of redirect titles are not counted.** Wikipedia counts views that arrive through an alternative title (e.g. "5:2 diet") under that title. If an article was renamed during the period, its views split between the old and new title, which shows up as a sudden level change.

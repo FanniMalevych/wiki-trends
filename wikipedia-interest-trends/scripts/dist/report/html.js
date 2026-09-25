@@ -42,11 +42,7 @@ export function buildReport({ dataset: d, editions, chartSvg, notes, generatedOn
     const ranked = editions.length > 1 ? rankEditions(editions) : null;
     const order = ranked ? ranked.map((r) => editions.find((e) => e.project === r.project)) : editions;
     const takeaways = order.map((e) => `<li>${esc(e.summary)}</li>`).join("");
-    const gaps = d.missing
-        .map((m) => `<li><b>${esc(m.project)}</b>: ${esc(m.note ?? "no article")}` +
-        (m.candidates?.length ? ` Search results: ${m.candidates.map((c) => esc(display(c))).join(", ")}.` : "") +
-        "</li>")
-        .join("");
+    const gaps = d.missing.map((m) => `<li><b>${esc(m.project)}</b>: ${esc(m.note ?? "no article")}</li>`).join("");
     const rows = order
         .map((e, i) => {
         const t = e.trend;

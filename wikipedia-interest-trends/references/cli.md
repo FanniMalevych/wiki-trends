@@ -33,10 +33,9 @@ node scripts/dist/cli.js analyze --title "Intermittent fasting" --from en --lang
 | `--months <n>` | 60 | Number of months ending at `--end`; 24 = "the last two years" |
 | `--start <YYYY-MM>` | | First month, instead of `--months` |
 | `--end <YYYY-MM>` | last complete month | Last month |
-| `--redirects <n>` | 0 | Also count views of the article's n most-viewed redirect titles (can widen the topic) |
-| `--access <a>` | all-access | all-access, desktop, mobile-app, mobile-web |
-| `--agent <a>` | user | user (humans), all-agents, spider, automated |
 | `--verbose` | off | Adds the number of network requests made |
+
+Always measures human views (`agent` user) on every platform (`access` all-access); `fetch` can pull other traffic types.
 
 `data` fields:
 
@@ -86,7 +85,7 @@ node scripts/dist/cli.js resolve --title "intermittent fasting" --from en --lang
 ```
 
 Options: `--title` + `--from`, or `--qid`; `--lang` (default: every edition); `--verbose`.
-Returns `qid`, `label`, `source`, and `editions[]` with `status` found or missing. `candidates` on a missing edition are unverified search results.
+Returns `qid`, `label`, `source`, and `editions[]` with `status` found or missing; a missing edition has a `note`.
 
 ## fetch — raw monthly or daily views
 
@@ -100,7 +99,9 @@ Same article options as analyze, plus:
 |---|---|---|
 | `--start`, `--end` | 24 months / 730 days back, last complete period | `YYYY-MM` or `YYYY-MM-DD` |
 | `--granularity <g>` | monthly | monthly or daily |
-| `--redirects`, `--access`, `--agent`, `--verbose` | | As for analyze |
+| `--access <a>` | all-access | all-access, desktop, mobile-app, mobile-web |
+| `--agent <a>` | user | user (humans), all-agents, spider, automated |
+| `--verbose` | off | As for analyze |
 | `--skip-aggregate` | off | Do not fetch each edition's total views |
 | `--points` | off | Include every `[period, views]` pair |
 

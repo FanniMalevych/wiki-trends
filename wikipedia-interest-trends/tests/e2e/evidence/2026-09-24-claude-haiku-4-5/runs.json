@@ -31,11 +31,19 @@
    "failed": {}
   },
   {
-   "run": "run 3: final (transcripts in this folder)",
+   "run": "run 3: final before trimming",
    "folder": "2026-09-24T16-40-18",
    "passed": 8,
    "total": 8,
    "costUsd": 0.0932,
+   "failed": {}
+  },
+  {
+   "run": "run 4: after removing unused features (transcripts in this folder)",
+   "folder": "2026-09-25T07-09-21",
+   "passed": 8,
+   "total": 8,
+   "costUsd": 0.0909,
    "failed": {}
   }
  ]

@@ -1,0 +1,26 @@
+{
+ "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&redirects=1&titles=intermittent+fasting&prop=pageprops&ppprop=wikibase_item%7Cdisambiguation",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "query": {
+   "normalized": [
+    {
+     "fromencoded": false,
+     "from": "intermittent fasting",
+     "to": "Intermittent fasting"
+    }
+   ],
+   "pages": [
+    {
+     "pageid": 20104879,
+     "ns": 0,
+     "title": "Intermittent fasting",
+     "pageprops": {
+      "wikibase_item": "Q1666254"
+     }
+    }
+   ]
+  }
+ }
+}

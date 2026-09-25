@@ -27,11 +27,11 @@
    "content": [
     {
      "type": "text",
-     "text": "I'll help you check whether interest in Mercury is growing on German Wikipedia. Let me first read the skill instructions to understand how to use this tool."
+     "text": "I'll help you check whether interest in Mercury is growing on German Wikipedia. First, let me read the skill instructions to understand how to use this tool properly."
     },
     {
      "type": "tool_use",
-     "id": "toolu_01NrC8CtxizZ4UxjWBpDRXHt",
+     "id": "toolu_01Ak2WqHdemEp9cBsHj3G384",
      "name": "read_file",
      "input": {
       "path": "SKILL.md"
@@ -47,7 +47,7 @@
    "content": [
     {
      "type": "tool_result",
-     "tool_use_id": "toolu_01NrC8CtxizZ4UxjWBpDRXHt",
+     "tool_use_id": "toolu_01Ak2WqHdemEp9cBsHj3G384",
      "content": "---\nname: wikipedia-interest-trends\ndescription: Measures whether public interest in a topic is growing, stable or declining in one or more Wikipedia language editions, using Wikipedia pageview statistics, and says how far each trend can be trusted. Use when asked whether interest in a topic is rising, to compare interest between languages or countries, or to pick which language audiences to investigate next (e.g. for a course, product or localization decision).\n---\n\n# Wikipedia Interest Trends\n\nPageviews show **attention**, not willingness to pay. Present results as a signal for what to validate next, never as proof of demand.\n\nAll commands run from this skill's directory and print one line of JSON: `{ok, data, warnings, errors}`. Never compute trend numbers yourself: use the command output.\n\n## Workflow\n\n1. **Identify the topic and languages.**\n   - Topic → an English Wikipedia article title (e.g. \"Intermittent fasting\", \"Astronomy\").\n   - Languages → edition codes (see the table below), e.g. Polish = `pl`, Czech = `cs`.\n   - Period → `--months`: \"last two years\" = `--months 24`, \"last year\" = `--months 12`. No period given → omit it (default: 5 years, the most reliable).\n\n2. **Run `analyze`** (it finds the article in each language automatically):\n   ```bash\n   node scripts/dist/cli.js analyze --title \"Intermittent fasting\" --from en --lang pl,cs\n   ```\n   Up to 20 languages per call. Do not calculate dates yourself.\n\n3. **If `ok` is false,** read `errors[0]`. It says what to do: pick one of the suggested titles (disambiguation page or misspelling) and run again.\n\n4. **Report each edition** in `data.editions`:\n   - `summary` — one sentence; quote it or paraphrase it closely.\n   - `trend.direction` (growing / declining / stable / unclear) and `trend.perYear` with `trend.ci95` (% per year).\n   - `confidence.level` (high / medium / low) and the 1–3 most important `confidence.reasons`.\n   - `monthlyViews` (audience size) and `perMillion`: views per million of **that edition's** views (the topic's share of attention there, comparable across languages; not per population).\n\n5. **Report gaps.** Every entry in `data.missing` and every item in `warnings` must be mentioned: a language with no article usually means the topic is not covered there.\n\n6. **Several languages:** use `data.ranking` (already ordered: growing before stable before unclear before declining, then by confidence). Recommend the top 1–2 to investigate and say why, including confidence.\n\n7. **Shareable report** (when the user asks for a report, chart, PDF or something to share): run `report` with the same options, plus your recommendation as `--note`:\n   ```bash\n   node scripts/dist/cli.js report --title \"Astronomy\" --from en --lang uk --note \"Your 1–2 sentence recommendation.\"\n   ```\n   **Always put the exact path from `data.file` in your answer**; without it the user cannot find the report. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.\n\n## When a topic has no article in some languages\n\nFirst report the gap: no article usually means the topic is not covered in that language.\nThen, if a result for that language matters, try **one** broader English title with `analyze` (e.g. \"Intermittent fasting\" → \"Fasting\", \"English as a second or foreign language\" → \"English language\") and say clearly that it measures the broader topic. Do not guess titles in other languages and do not use `resolve` to search: `analyze` finds each language's article itself.\n\n## Follow-up questions\n\nRun `analyze` again with the changed options (other languages, other period). Data already downloaded is reused from a local cache, so repeating or widening a query is cheap.\n\n## Interpreting results\n\n- Trends are measured as a **share of all views in that edition**, so a shrinking or growing Wikipedia does not create a fake trend. `trend.rawViewsPerYear` is the raw count trend, for reference only.\n- `confidence.level` is how far the direction can be trusted. `low` or `unclear` → say the data does not support a conclusion.\n- Low traffic (under ~100 views/month) is noisy: do not rank audiences on it alone.\n- Data after May 2025 is affected by a Wikimedia bot-detection change. The analysis accounts for it and mentions it in the reasons; repeat that caveat briefly.\n- More detail: [references/interpretation.md](references/interpretation.md). All commands and options: [references/cli.md](references/cli.md).\n\n## Language codes\n\n| Language | Code | Language | Code | Language | Code |\n|---|---|---|---|---|---|\n| English | en | Polish | pl | Ukrainian | uk |\n| German | de | Czech | cs | Russian | ru |\n| French | fr | Slovak | sk | Turkish | tr |\n| Spanish | es | Hungarian | hu | Arabic | ar |\n| Italian | it | Romanian | ro | Hindi | hi |\n| Portuguese | pt | Dutch | nl | Japanese | ja |\n| Swedish | sv | Greek | el | Chinese | zh |\n| Norwegian (Bokmål) | no | Finnish | fi | Korean | ko |\n"
     }
    ]
@@ -57,11 +57,11 @@
    "content": [
     {
      "type": "text",
-     "text": "Now let me analyze interest in Mercury on German Wikipedia:"
+     "text": "Now let me analyze the interest in Mercury on German Wikipedia:"
     },
     {
      "type": "tool_use",
-     "id": "toolu_0176GbkTZVF3MHWAwZ1hqBLz",
+     "id": "toolu_01LjNat6yhbEEszZwKG6bg4H",
      "name": "run_cli",
      "input": {
       "args": [
@@ -85,7 +85,7 @@
    "content": [
     {
      "type": "tool_result",
-     "tool_use_id": "toolu_0176GbkTZVF3MHWAwZ1hqBLz",
+     "tool_use_id": "toolu_01LjNat6yhbEEszZwKG6bg4H",
      "content": "{\"ok\":false,\"data\":null,\"warnings\":[],\"errors\":[\"\\\"Mercury\\\" on en.wikipedia is a disambiguation page, not an article. Pick a specific one, e.g. \\\"Mercury_(planet)\\\", \\\"Freddie_Mercury\\\", \\\"Mercury_(element)\\\", \\\"Mercury_Records\\\", \\\"Project_Mercury\\\", \\\"Mercury_Prize\\\", \\\"Mercury_(automobile)\\\".\"]}\n\nexit code: 1"
     }
    ]
@@ -95,11 +95,11 @@
    "content": [
     {
      "type": "text",
-     "text": "The search found that \"Mercury\" is a disambiguation page. Let me search for the planet specifically:"
+     "text": "I see—Mercury is a disambiguation page. You likely mean the planet. Let me check the planet Mercury on German Wikipedia:"
     },
     {
      "type": "tool_use",
-     "id": "toolu_01EC96vdkWie6Mq7ep3Xt4Gw",
+     "id": "toolu_01KPQ57WrR2HVMeznkvYfuYa",
      "name": "run_cli",
      "input": {
       "args": [
@@ -123,7 +123,7 @@
    "content": [
     {
      "type": "tool_result",
-     "tool_use_id": "toolu_01EC96vdkWie6Mq7ep3Xt4Gw",
+     "tool_use_id": "toolu_01KPQ57WrR2HVMeznkvYfuYa",
      "content": "{\"ok\":true,\"data\":{\"qid\":\"Q308\",\"label\":\"Mercury\",\"start\":\"2021-09\",\"end\":\"2026-08\",\"editions\":[{\"project\":\"de.wikipedia\",\"article\":\"Merkur_(Planet)\",\"months\":60,\"monthlyViews\":12329,\"perMillion\":17.49,\"trend\":{\"direction\":\"declining\",\"perYear\":-5.6,\"ci95\":[-7.6,-4.2],\"p\":2.65e-7,\"rawViewsPerYear\":-9.6},\"yoy\":{\"share\":-13.7,\"views\":-20.1},\"seasonality\":{\"strength\":0.77,\"peak\":\"Jan\",\"low\":\"Jul\"},\"spikes\":[],\"step\":null,\"confidence\":{\"level\":\"high\",\"score\":95,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −6%/yr, Mann–Kendall p < 0.001).\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"de.wikipedia \\\"Merkur (Planet)\\\": interest declining about −6%/yr (95% CI −8% to −4%) relative to all traffic in this edition; confidence high.\"}]},\"warnings\":[],\"errors\":[]}\n\nexit code: 0"
     }
    ]
@@ -133,7 +133,7 @@
    "content": [
     {
      "type": "text",
-     "text": "Based on the analysis, **interest in Mercury (the planet) on German Wikipedia is declining**, not growing. Here are the key findings:\n\n- **Trend**: Interest is **declining at about −6% per year** (with a 95% confidence interval of −8% to −4%).\n- **Confidence**: This conclusion is **high confidence**, based on 60 months of data with proper seasonal adjustment.\n- **Traffic**: The Mercury article on German Wikipedia (Merkur_(Planet)) receives about 12,000 views per month on average.\n- **Recent performance**: Year-over-year, the article lost about 20% of views, and its share of all German Wikipedia traffic dropped by 13.7%.\n- **Seasonality**: There's a strong seasonal pattern, peaking in January and dipping in July.\n\nThe analysis accounts for a Wikimedia bot-detection change in May 2025, which affects raw counts, but the trend measurement uses shares of edition views which are more robust to that change."
+     "text": "Based on the analysis of Mercury (planet) on German Wikipedia, **interest is declining, not growing**. \n\nHere's what the data shows:\n\n- **Trend**: Interest in the Mercury article is **declining by about 6% per year** (with a 95% confidence interval of −8% to −4%).\n- **Confidence**: This finding is **high confidence**—the analysis is based on 60 months of data with seasonal adjustment, and the statistical test (Mann–Kendall p < 0.001) is very strong.\n- **Context**: The article attracts about 12,329 views per month on average, which represents a stable audience size, but its share of overall German Wikipedia traffic is shrinking year on year. Year-on-year, the share declined by 13.7%.\n- **Seasonality**: There's a clear seasonal pattern, with peaks in January and lowest interest in July.\n\nSo if you're looking at German Wikipedia specifically, public interest in Mercury the planet is actually moving in the opposite direction—it's getting relatively less attention over time."
     }
    ]
   }
@@ -159,12 +159,12 @@
   }
  ],
  "answers": [
-  "Based on the analysis, **interest in Mercury (the planet) on German Wikipedia is declining**, not growing. Here are the key findings:\n\n- **Trend**: Interest is **declining at about −6% per year** (with a 95% confidence interval of −8% to −4%).\n- **Confidence**: This conclusion is **high confidence**, based on 60 months of data with proper seasonal adjustment.\n- **Traffic**: The Mercury article on German Wikipedia (Merkur_(Planet)) receives about 12,000 views per month on average.\n- **Recent performance**: Year-over-year, the article lost about 20% of views, and its share of all German Wikipedia traffic dropped by 13.7%.\n- **Seasonality**: There's a strong seasonal pattern, peaking in January and dipping in July.\n\nThe analysis accounts for a Wikimedia bot-detection change in May 2025, which affects raw counts, but the trend measurement uses shares of edition views which are more robust to that change."
+  "Based on the analysis of Mercury (planet) on German Wikipedia, **interest is declining, not growing**. \n\nHere's what the data shows:\n\n- **Trend**: Interest in the Mercury article is **declining by about 6% per year** (with a 95% confidence interval of −8% to −4%).\n- **Confidence**: This finding is **high confidence**—the analysis is based on 60 months of data with seasonal adjustment, and the statistical test (Mann–Kendall p < 0.001) is very strong.\n- **Context**: The article attracts about 12,329 views per month on average, which represents a stable audience size, but its share of overall German Wikipedia traffic is shrinking year on year. Year-on-year, the share declined by 13.7%.\n- **Seasonality**: There's a clear seasonal pattern, with peaks in January and lowest interest in July.\n\nSo if you're looking at German Wikipedia specifically, public interest in Mercury the planet is actually moving in the opposite direction—it's getting relatively less attention over time."
  ],
  "usage": {
   "requests": 4,
-  "input": 8615,
-  "output": 492,
+  "input": 8628,
+  "output": 514,
   "cacheRead": 0,
   "cacheWrite": 0
  },

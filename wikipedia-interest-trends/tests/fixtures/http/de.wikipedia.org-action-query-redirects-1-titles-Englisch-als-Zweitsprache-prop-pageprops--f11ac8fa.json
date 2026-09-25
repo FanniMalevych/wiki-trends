@@ -1,0 +1,19 @@
+{
+ "url": "https://de.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&redirects=1&titles=Englisch+als+Zweitsprache&prop=pageprops&ppprop=wikibase_item%7Cdisambiguation",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "query": {
+   "pages": [
+    {
+     "pageid": 1752610,
+     "ns": 0,
+     "title": "Englisch als Zweitsprache",
+     "pageprops": {
+      "wikibase_item": "Q130192"
+     }
+    }
+   ]
+  }
+ }
+}

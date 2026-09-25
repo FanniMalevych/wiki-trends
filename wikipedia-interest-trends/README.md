@@ -51,7 +51,7 @@ npm run check       # fails if scripts/dist does not match the source
 |---|---|
 | `npm test` | Unit tests plus integration tests that run the real CLI against recorded API responses in `tests/fixtures/http/` |
 | `npm run fixtures:record` | Re-records those responses from the live APIs |
-| `npm run e2e` | End-to-end test: a real model uses the skill on the prompts in `tests/evals/evals.json`. Default: Claude Haiku 4.5, about $0.09 per full run; needs `ANTHROPIC_API_KEY` in `.env`, see `.env.example`. Options: `--case <id>`, `--provider anthropic\|gemini\|openrouter`, `--model <id>`, `--list-models`, `--dry-run` |
+| `npm run e2e` | End-to-end test: a real model uses the skill on the prompts in `tests/evals/evals.json`. Default: Claude Haiku 4.5, about $0.09 per full run; needs `ANTHROPIC_API_KEY` in `.env`, see `.env.example`. Options: `--case <id>`, `--provider anthropic\|gemini`, `--model <id>`, `--list-models`, `--dry-run` |
 | `python3 tests/reference/stats_reference.py` | Regenerates the independent reference values for the statistics tests |
 
 How AI tools were used to build this, and how their output was verified: [DEVELOPMENT.md](DEVELOPMENT.md).

@@ -1,0 +1,19 @@
+{
+ "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&redirects=1&titles=English+as+a+second+or+foreign+language&prop=pageprops&ppprop=wikibase_item%7Cdisambiguation",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "query": {
+   "pages": [
+    {
+     "pageid": 415406,
+     "ns": 0,
+     "title": "English as a second or foreign language",
+     "pageprops": {
+      "wikibase_item": "Q130192"
+     }
+    }
+   ]
+  }
+ }
+}

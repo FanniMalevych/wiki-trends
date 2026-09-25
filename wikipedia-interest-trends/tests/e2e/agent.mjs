@@ -1,8 +1,8 @@
 // A minimal agent loop for end-to-end tests: it presents the skill the way an
 // agent platform does (name + description up front, SKILL.md read on demand)
 // and gives the model two tools: read files in the skill, and run its CLI.
-// Providers: Claude via the Anthropic SDK, and any OpenAI-compatible
-// chat-completions API (Gemini, OpenRouter) via fetch.
+// Providers: Claude via the Anthropic SDK, and Gemini through its
+// OpenAI-compatible chat-completions API via fetch.
 import Anthropic from "@anthropic-ai/sdk";
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -23,13 +23,6 @@ export const PROVIDERS = {
     modelsUrl: "https://generativelanguage.googleapis.com/v1beta/openai/models",
     keyVar: "GEMINI_API_KEY",
     defaultModel: "gemini-3.5-flash", // a pinned version: "-latest" aliases change and were overloaded (503) when tested
-  },
-  openrouter: {
-    kind: "openai",
-    url: "https://openrouter.ai/api/v1/chat/completions",
-    modelsUrl: "https://openrouter.ai/api/v1/models",
-    keyVar: "OPENROUTER_API_KEY",
-    defaultModel: undefined, // pick one with --model, e.g. a ":free" model that supports tools
   },
 };
 

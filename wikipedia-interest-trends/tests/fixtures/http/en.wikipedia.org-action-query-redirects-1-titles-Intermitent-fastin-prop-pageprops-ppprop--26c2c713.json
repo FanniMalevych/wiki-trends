@@ -1,0 +1,16 @@
+{
+ "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&redirects=1&titles=Intermitent+fastin&prop=pageprops&ppprop=wikibase_item%7Cdisambiguation",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "query": {
+   "pages": [
+    {
+     "ns": 0,
+     "title": "Intermitent fastin",
+     "missing": true
+    }
+   ]
+  }
+ }
+}

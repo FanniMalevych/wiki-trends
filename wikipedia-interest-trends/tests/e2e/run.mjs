@@ -4,7 +4,6 @@
 //   npm run e2e                                  all cases on Claude Haiku 4.5
 //   npm run e2e -- --provider gemini             all cases on Gemini (free tier)
 //   npm run e2e -- --case q2-astronomy-uk        one case
-//   npm run e2e -- --provider openrouter --model <id>
 //   npm run e2e -- --list-models                 models available for the key
 //   npm run e2e -- --dry-run                     show the prompt and cases, call nothing
 //
@@ -51,7 +50,6 @@ if (values["list-models"]) {
 }
 
 const model = values.model ?? provider.defaultModel;
-if (!model) throw new Error(`Pass --model for provider ${values.provider}.`);
 
 // The CLI gets a shared cache (so follow-up questions can reuse data) and never sees API keys.
 const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/API_KEY$/.test(k)));

@@ -1,24 +1,24 @@
 {
  "provider": "anthropic",
  "model": "claude-haiku-4-5",
- "date": "2026-09-24",
+ "date": "2026-09-25",
  "passed": 8,
  "total": 8,
- "costUsd": 0.0932,
+ "costUsd": 0.0909,
  "cases": [
   {
    "id": "q1-fasting-pl-cs",
    "passed": true,
    "failed": [],
-   "toolCalls": 2,
+   "toolCalls": 3,
    "usage": {
     "requests": 3,
-    "input": 6171,
-    "output": 556,
+    "input": 6436,
+    "output": 529,
     "cacheRead": 0,
     "cacheWrite": 0
    },
-   "cost": 0.009
+   "cost": 0.0091
   },
   {
    "id": "q2-astronomy-uk",
@@ -27,8 +27,8 @@
    "toolCalls": 2,
    "usage": {
     "requests": 3,
-    "input": 6035,
-    "output": 488,
+    "input": 6036,
+    "output": 502,
     "cacheRead": 0,
     "cacheWrite": 0
    },
@@ -41,12 +41,12 @@
    "toolCalls": 4,
    "usage": {
     "requests": 5,
-    "input": 15598,
-    "output": 1174,
+    "input": 15446,
+    "output": 1086,
     "cacheRead": 0,
     "cacheWrite": 0
    },
-   "cost": 0.0215
+   "cost": 0.0209
   },
   {
    "id": "followup-more-languages",
@@ -55,12 +55,12 @@
    "toolCalls": 3,
    "usage": {
     "requests": 5,
-    "input": 13424,
-    "output": 926,
+    "input": 13299,
+    "output": 762,
     "cacheRead": 0,
     "cacheWrite": 0
    },
-   "cost": 0.0181
+   "cost": 0.0171
   },
   {
    "id": "disambiguation-mercury",
@@ -69,12 +69,12 @@
    "toolCalls": 3,
    "usage": {
     "requests": 4,
-    "input": 8615,
-    "output": 492,
+    "input": 8628,
+    "output": 514,
     "cacheRead": 0,
     "cacheWrite": 0
    },
-   "cost": 0.0111
+   "cost": 0.0112
   },
   {
    "id": "typo-title",
@@ -83,12 +83,12 @@
    "toolCalls": 2,
    "usage": {
     "requests": 3,
-    "input": 6095,
-    "output": 513,
+    "input": 6105,
+    "output": 422,
     "cacheRead": 0,
     "cacheWrite": 0
    },
-   "cost": 0.0087
+   "cost": 0.0082
   },
   {
    "id": "report-shareable",
@@ -97,12 +97,12 @@
    "toolCalls": 3,
    "usage": {
     "requests": 4,
-    "input": 11081,
-    "output": 799,
+    "input": 11063,
+    "output": 705,
     "cacheRead": 0,
     "cacheWrite": 0
    },
-   "cost": 0.0151
+   "cost": 0.0146
   },
   {
    "id": "out-of-scope",
@@ -112,11 +112,11 @@
    "usage": {
     "requests": 1,
     "input": 912,
-    "output": 66,
+    "output": 77,
     "cacheRead": 0,
     "cacheWrite": 0
    },
-   "cost": 0.0012
+   "cost": 0.0013
   }
  ]
 }

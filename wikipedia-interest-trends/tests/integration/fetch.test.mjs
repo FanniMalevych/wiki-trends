@@ -36,7 +36,6 @@ test("fetch returns the article and edition total, then serves repeats from cach
   assert.equal(article.article, "Přerušovaný_půst");
   assert.equal(article.periods, 12);
   assert.ok(article.total > 0);
-  assert.equal(article.redirects, undefined); // off by default
   assert.ok(aggregate.total > article.total * 1000);
   assert.equal(first.out.data.requests, 3); // title lookup + article + edition total
 
@@ -84,19 +83,6 @@ test("fetch by topic resolves each edition and reports the gap", () => {
 
   const byQid = run("fetch", "--qid", "Q1666254", "--lang", "pl,cs,uk", "--start", "2023-09", "--end", "2025-08", "--verbose");
   assert.equal(byQid.out.data.requests, 0);
-});
-
-test("--redirects adds the most-viewed redirects and reports them", () => {
-  const run = makeRunner();
-  const args = ["fetch", "--project", "en", "--article", "Intermittent fasting", "--start", "2025-01", "--end", "2025-06", "--skip-aggregate", "--verbose"];
-  const withRedirects = run(...args, "--redirects", "10").out.data.articles[0];
-  assert.equal(withRedirects.redirects.titles.length, 10);
-  assert.ok(withRedirects.redirects.titles.includes("5:2_diet"));
-  assert.ok(withRedirects.redirects.views > 0 && withRedirects.redirects.share < 0.5);
-
-  const plain = run(...args);
-  assert.equal(plain.out.data.articles[0].total, withRedirects.total - withRedirects.redirects.views);
-  assert.equal(plain.out.data.requests, 0);
 });
 
 test("daily data with points, several articles in one edition", () => {

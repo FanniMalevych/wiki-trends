@@ -63,10 +63,10 @@ test("a misspelled title gets a did-you-mean suggestion", () => {
   assert.match(r.out.errors[0], /does not exist on en\.wikipedia\. Search suggests: "Intermittent_fasting"/);
 });
 
-test("unrelated search hits are not offered as suggestions", () => {
+test("a missing edition is explained, without guessed titles", () => {
   const r = makeRunner()("--title", "English as a second or foreign language", "--from", "en", "--lang", "pl,de");
   const [pl, de] = r.out.data.editions;
   assert.equal(de.status, "found");
-  assert.equal(pl.status, "missing");
-  assert.ok(!(pl.candidates ?? []).some((c) => /Charlie|polski/.test(c)));
+  assert.deepEqual(Object.keys(pl).sort(), ["note", "project", "status", "title"]);
+  assert.match(pl.note, /No pl\.wikipedia article is linked to Q\d+/);
 });

@@ -1,17 +1,9 @@
 import { pageProblem, resolveTopic } from "./resolve.js";
 import { loadSeries } from "./series.js";
-import { lookupPage, rankRedirects } from "./wiki/metadata.js";
+import { lookupPage } from "./wiki/metadata.js";
 import { resolveRange } from "./wiki/periods.js";
 export const MAX_ARTICLES = 20;
-const total = (points) => points.reduce((sum, p) => sum + p.views, 0);
-function combine(results) {
-    const [first, ...rest] = results;
-    return {
-        points: first.points.map((p, i) => ({ period: p.period, views: p.views + rest.reduce((s, r) => s + r.points[i].views, 0) })),
-        cachedPeriods: results.reduce((s, r) => s + r.cachedPeriods, 0),
-        fetchedPeriods: results.reduce((s, r) => s + r.fetchedPeriods, 0),
-    };
-}
+const loaded = ({ points, cachedPeriods, fetchedPeriods }) => ({ points, cachedPeriods, fetchedPeriods });
 export async function loadDataset(cache, selection, options, now) {
     const { granularity, access, agent } = options;
     const { start, end, warnings } = resolveRange(granularity, options.start, options.end, now);
@@ -42,7 +34,7 @@ export async function loadDataset(cache, selection, options, now) {
     if (targets.length > MAX_ARTICLES) {
         throw new Error(`${targets.length} articles requested; the limit is ${MAX_ARTICLES} per call. Split the request.`);
     }
-    // 2. Check each article exists, follow redirects, and load it (plus its top redirects).
+    // 2. Check each article exists, follow a redirected title, and load it.
     const articles = [];
     for (const target of targets) {
         const page = await lookupPage(cache, target.project, target.title, now);
@@ -55,30 +47,18 @@ export async function loadDataset(cache, selection, options, now) {
         const article = page.title;
         if (page.redirectedFrom)
             warnings.push(`"${page.redirectedFrom}" redirects to "${article}" on ${target.project}; using the latter.`);
-        const redirects = options.redirects > 0 && page.redirects.length > 0
-            ? (await rankRedirects(cache, target.project, page.redirects, now)).slice(0, options.redirects).map((r) => r.title)
-            : [];
-        const results = [await loadSeries(cache, keyFor("article", target.project, article), start, end, now)];
-        for (const r of redirects)
-            results.push(await loadSeries(cache, keyFor("article", target.project, r), start, end, now));
-        const loaded = combine(results);
-        if (total(loaded.points) === 0)
+        const series = loaded(await loadSeries(cache, keyFor("article", target.project, article), start, end, now));
+        if (series.points.every((p) => p.views === 0)) {
             warnings.push(`"${article}" on ${target.project} has no recorded views in ${start}..${end}.`);
-        articles.push({
-            project: target.project,
-            article,
-            redirectedFrom: page.redirectedFrom,
-            redirects,
-            redirectViews: total(loaded.points) - total(results[0].points),
-            ...loaded,
-        });
+        }
+        articles.push({ project: target.project, article, redirectedFrom: page.redirectedFrom, ...series });
     }
     // 3. Edition totals.
     const aggregates = [];
     if (options.aggregates) {
         const projects = "topic" in selection ? selection.topic.projects : selection.projects;
         for (const project of new Set(projects)) {
-            aggregates.push({ project, ...combine([await loadSeries(cache, keyFor("aggregate", project), start, end, now)]) });
+            aggregates.push({ project, ...loaded(await loadSeries(cache, keyFor("aggregate", project), start, end, now)) });
         }
     }
     return { qid, label, granularity, access, agent, start, end, articles, aggregates, missing, warnings };

@@ -29,11 +29,11 @@
    "content": [
     {
      "type": "text",
-     "text": "I'll help you check the interest trends for intermittent fasting in Spanish Wikipedia. Let me start by reading the skill instructions and then run the analysis."
+     "text": "I'll help you check the interest trends for \"intermittent fasting\" in Spanish Wikipedia. Let me first read the skill instructions to make sure I use the tool correctly."
     },
     {
      "type": "tool_use",
-     "id": "toolu_01C8mxgHK9acRqJZrK8Tv2gD",
+     "id": "toolu_01FepsTtJA6fueW2d7wKMBDC",
      "name": "read_file",
      "input": {
       "path": "SKILL.md"
@@ -49,7 +49,7 @@
    "content": [
     {
      "type": "tool_result",
-     "tool_use_id": "toolu_01C8mxgHK9acRqJZrK8Tv2gD",
+     "tool_use_id": "toolu_01FepsTtJA6fueW2d7wKMBDC",
      "content": "---\nname: wikipedia-interest-trends\ndescription: Measures whether public interest in a topic is growing, stable or declining in one or more Wikipedia language editions, using Wikipedia pageview statistics, and says how far each trend can be trusted. Use when asked whether interest in a topic is rising, to compare interest between languages or countries, or to pick which language audiences to investigate next (e.g. for a course, product or localization decision).\n---\n\n# Wikipedia Interest Trends\n\nPageviews show **attention**, not willingness to pay. Present results as a signal for what to validate next, never as proof of demand.\n\nAll commands run from this skill's directory and print one line of JSON: `{ok, data, warnings, errors}`. Never compute trend numbers yourself: use the command output.\n\n## Workflow\n\n1. **Identify the topic and languages.**\n   - Topic → an English Wikipedia article title (e.g. \"Intermittent fasting\", \"Astronomy\").\n   - Languages → edition codes (see the table below), e.g. Polish = `pl`, Czech = `cs`.\n   - Period → `--months`: \"last two years\" = `--months 24`, \"last year\" = `--months 12`. No period given → omit it (default: 5 years, the most reliable).\n\n2. **Run `analyze`** (it finds the article in each language automatically):\n   ```bash\n   node scripts/dist/cli.js analyze --title \"Intermittent fasting\" --from en --lang pl,cs\n   ```\n   Up to 20 languages per call. Do not calculate dates yourself.\n\n3. **If `ok` is false,** read `errors[0]`. It says what to do: pick one of the suggested titles (disambiguation page or misspelling) and run again.\n\n4. **Report each edition** in `data.editions`:\n   - `summary` — one sentence; quote it or paraphrase it closely.\n   - `trend.direction` (growing / declining / stable / unclear) and `trend.perYear` with `trend.ci95` (% per year).\n   - `confidence.level` (high / medium / low) and the 1–3 most important `confidence.reasons`.\n   - `monthlyViews` (audience size) and `perMillion`: views per million of **that edition's** views (the topic's share of attention there, comparable across languages; not per population).\n\n5. **Report gaps.** Every entry in `data.missing` and every item in `warnings` must be mentioned: a language with no article usually means the topic is not covered there.\n\n6. **Several languages:** use `data.ranking` (already ordered: growing before stable before unclear before declining, then by confidence). Recommend the top 1–2 to investigate and say why, including confidence.\n\n7. **Shareable report** (when the user asks for a report, chart, PDF or something to share): run `report` with the same options, plus your recommendation as `--note`:\n   ```bash\n   node scripts/dist/cli.js report --title \"Astronomy\" --from en --lang uk --note \"Your 1–2 sentence recommendation.\"\n   ```\n   **Always put the exact path from `data.file` in your answer**; without it the user cannot find the report. It is an HTML page that prints to one A4 page (save as PDF from the browser). For a chart image only, use `chart`.\n\n## When a topic has no article in some languages\n\nFirst report the gap: no article usually means the topic is not covered in that language.\nThen, if a result for that language matters, try **one** broader English title with `analyze` (e.g. \"Intermittent fasting\" → \"Fasting\", \"English as a second or foreign language\" → \"English language\") and say clearly that it measures the broader topic. Do not guess titles in other languages and do not use `resolve` to search: `analyze` finds each language's article itself.\n\n## Follow-up questions\n\nRun `analyze` again with the changed options (other languages, other period). Data already downloaded is reused from a local cache, so repeating or widening a query is cheap.\n\n## Interpreting results\n\n- Trends are measured as a **share of all views in that edition**, so a shrinking or growing Wikipedia does not create a fake trend. `trend.rawViewsPerYear` is the raw count trend, for reference only.\n- `confidence.level` is how far the direction can be trusted. `low` or `unclear` → say the data does not support a conclusion.\n- Low traffic (under ~100 views/month) is noisy: do not rank audiences on it alone.\n- Data after May 2025 is affected by a Wikimedia bot-detection change. The analysis accounts for it and mentions it in the reasons; repeat that caveat briefly.\n- More detail: [references/interpretation.md](references/interpretation.md). All commands and options: [references/cli.md](references/cli.md).\n\n## Language codes\n\n| Language | Code | Language | Code | Language | Code |\n|---|---|---|---|---|---|\n| English | en | Polish | pl | Ukrainian | uk |\n| German | de | Czech | cs | Russian | ru |\n| French | fr | Slovak | sk | Turkish | tr |\n| Spanish | es | Hungarian | hu | Arabic | ar |\n| Italian | it | Romanian | ro | Hindi | hi |\n| Portuguese | pt | Dutch | nl | Japanese | ja |\n| Swedish | sv | Greek | el | Chinese | zh |\n| Norwegian (Bokmål) | no | Finnish | fi | Korean | ko |\n"
     }
    ]
@@ -59,11 +59,11 @@
    "content": [
     {
      "type": "text",
-     "text": "Now let me analyze the interest trends for intermittent fasting in Spanish Wikipedia:"
+     "text": "Now I'll analyze the interest in \"Intermittent fasting\" in Spanish Wikipedia:"
     },
     {
      "type": "tool_use",
-     "id": "toolu_013CRynordzb9y8dLMtu2dFk",
+     "id": "toolu_01KQKBzqMD1cVXd16gSo4EFi",
      "name": "run_cli",
      "input": {
       "args": [
@@ -87,7 +87,7 @@
    "content": [
     {
      "type": "tool_result",
-     "tool_use_id": "toolu_013CRynordzb9y8dLMtu2dFk",
+     "tool_use_id": "toolu_01KQKBzqMD1cVXd16gSo4EFi",
      "content": "{\"ok\":true,\"data\":{\"qid\":\"Q1666254\",\"label\":\"intermittent fasting\",\"start\":\"2021-09\",\"end\":\"2026-08\",\"editions\":[{\"project\":\"es.wikipedia\",\"article\":\"Ayuno_intermitente\",\"months\":60,\"monthlyViews\":861,\"perMillion\":1.58,\"trend\":{\"direction\":\"declining\",\"perYear\":-46.9,\"ci95\":[-60.7,-28.7],\"p\":0.000598,\"rawViewsPerYear\":-50.9},\"yoy\":{\"share\":-80.3,\"views\":-84.4},\"seasonality\":{\"strength\":0.4,\"peak\":\"Jan\",\"low\":\"Nov\"},\"spikes\":[{\"period\":\"2024-10\",\"ratio\":1.67}],\"step\":{\"period\":\"2025-05\",\"change\":-73.2,\"event\":\"Wikimedia bot-detection update\"},\"confidence\":{\"level\":\"high\",\"score\":75,\"reasons\":[\"60 months of data, seasonally adjusted; trend of the share of edition views (Theil–Sen −47%/yr, Mann–Kendall p < 0.001).\",\"Modest traffic (about 861 views/month).\",\"1 spike month(s), e.g. 2024-10 (1.7×), account for 1% of views; the trend estimate is robust to them.\",\"Sudden level change in 2025-05 (−73% relative to the trend), matching the Wikimedia bot-detection update.\",\"16 of 60 months fall after the Wikimedia bot-detection update (2025-05): raw counts are not comparable across it; shares of edition views are affected much less.\"]},\"summary\":\"es.wikipedia \\\"Ayuno intermitente\\\": interest declining about −47%/yr (95% CI −61% to −29%) relative to all traffic in this edition; confidence high.\"}]},\"warnings\":[],\"errors\":[]}\n\nexit code: 0"
     }
    ]
@@ -97,7 +97,7 @@
    "content": [
     {
      "type": "text",
-     "text": "Based on the analysis, here's what I found about interest trends for intermittent fasting in Spanish Wikipedia:\n\n**Trend: Declining**\n\nInterest in intermittent fasting (Spanish: \"Ayuno intermitente\") on Spanish Wikipedia is **declining at about 47% per year** (95% confidence interval: −61% to −29%). This is a statistically significant downward trend measured over the past 5 years (September 2021 to August 2026).\n\n**Confidence: High**\n\nThe analysis has high confidence in this finding because:\n- There are 60 months of data, which is a substantial period\n- The trend is seasonally adjusted\n- The decline is consistent and statistically significant (Mann–Kendall p-value < 0.001)\n- Temporary spikes in traffic have minimal impact on the overall trend\n\n**Context:**\n\n- The article receives modest traffic of about 861 views per month on average\n- In the Spanish Wikipedia ecosystem, intermittent fasting represents about 1.6 views per million page views\n- There was a notable drop in May 2025 related to a Wikimedia bot-detection update, which affected traffic measurement methods\n- The year-over-year decline in traffic share is about 80%, showing an accelerating downward trend\n\nThis declining interest may reflect that the topic's initial novelty or trend has peaked, and public attention in Spanish-speaking Wikipedia readers has moved on or stabilized at a lower level."
+     "text": "Based on the analysis, interest in \"intermittent fasting\" in Spanish Wikipedia is **declining significantly**.\n\nHere are the key findings:\n\n- **Trend direction:** Declining at approximately **47% per year** (95% confidence interval: −61% to −29%)\n- **Confidence level:** High — this is a reliable trend based on 60 months of data and robust statistical analysis\n- **Current audience size:** About 861 views per month on average\n- **Time period analyzed:** September 2021 to August 2026\n\nThe Spanish article \"Ayuno intermitente\" shows a clear downward pattern in public attention relative to all traffic in the Spanish Wikipedia edition. However, note that there was a sudden drop in May 2025 related to a Wikimedia bot-detection update, which affected raw view counts but the trend analysis accounts for this.\n\nThis declining interest in Spanish Wikipedia suggests that public attention to intermittent fasting is waning compared to other topics on the Spanish version of Wikipedia, though the topic still maintains a modest audience."
     }
    ]
   }
@@ -117,12 +117,12 @@
   }
  ],
  "answers": [
-  "Based on the analysis, here's what I found about interest trends for intermittent fasting in Spanish Wikipedia:\n\n**Trend: Declining**\n\nInterest in intermittent fasting (Spanish: \"Ayuno intermitente\") on Spanish Wikipedia is **declining at about 47% per year** (95% confidence interval: −61% to −29%). This is a statistically significant downward trend measured over the past 5 years (September 2021 to August 2026).\n\n**Confidence: High**\n\nThe analysis has high confidence in this finding because:\n- There are 60 months of data, which is a substantial period\n- The trend is seasonally adjusted\n- The decline is consistent and statistically significant (Mann–Kendall p-value < 0.001)\n- Temporary spikes in traffic have minimal impact on the overall trend\n\n**Context:**\n\n- The article receives modest traffic of about 861 views per month on average\n- In the Spanish Wikipedia ecosystem, intermittent fasting represents about 1.6 views per million page views\n- There was a notable drop in May 2025 related to a Wikimedia bot-detection update, which affected traffic measurement methods\n- The year-over-year decline in traffic share is about 80%, showing an accelerating downward trend\n\nThis declining interest may reflect that the topic's initial novelty or trend has peaked, and public attention in Spanish-speaking Wikipedia readers has moved on or stabilized at a lower level."
+  "Based on the analysis, interest in \"intermittent fasting\" in Spanish Wikipedia is **declining significantly**.\n\nHere are the key findings:\n\n- **Trend direction:** Declining at approximately **47% per year** (95% confidence interval: −61% to −29%)\n- **Confidence level:** High — this is a reliable trend based on 60 months of data and robust statistical analysis\n- **Current audience size:** About 861 views per month on average\n- **Time period analyzed:** September 2021 to August 2026\n\nThe Spanish article \"Ayuno intermitente\" shows a clear downward pattern in public attention relative to all traffic in the Spanish Wikipedia edition. However, note that there was a sudden drop in May 2025 related to a Wikimedia bot-detection update, which affected raw view counts but the trend analysis accounts for this.\n\nThis declining interest in Spanish Wikipedia suggests that public attention to intermittent fasting is waning compared to other topics on the Spanish version of Wikipedia, though the topic still maintains a modest audience."
  ],
  "usage": {
   "requests": 3,
-  "input": 6095,
-  "output": 513,
+  "input": 6105,
+  "output": 422,
   "cacheRead": 0,
   "cacheWrite": 0
  },

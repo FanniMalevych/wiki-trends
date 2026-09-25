@@ -1,0 +1,19 @@
+{
+ "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&redirects=1&titles=Astronomy&prop=pageprops&ppprop=wikibase_item%7Cdisambiguation",
+ "status": 200,
+ "body": {
+  "batchcomplete": true,
+  "query": {
+   "pages": [
+    {
+     "pageid": 50650,
+     "ns": 0,
+     "title": "Astronomy",
+     "pageprops": {
+      "wikibase_item": "Q333"
+     }
+    }
+   ]
+  }
+ }
+}

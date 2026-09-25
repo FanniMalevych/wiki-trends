@@ -2,8 +2,6 @@ import { getJson, HttpError } from "./http.js";
 import { normalizeTitle } from "./pageviews.js";
 export const LOOKUP_TTL_MS = 30 * 86_400_000;
 const WIKIDATA_API = "https://www.wikidata.org/w/api.php";
-const MAX_RANKED_REDIRECTS = 100;
-const TITLES_PER_QUERY = 50; // MediaWiki limit for anonymous clients
 // Wikidata site IDs whose language code does not map mechanically to a subdomain.
 const SITE_TO_PROJECT = { be_x_oldwiki: "be-tarask.wikipedia" };
 // "<code>wiki" site IDs that are not language editions of Wikipedia.
@@ -20,9 +18,6 @@ export function siteToProject(site) {
         return undefined;
     const match = /^([a-z0-9_]+)wiki$/.exec(site);
     return match ? `${match[1].replaceAll("_", "-")}.wikipedia` : undefined;
-}
-export function languageOf(project) {
-    return project.split(".")[0];
 }
 function apiUrl(base, params) {
     return `${base}?${new URLSearchParams({ format: "json", formatversion: "2", ...params })}`;
@@ -48,18 +43,15 @@ export async function lookupPage(cache, project, title, now) {
         action: "query",
         redirects: "1",
         titles: displayTitle(title),
-        prop: "pageprops|redirects",
+        prop: "pageprops",
         ppprop: "wikibase_item|disambiguation",
-        rdnamespace: "0",
-        rdprop: "title|fragment",
-        rdlimit: "max",
     });
     const body = await cachedQuery(cache, url, now);
     const page = body.query?.pages?.[0];
     const redirect = body.query?.redirects?.[0];
     const redirectedFrom = redirect ? normalizeTitle(redirect.from) : null;
     if (!page || page.missing || page.invalid) {
-        return { project, status: "missing", title: null, redirectedFrom, qid: null, redirects: [] };
+        return { project, status: "missing", title: null, redirectedFrom, qid: null };
     }
     return {
         project,
@@ -67,33 +59,7 @@ export async function lookupPage(cache, project, title, now) {
         title: normalizeTitle(page.title),
         redirectedFrom,
         qid: page.pageprops?.wikibase_item ?? null,
-        redirects: (page.redirects ?? []).filter((r) => !r.fragment).map((r) => normalizeTitle(r.title)),
     };
-}
-/**
- * Orders redirect titles by their views over the last 60 days and drops those
- * with none. Only the first MAX_RANKED_REDIRECTS titles are considered.
- */
-export async function rankRedirects(cache, project, titles, now) {
-    const ranked = [];
-    const considered = titles.slice(0, MAX_RANKED_REDIRECTS);
-    for (let i = 0; i < considered.length; i += TITLES_PER_QUERY) {
-        const batch = considered.slice(i, i + TITLES_PER_QUERY).map(displayTitle).join("|");
-        let cont = {};
-        do {
-            const url = apiUrl(actionApi(project), { action: "query", prop: "pageviews", pvipdays: "60", titles: batch, ...cont });
-            const body = await cachedQuery(cache, url, now);
-            for (const page of body.query?.pages ?? []) {
-                if (!page.pageviews)
-                    continue;
-                const views = Object.values(page.pageviews).reduce((sum, v) => sum + (v ?? 0), 0);
-                if (views > 0)
-                    ranked.push({ title: normalizeTitle(page.title), views });
-            }
-            cont = body.continue ?? {};
-        } while (Object.keys(cont).length > 0);
-    }
-    return ranked.sort((a, b) => b.views - a.views || a.title.localeCompare(b.title));
 }
 const stems = (text) => new Set(text
     .toLocaleLowerCase()

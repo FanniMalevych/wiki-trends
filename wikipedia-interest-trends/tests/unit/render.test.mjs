@@ -46,7 +46,7 @@ const edition = (project, direction, level) => ({
 
 test("report has every section, escapes user text and ranks editions", () => {
   const html = buildReport({
-    dataset: { qid: "Q1", label: "topic <x>", start: "2021-09", end: "2026-08", missing: [{ project: "pl.wikipedia", status: "missing", title: null, note: "No article.", candidates: ["Temat"] }] },
+    dataset: { qid: "Q1", label: "topic <x>", start: "2021-09", end: "2026-08", missing: [{ project: "pl.wikipedia", status: "missing", title: null, note: "No article." }] },
     editions: [edition("de.wikipedia", "declining", "high"), edition("cs.wikipedia", "growing", "medium")],
     chartSvg: "<svg></svg>",
     notes: ["Validate <Czech> first."],
@@ -59,7 +59,6 @@ test("report has every section, escapes user text and ranks editions", () => {
   assert.match(html, /Caveat one\. Caveat two\./);
   assert.doesNotMatch(html, /Caveat three|>method</);
   assert.match(html, /0% to \+20%/); // −0.3 rounds to 0%, not "−0%"
-  assert.match(html, /Search results: Temat/);
   assert.match(html, /href="https:\/\/cs\.wikipedia\.org\/wiki\/Some_Topic"/);
   assert.match(html, /not willingness to pay/);
   assert.doesNotMatch(html, /<script|<link|src="http/); // self-contained, no external resources

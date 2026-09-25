@@ -81,12 +81,22 @@ The AI's output was wrong in these cases; each was caught by the check named, an
 | The 95% interval could exclude zero while the trend test said "not significant" | Live output for Spanish; the interval now uses the same autocorrelation-corrected variance |
 | Short histories could still get "high" confidence | Unit test; capped at medium without seasonal adjustment |
 | A follow-up question in other languages repeated a Wikidata request | Integration test; the item is now fetched once for all languages |
-| Redirect ranking by the last 60 days missed renamed articles, the case it was meant for | Design review; redirects are now opt-in |
+| Redirect ranking by the last 60 days missed renamed articles, the case it was meant for | Design review; the feature was made opt-in, then removed (see below) |
 | `cache stats` counted data points as articles | Manual run |
 | Chart: overlapping year labels, "−0%", an over-stretched single panel, wasted axis range | Rendering the report and looking at it |
 | Test harness: a grader regex that never matched, retrying for 8 minutes on an exhausted daily quota, no request timeout | Unit tests and the first live runs |
 | Spike detection flagged 1.2× wobbles in smooth series as "spikes" | Reading the Haiku answers against the data |
 | `SKILL.md` left room for two mistakes: calling `perMillion` "per population", and not giving the report's path | Reading the Haiku answers; the failed check in run 2 |
+
+## Trimming what was not used
+
+A final review compared the features with actual use: across all Haiku runs, the model called only `analyze` and `report`, with five options. Three features no real use needed were removed, about 150 lines:
+
+- **Counting views of redirect titles:** built, then switched off by default because it missed its main case (renamed articles). A switched-off feature is still code to maintain and a source of failures.
+- **Search suggestions for editions with no article:** almost always empty or unrelated, and the model ignored them. Suggestions remain where they work: misspelled titles and disambiguation pages.
+- **The OpenRouter option in the test harness:** never run.
+
+`analyze`, `report` and `chart` also lost their `--access`/`--agent` options: interest means human views on every platform. `fetch` keeps them as the raw-data tool.
 
 ## End-to-end results
 
@@ -99,7 +109,8 @@ The AI's output was wrong in these cases; each was caught by the check named, an
 | 1 | 8/8 | $0.094 |
 | 2 (after the spike fix below) | 7/8: the report was written, but the answer did not say where | $0.083 |
 | Report case after tightening `SKILL.md` | 1/1 | $0.016 |
-| 3, final | **8/8** | **$0.093** |
+| 3 | 8/8 | $0.093 |
+| 4, after trimming unused features (final) | **8/8** | **$0.091** |
 
 A full run costs about 9 US cents, or 1–2 cents per question, with 3–5 model requests and 1–3 CLI calls per question. The final transcripts and the run history are in [tests/e2e/evidence/2026-09-24-claude-haiku-4-5/](tests/e2e/evidence/2026-09-24-claude-haiku-4-5/).
 

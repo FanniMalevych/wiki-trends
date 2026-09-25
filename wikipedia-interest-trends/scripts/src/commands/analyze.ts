@@ -4,9 +4,8 @@ import { Cache } from "../cache/db.js";
 import { loadDataset, type Dataset } from "../dataset.js";
 import { success, type Envelope } from "../output.js";
 import { httpStats } from "../wiki/http.js";
-import { ACCESS_VALUES, AGENT_VALUES } from "../wiki/pageviews.js";
 import { lastCompletePeriod, shiftPeriod, toPeriod } from "../wiki/periods.js";
-import { count, oneOf, SELECTION_HELP, SELECTION_OPTIONS, selectionFrom } from "./selection.js";
+import { count, SELECTION_HELP, SELECTION_OPTIONS, selectionFrom } from "./selection.js";
 
 const DEFAULT_MONTHS = 60;
 
@@ -25,9 +24,6 @@ Options:
   --months <n>         Number of months up to --end (default ${DEFAULT_MONTHS}), e.g. 24 for "the last two years"
   --start <month>      YYYY-MM, instead of --months
   --end <month>        YYYY-MM (default: last complete month)
-  --redirects <n>      Also count views of each article's n most-viewed redirects (default 0)
-  --access <a>         all-access (default) | desktop | mobile-app | mobile-web
-  --agent <a>          user (default) | all-agents | spider | automated
   --verbose            Include request details
 
 Per edition: trend.direction (growing | declining | stable | unclear),
@@ -41,9 +37,6 @@ export const ANALYSIS_OPTIONS = {
   months: { type: "string" },
   start: { type: "string" },
   end: { type: "string" },
-  redirects: { type: "string", default: "0" },
-  access: { type: "string", default: "all-access" },
-  agent: { type: "string", default: "user" },
   verbose: { type: "boolean", default: false },
 } as const;
 
@@ -71,12 +64,12 @@ export async function runAnalysis(values: AnalysisValues, now: number): Promise<
       cache,
       selection,
       {
+        // Interest means human readers on every platform.
         granularity: "monthly",
-        access: oneOf("access", values.access, ACCESS_VALUES),
-        agent: oneOf("agent", values.agent, AGENT_VALUES),
+        access: "all-access",
+        agent: "user",
         start: values.start ?? shiftPeriod(end, "monthly", -(months - 1)),
         end: values.end,
-        redirects: count("redirects", values.redirects),
         aggregates: true,
       },
       now,
